@@ -1,0 +1,44 @@
+{
+  "authority_root": {
+    "binding_id": "UR_CURRENT_RUNTIME_ACTION_DELIVERY_AUTHORITY_ROOT_R002",
+    "mode": "EXACT_WINDOWS_RUNTIME_DATA_ROOT",
+    "windows_path": "C:\\Users\\user\\Desktop\\LocalUniversalRuntime_v0_1\\authority\\action_delivery"
+  },
+  "policy_id": "UR_ACTION_DELIVERY_TRUST_POLICY_R002",
+  "report_gate_id_pattern": "^[A-Z0-9][A-Z0-9._-]{0,127}$",
+  "schema_revision": "R002",
+  "trusted_action_compile_validator": {
+    "bytes": 3882,
+    "relative_path": "src/universal_runtime/devtools/trusted_action_compile_validator_r002.py",
+    "sha256": "e6e5e94e9ed7dc368c863e6ef76687457062fc0125f9933df7a0d02aff9331ad",
+    "validator_id": "UR_TRUSTED_ACTION_COMPILE_VALIDATOR_R002"
+  },
+  "trusted_authority": {
+    "issuer_id": "UNIVERSAL_RUNTIME_JOB_AUTHORITY",
+    "schema_revision": "R002"
+  },
+  "trusted_ps51_probe": {
+    "bytes": 7205,
+    "contract_bytes": 458,
+    "contract_relative_path": "fixtures/UR_PS51_FINAL_BOUNDARY_PROBE_CONTRACT_R002.json",
+    "contract_sha256": "4f41957ef621fae9aff660705d5cb14840723cf6573ce13dbd9bafb6ea8e7c73",
+    "producer_contract_revision": "R002",
+    "producer_id": "UR_PS51_FINAL_BOUNDARY_PROBE_R002",
+    "relative_path": "scripts/urt_dev_ps51_final_boundary_probe_r002.ps1",
+    "sha256": "63ec46d0c98962056c8f1b14b052a5e2f125fc7c9e3301a2be95f6c071df92d0"
+  },
+  "trusted_receipt_producers": {
+    "interaction": {
+      "contract_revision": "R002",
+      "producer_id": "UR_INTERACTION_COMPILER_R002"
+    },
+    "rollback": {
+      "contract_revision": "R002",
+      "producer_id": "UR_ROLLBACK_READBACK_VALIDATOR_R002"
+    },
+    "state": {
+      "contract_revision": "R002",
+      "producer_id": "UR_RESULT_STATE_RECONCILER_R002"
+    }
+  }
+}

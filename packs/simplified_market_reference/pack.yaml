@@ -1,0 +1,15 @@
+pack_id: simplified_market_reference
+version: 0.1.0
+status: experimental_fixture
+purpose: 用固定 OHLCV fixture 验证确定性计算 Pack 无需修改 Universal Core。
+capabilities:
+  - csv_ohlcv_load
+  - deterministic_ema_macd
+  - simple_bottom_divergence_fixture
+permissions:
+  read: pack_fixture_only
+  write: runtime_artifact_store_only
+  network: forbidden
+  trading: forbidden
+model_profiles:
+  explanation: extract_fast

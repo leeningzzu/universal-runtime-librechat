@@ -1,0 +1,23 @@
+name: LibreChat upstream watch
+
+on:
+  schedule:
+    - cron: "17 8 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Verify pinned tag still exists upstream
+        shell: bash
+        run: |
+          set -euo pipefail
+          PINNED="$(python -c 'import json; print(json.load(open("docs/upstream/librechat.lock.json", encoding="utf-8"))["release"])')"
+          echo "Pinned LibreChat release: ${PINNED}"
+          git ls-remote --exit-code --tags https://github.com/LibreChat-AI/LibreChat.git "refs/tags/${PINNED}" >/dev/null
+          echo "Pinned tag exists upstream. This workflow does not auto-upgrade or merge."

@@ -1,0 +1,63 @@
+schema: UR_PUBLIC_CUSTOM_SEAMS_R001
+upstream:
+  product_shell: LibreChat
+  release: v0.8.8
+  commit_short: e8f3be0
+  exact_full_commit_status: REQUIRED_BEFORE_PUBLICATION
+seams:
+  - id: project_runtime_workspace
+    product_goal: Project-scoped governed settings without replacing the LibreChat shell
+    disposition: KEEP_THIN
+    retirement_trigger: LibreChat natively covers the same Project-scoped governance semantics
+  - id: project_memory_authority
+    product_goal: explicit Project-scoped Memory with lifecycle/currentness and portable identity
+    disposition: KEEP_THIN
+    retirement_trigger: upstream provides equivalent Project-scoped explicit Memory authority
+  - id: project_recent_history_context
+    product_goal: automatic bounded same-Project continuity in normal Project chat
+    disposition: KEEP_THIN
+    retirement_trigger: upstream provides equivalent bounded Project continuity with scope/currentness guarantees
+  - id: project_exact_chat_recall
+    product_goal: search old same-Project chats then read exact messages when claims matter
+    disposition: KEEP_GAP
+    current_gap: exact recall is currently stronger on the Agent route than on every normal Provider route
+    retirement_trigger: upstream provides Provider-neutral exact same-Project recall
+  - id: runtime_semantic_search_first_slice
+    product_goal: retrieve Project Source content while preserving exact Source authority
+    disposition: DEPRECATE
+    current_gap: native File Search is not yet enabled/accepted in the private Daily Product
+    retirement_trigger: native LibreChat File Search is accepted at Product scale; retain only governance/exact-recovery duties
+  - id: project_file_source_bridge
+    product_goal: durable Project Sources with revision/SHA/provenance
+    disposition: KEEP_THIN
+    retirement_trigger: upstream covers the user flow while Runtime still owns only authority metadata
+  - id: project_assistant_profile
+    product_goal: optional Project capability defaults
+    disposition: DEPRECATE
+    current_gap: must not become Project identity or require hidden persistent Agent selection
+    retirement_trigger: native Project/provider defaults or Packs satisfy the consumer
+  - id: mcp_runtime_project_context
+    product_goal: optional read-only Project-context interoperability
+    disposition: KEEP_THIN
+    retirement_trigger: direct native consumer can obtain equivalent governed Project context without MCP
+  - id: local_action_binding
+    product_goal: replaceable machine-local local-work provider
+    disposition: KEEP_THIN
+    current_gap: lower-level executor validation still admits only the current provider
+    retirement_trigger: provider-neutral resolver/admission is complete
+  - id: pack_user_lifecycle
+    product_goal: optional governed Pack install/activate/update/rollback/uninstall
+    disposition: KEEP_THIN
+    retirement_trigger: none; this is Runtime governance rather than a duplicate Skill engine
+  - id: generic_skill_engine
+    product_goal: reusable methods
+    disposition: DELETE
+    reason: LibreChat native Skills already own authoring/import/invocation/sync primitives
+  - id: generic_mcp_platform
+    product_goal: external interoperability
+    disposition: DELETE
+    reason: LibreChat native MCP already owns management/auth/ACL/connection primitives
+  - id: custom_auto_title
+    product_goal: normal chat title generation
+    disposition: DELETE
+    reason: absorbed by LibreChat native auto-title

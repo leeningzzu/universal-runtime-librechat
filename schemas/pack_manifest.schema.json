@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PackManifest",
+  "type": "object",
+  "required": [
+    "pack_id",
+    "version",
+    "status",
+    "capabilities",
+    "permissions"
+  ],
+  "properties": {
+    "pack_id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "capabilities": {
+      "type": "array"
+    },
+    "permissions": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

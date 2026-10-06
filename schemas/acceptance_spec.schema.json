@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Universal Runtime AcceptanceSpec v1",
+  "type": "object", "additionalProperties": false,
+  "required": ["spec_version", "task_id", "mode", "project_root"],
+  "properties": {
+    "spec_version": {"type":"string"}, "task_id":{"type":"string"},
+    "mode":{"enum":["STATIC_ACCEPTANCE","LOCAL_INTEGRATION_ACCEPTANCE","LIVE_EVIDENCE_ACCEPTANCE","PROMOTION_READINESS"]},
+    "project_root":{"type":"string"},
+    "protected_bindings":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["path"],"properties":{"path":{"type":"string"},"required":{"type":"boolean"},"expected_sha256":{"type":"string","pattern":"^[0-9a-f]{64}$"},"kind":{"type":"string"}}}},
+    "compile_targets":{"type":"array","items":{"type":"string"}},
+    "pytest":{"type":"object","additionalProperties":false,"properties":{"targeted_args":{"type":"array","items":{"type":"string"}},"full_args":{"type":"array","items":{"type":"string"}},"timeout_seconds":{"type":"number","exclusiveMinimum":0}}},
+    "expected_skips":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["node_id"],"properties":{"node_id":{"type":"string"},"platform":{"type":"string"},"reason_contains":{"type":"string"}}}},
+    "maf_smoke":{"type":["object","null"]}, "live_evidence_checks":{"type":"array","items":{"type":"object"}}, "artifact_manifest_checks":{"type":"array","items":{"type":"object"}},
+    "timeout_seconds":{"type":"number","exclusiveMinimum":0}, "output_budget":{"type":"integer","minimum":1}, "report_root":{"type":"string"}, "network_allowed":{"type":"boolean"}, "model_call_allowed":{"type":"boolean"}
+  }
+}

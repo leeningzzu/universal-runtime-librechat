@@ -1,0 +1,40 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "local-universal-runtime"
+version = "0.1.0"
+description = "LibreChat-based Windows AI workbench with governed Project continuity and optional Packs"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "agent-framework==1.13.0",
+  "fastapi>=0.128,<1",
+  "uvicorn[standard]>=0.48,<1",
+  "pydantic>=2.13,<3",
+  "python-dotenv>=1.2,<2",
+  "PyYAML>=6.0,<7",
+  "typer>=0.26,<1",
+  "rich>=14,<15",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=9,<10",
+  "ruff>=0.12,<1",
+]
+
+[project.scripts]
+urt = "universal_runtime.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/universal_runtime"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"

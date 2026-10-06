@@ -1,0 +1,14 @@
+{
+  "schema": "UR_PUBLIC_LIBRECHAT_UPSTREAM_LOCK_R001",
+  "repository": "https://github.com/LibreChat-AI/LibreChat",
+  "release": "v0.8.8",
+  "release_date": "2026-09-30",
+  "commit_short": "e8f3be0",
+  "commit_full": null,
+  "commit_full_status": "REQUIRED_BEFORE_PUBLICATION",
+  "config_version": "1.3.17",
+  "local_private_build_config_version": "1.3.16",
+  "automatic_upgrade": false,
+  "source": "official LibreChat release/changelog",
+  "note": "Bind the exact full upstream commit before public publication or patch export."
+}

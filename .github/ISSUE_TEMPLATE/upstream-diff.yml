@@ -1,0 +1,30 @@
+name: LibreChat upstream capability diff
+description: Track a new LibreChat stable release without automatic upgrade
+title: "[Upstream] LibreChat capability diff "
+labels: ["upstream"]
+body:
+  - type: input
+    id: release
+    attributes:
+      label: LibreChat release
+    validations:
+      required: true
+  - type: textarea
+    id: changed
+    attributes:
+      label: Changed capability families
+  - type: textarea
+    id: seams
+    attributes:
+      label: Custom seams potentially absorbed or invalidated
+  - type: dropdown
+    id: disposition
+    attributes:
+      label: Initial disposition
+      options:
+        - DELETE
+        - DEPRECATE
+        - KEEP_THIN
+        - KEEP_GAP
+        - BREAKING_CHANGE
+        - NO_MATERIAL_CHANGE

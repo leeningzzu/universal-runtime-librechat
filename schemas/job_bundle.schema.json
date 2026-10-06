@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "JobBundle",
+  "type": "object",
+  "required": [
+    "job_id",
+    "project_id",
+    "pack_id",
+    "pack_version",
+    "pack_manifest_sha256",
+    "runtime_contract_manifest_sha256",
+    "action_id",
+    "model_profile",
+    "model_selection_mode",
+    "model_policy_revision",
+    "model_decision_sha256",
+    "model_catalog_revision",
+    "model_catalog_sha256",
+    "model_update_mode",
+    "resolved_model_entry_id",
+    "resolved_provider",
+    "resolved_model",
+    "model_profile_config_sha256",
+    "model_resolution_sha256",
+    "inputs",
+    "permissions",
+    "permission_plan_sha256",
+    "load_plan_sha256",
+    "persistence"
+  ],
+  "properties": {
+    "job_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "pack_id": {
+      "type": "string"
+    },
+    "pack_version": {
+      "type": "string"
+    },
+    "pack_manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "runtime_contract_manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "action_id": {
+      "type": "string"
+    },
+    "model_profile": {
+      "type": "string"
+    },
+    "model_selection_mode": {
+      "type": "string",
+      "enum": [
+        "AUTO_RECOMMENDED",
+        "COST_PRIORITY",
+        "QUALITY_PRIORITY",
+        "USER_SELECTED_PROFILE"
+      ]
+    },
+    "model_policy_revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "model_decision_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "model_catalog_revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "model_catalog_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "model_update_mode": {
+      "type": "string",
+      "enum": [
+        "STRICT_PIN",
+        "LATEST_PROMOTED_AT_TASK_BOUNDARY"
+      ]
+    },
+    "resolved_model_entry_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "resolved_provider": {
+      "type": "string",
+      "minLength": 1
+    },
+    "resolved_model": {
+      "type": "string",
+      "minLength": 1
+    },
+    "model_profile_config_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "model_resolution_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "requested_model_profile": {
+      "type": "string"
+    },
+    "requested_model_entry_id": {
+      "type": "string"
+    },
+    "permissions": {
+      "type": "object",
+      "required": [
+        "read_roots"
+      ],
+      "properties": {
+        "read_roots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "permission_plan_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "load_plan_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "additionalProperties": true
+}

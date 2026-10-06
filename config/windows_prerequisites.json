@@ -1,0 +1,95 @@
+{
+  "schema": "UR_WEB_R004_WINDOWS_PREREQUISITES_R001",
+  "product_name": "Universal Runtime",
+  "policy": {
+    "healthy_startup": "SILENT_ON_DEMAND_AUTO_START",
+    "start_at_login_default": false,
+    "show_repair_ui_only_when_user_action_is_required": true,
+    "auto_download_in_r001": false,
+    "auto_install_in_r001": false,
+    "auto_accept_third_party_license": false,
+    "network_default": "DENY_EXCEPT_EXPLICIT_USER_INSTALL_ACTION",
+    "language_default": "FOLLOW_WINDOWS_USER_LANGUAGE",
+    "shell_languages_r001": ["en", "zh-Hans"],
+    "language_override_persistence": "DEFER_UNTIL_PRODUCTION_SETTINGS_BINDING"
+  },
+  "requirements": [
+    {
+      "id": "windows",
+      "display_name": "Windows 10/11 64-bit",
+      "required": true,
+      "minimum_build": 19041,
+      "repair_class": "UNSUPPORTED_IF_MISSING"
+    },
+    {
+      "id": "edge",
+      "display_name": "Microsoft Edge",
+      "required": true,
+      "repair_class": "USER_INSTALL_REQUIRED",
+      "provider": {
+        "kind": "WINGET_OR_OFFICIAL_PAGE",
+        "winget_exact_id": "Microsoft.Edge",
+        "official_url": "https://www.microsoft.com/edge/download"
+      }
+    },
+    {
+      "id": "wsl2",
+      "display_name": "Windows Subsystem for Linux 2",
+      "required": true,
+      "repair_class": "ADMIN_AND_REBOOT_MAY_BE_REQUIRED",
+      "provider": {
+        "kind": "WINDOWS_BUILT_IN",
+        "official_url": "https://learn.microsoft.com/windows/wsl/install",
+        "recommended_command": "wsl --install --no-distribution"
+      }
+    },
+    {
+      "id": "docker_desktop",
+      "display_name": "Docker Desktop",
+      "required": true,
+      "repair_class": "AUTO_START_IF_INSTALLED_ELSE_USER_INSTALL_REQUIRED",
+      "auto_start": {
+        "preferred": "docker desktop start --detach --timeout 120",
+        "status": "docker desktop status --format json",
+        "fallback": "START_DISCOVERED_DOCKER_DESKTOP_EXE"
+      },
+      "provider": {
+        "kind": "OFFICIAL_INSTALLER_PREFERRED",
+        "preferred_install_mode": "PER_USER",
+        "preferred_installer_args": ["install", "--user"],
+        "winget_exact_id": "Docker.DockerDesktop",
+        "winget_role": "USER_SELECTED_OR_DISCOVERY_ONLY",
+        "official_url": "https://docs.docker.com/desktop/setup/install/windows-install/",
+        "license_must_be_accepted_by_user": true,
+        "forbidden_automatic_arg": "--accept-license"
+      }
+    },
+    {
+      "id": "runtime_bundle",
+      "display_name": "Universal Runtime local runtime",
+      "required": true,
+      "repair_class": "PRODUCT_REPAIR_REQUIRED",
+      "provider": {
+        "kind": "PRODUCT_BUNDLE",
+        "external_download": false
+      }
+    },
+    {
+      "id": "production_stack",
+      "display_name": "Universal Runtime local services",
+      "required": true,
+      "repair_class": "AUTO_START_IF_INSTALLED_ELSE_PRODUCT_REPAIR_REQUIRED",
+      "containers": [
+        "ur-web-r004-daily-mongo-r004",
+        "ur-web-r004-daily-adapter-r005",
+        "ur-web-r004-daily-ui-r005"
+      ]
+    }
+  ],
+  "future_optional_preference": {
+    "id": "warm_start_on_login",
+    "default": false,
+    "label": "Faster startup: keep local services warm after Windows sign-in",
+    "note": "Opt-in only. Do not change Docker Desktop global startup settings silently."
+  }
+}
