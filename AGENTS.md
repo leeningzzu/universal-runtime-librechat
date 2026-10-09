@@ -13,6 +13,8 @@ Any supported Windows PC -> LibreChat shared AI Web/Desktop shell -> Runtime Aut
 - Project identity is not Provider, Pack, Agent, MCP server, executor, session, drive letter, username, or absolute path.
 - Packless Projects must remain fully usable.
 - Promotion != Install; Install != Activate; Deactivate != Uninstall; Update != auto-adopt.
+- **Final Windows installer / LibreChat Shell ships with ZERO preloaded Pack content**. All Academic, Novel, Report, Market, Universal and General/system Packs currently on the developer machine are local test assets only. Preserve optional user Install/Activate/Deactivate/Uninstall capability; do not bundle or auto-bind any Pack in a fresh product.
+- Pack lifecycle code and LibreChat native Skills may ship as Core primitives, but no `_authoritative/packs`, `_installed/packs`, developer `packs`, installed Pack receipts or preactivation metadata belong in final release bytes. At C7 packaging point of use run `python scripts/check_packless_final_shell.py <staged_release_directory>` on the actual payload. Self-test alone is not C7/Product PASS.
 - Local Action providers are replaceable machine-local capabilities.
 - Same-Project continuity must not require the user to select a hidden persistent Agent.
 - Storage != retrieval != context injection != exact recovery.

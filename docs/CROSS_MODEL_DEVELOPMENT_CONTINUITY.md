@@ -10,6 +10,17 @@ Any supported Windows PC → one LibreChat-based shared AI Web/Desktop shell →
 existing Runtime Authority/Governance → optional governed Packs / AI Workbench.
 A Project with zero user Packs must remain fully usable.
 
+**Final-shell no-Pack invariant:** all local Academic, Novel, Report,
+Market, Universal and General/system Pack instances are development/test
+assets, never preinstalled consumer payloads. The clean Windows Shell
+must ship and start without any Pack; retain only optional Pack lifecycle
+APIs and LibreChat native Skills, with user-controlled later install,
+activation, deactivation and uninstall. Do not import local promotion,
+installed state, Pack receipts or automatic Project Pack bindings into the
+final installer. Run `python scripts/check_packless_final_shell.py
+<staged_release_directory>` against the actual staged release at C7;
+synthetic tests are not equivalent to real Product PASS.
+
 A Project is the workspace and continuity scope, not a Provider, model, Pack,
 Agent, Skill, executor, MCP transport, container, username, drive or absolute path.
 Project Memory, Sources, exact same-Project history and bounded context are

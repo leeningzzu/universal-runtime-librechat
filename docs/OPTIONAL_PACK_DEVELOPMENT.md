@@ -5,6 +5,32 @@ must come from the existing Runtime promoted registry, exact installed
 projection, Project bindings and current accepted evidence. Candidate
 directories alone are not deployed Pack status.
 
+## Final consumer Shell must ship without Pack content
+
+**The final Windows Shell/install payload must include ZERO optional Pack instances.**
+Academic Paper, Novel, report/review, market/stock, Universal, and experimental
+General/system Pack contents already present on developer machines are
+**local testing assets only**. A fresh consumer installation opens a normal
+Project/Chat with zero user Packs. Only afterward may a user explicitly
+Install, Activate, Deactivate or Uninstall an authorized optional Pack.
+Pack promotion, a local candidate directory or a Git source reference never
+implies the Pack ships, is installed, or is bound to any Project.
+
+Final payloads may include reusable **Pack-lifecycle code and registry APIs**
+plus LibreChat native Skills, but no promoted/installed Pack payloads,
+content manifests, developer test catalogs, installed Pack receipts, hidden
+mandatory Core Pack or automatic Project Pack activation. Local developer
+`_authoritative`, `_installed`, and `packs` content stays outside final
+Shell distribution. User-installed future Pack content belongs to a governed
+machine-local install location independent of replaceable Shell assets.
+
+**C7 point-of-use gate:** run
+`python scripts/check_packless_final_shell.py <staged_release_directory>`
+against the actual finished release staging tree. Run `--self-test` for
+independent positive/negative fixture coverage; these fixture tests do NOT
+establish that a real installer, Windows fresh start or Packless Core has
+passed Product acceptance.
+
 ## Roles and independent fact owners
 
 - Core and Project: normal chat, Project memory/history/files, source and
