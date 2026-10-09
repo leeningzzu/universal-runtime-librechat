@@ -3,12 +3,13 @@
   "repository": "https://github.com/LibreChat-AI/LibreChat",
   "release": "v0.8.8",
   "release_date": "2026-09-30",
+  "release_prerelease": true,
   "commit_short": "e8f3be0",
-  "commit_full": null,
-  "commit_full_status": "REQUIRED_BEFORE_PUBLICATION",
+  "commit_full": "e8f3be08623663d4ad7f7241e693c94469b63bb0",
+  "commit_full_status": "VERIFIED_OFFICIAL_GITHUB_TAG_API_R001",
   "config_version": "1.3.17",
   "local_private_build_config_version": "1.3.16",
   "automatic_upgrade": false,
-  "source": "official LibreChat release/changelog",
-  "note": "Bind the exact full upstream commit before public publication or patch export."
+  "source": "official GitHub tag/ref/release API (2026-10-09)",
+  "note": "Exact upstream v0.8.8 release SHA verified from official GitHub tag API. Source redistribution still requires repository-level license decision and review of NOTICE and downstream patch provenance."
 }
