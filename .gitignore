@@ -1,0 +1,43 @@
+# Secrets and local state
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.pfx
+*.token
+*.secret
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Product private/runtime state
+artifacts/
+.staging/
+.sidecars/
+logs/
+workspace/
+handoff/
+_installed/
+_authoritative/
+*.db
+*.sqlite*
+*.dump
+
+# Browser/account state
+**/Cookies*
+**/Sessions/
+**/EdgeSessions/
+**/Trust Tokens*
+**/Device Bound Sessions*
+**/Vpn Tokens*
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

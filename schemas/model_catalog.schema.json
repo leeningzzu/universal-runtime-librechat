@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Runtime Model Catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["catalog_revision", "entries", "catalog_sha256"],
+  "properties": {
+    "catalog_revision": {"type": "string", "minLength": 1},
+    "catalog_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "entry_id", "provider", "model", "eligible_profiles", "status",
+          "promotion_order", "cost_rank", "quality_rank", "latency_rank"
+        ],
+        "properties": {
+          "entry_id": {"type": "string", "minLength": 1},
+          "provider": {"type": "string", "minLength": 1},
+          "model": {"type": "string", "minLength": 1},
+          "eligible_profiles": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": ["extract_fast", "write_main", "reason_high", "audit_high"]
+            }
+          },
+          "status": {"type": "string", "enum": ["CANDIDATE", "PROMOTED"]},
+          "promotion_order": {"type": "integer", "minimum": 0},
+          "cost_rank": {"type": "integer", "minimum": 0},
+          "quality_rank": {"type": "integer", "minimum": 0},
+          "latency_rank": {"type": "integer", "minimum": 0}
+        }
+      }
+    }
+  }
+}

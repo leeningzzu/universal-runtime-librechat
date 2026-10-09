@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local-universal-runtime/schemas/p08_gate_result.schema.json",
+  "title": "Runtime-owned P08B structure gate result",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "verdict": {
+      "type": "string",
+      "enum": ["PASS", "REVISE", "HISTORY_BOUNDARY_BLOCKER"]
+    },
+    "reviewed_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "revision_targets": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "blocker_details": {
+      "anyOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "missing_input": {"type": "string", "minLength": 1},
+            "reason": {"type": "string", "minLength": 1},
+            "required_return_interface": {"type": "string", "minLength": 1}
+          },
+          "required": ["missing_input", "reason", "required_return_interface"]
+        }
+      ]
+    },
+    "return_action": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "verdict",
+    "reviewed_sha256",
+    "summary",
+    "revision_targets",
+    "blocker_details",
+    "return_action"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "verdict": {"const": "PASS"},
+        "revision_targets": {"maxItems": 0},
+        "blocker_details": {"type": "null"}
+      }
+    },
+    {
+      "properties": {
+        "verdict": {"const": "REVISE"},
+        "revision_targets": {"minItems": 1},
+        "blocker_details": {"type": "null"},
+        "return_action": {"const": "P08 / ACTION_ID = P08_MAP_CURRENT_PARENT"}
+      }
+    },
+    {
+      "properties": {
+        "verdict": {"const": "HISTORY_BOUNDARY_BLOCKER"},
+        "revision_targets": {"maxItems": 0},
+        "blocker_details": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "missing_input": {"type": "string", "minLength": 1},
+            "reason": {"type": "string", "minLength": 1},
+            "required_return_interface": {"type": "string", "minLength": 1}
+          },
+          "required": ["missing_input", "reason", "required_return_interface"]
+        },
+        "return_action": {"const": "STOP / REQUIRED_RETURN_INTERFACE"}
+      }
+    }
+  ]
+}

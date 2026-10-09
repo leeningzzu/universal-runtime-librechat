@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local-universal-runtime/schemas/p08_structure_draft.schema.json",
+  "title": "Runtime-owned P08 structure draft",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "parent_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["KEEP", "SPLIT"]
+    },
+    "draft_markdown": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_coverage_summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "unit_boundaries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "unit_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_start_anchor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_end_anchor": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": ["unit_id", "source_start_anchor", "source_end_anchor"]
+      }
+    },
+    "history_boundary_blocker": {
+      "anyOf": [
+        {"type": "null"},
+        {"type": "string", "minLength": 1}
+      ]
+    }
+  },
+  "required": [
+    "parent_id",
+    "decision",
+    "draft_markdown",
+    "source_coverage_summary",
+    "unit_boundaries",
+    "history_boundary_blocker"
+  ]
+}

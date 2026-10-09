@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ArtifactManifest",
+  "type": "object",
+  "required": [
+    "artifact_id",
+    "revision",
+    "sha256",
+    "path",
+    "persistence_class",
+    "created_at",
+    "job_id"
+  ],
+  "properties": {
+    "artifact_id": {
+      "type": "string"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "path": {
+      "type": "string"
+    },
+    "persistence_class": {
+      "enum": [
+        "EPHEMERAL",
+        "CACHE",
+        "WORKING",
+        "AUDIT",
+        "AUTHORITATIVE"
+      ]
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "job_id": {
+      "type": "string"
+    },
+    "input_fingerprint": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

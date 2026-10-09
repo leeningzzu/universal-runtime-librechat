@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WorkBridgeManifest",
+  "type": "object",
+  "required": [
+    "job_id",
+    "input_sha256",
+    "allowed_outputs",
+    "result_schema"
+  ],
+  "properties": {
+    "job_id": {
+      "type": "string"
+    },
+    "input_sha256": {
+      "type": "string"
+    },
+    "allowed_outputs": {
+      "type": "array"
+    },
+    "result_schema": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

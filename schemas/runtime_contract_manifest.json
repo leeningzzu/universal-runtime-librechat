@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "contracts": {
+    "job_bundle": {
+      "path": "job_bundle.schema.json",
+      "sha256": "fb4464f0f646ce1320a2ad95c15622a6e83a084f70dc270b3a0667f9c836169f"
+    },
+    "model_catalog": {
+      "path": "model_catalog.schema.json",
+      "sha256": "649f76744a0c90c107edf03e50334274cd03149bf25fd2b55538619858a8c282"
+    }
+  }
+}

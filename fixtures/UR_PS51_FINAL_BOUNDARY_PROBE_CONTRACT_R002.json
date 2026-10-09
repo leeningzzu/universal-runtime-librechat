@@ -1,0 +1,11 @@
+{
+  "contract_id": "UR_PS51_FINAL_BOUNDARY_PROBE_CONTRACT_R002",
+  "probe_bytes": 7205,
+  "probe_relative_path": "scripts/urt_dev_ps51_final_boundary_probe_r002.ps1",
+  "probe_sha256": "63ec46d0c98962056c8f1b14b052a5e2f125fc7c9e3301a2be95f6c071df92d0",
+  "producer_contract_revision": "R002",
+  "producer_id": "UR_PS51_FINAL_BOUNDARY_PROBE_R002",
+  "safe_subset": "POWERSHELL_PARSER_AST_AND_TOKENS",
+  "schema_revision": "R002",
+  "target_execution": "NO"
+}

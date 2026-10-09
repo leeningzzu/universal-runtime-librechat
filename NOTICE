@@ -1,0 +1,33 @@
+# NOTICE — Universal Runtime / AI Workbench
+
+Original Universal Runtime source code and documentation in this repository
+are licensed under the MIT License (see the root LICENSE file).
+
+Copyright (c) 2026 leeningzzu.
+
+Third-party content is not relicensed by the original-source LICENSE:
+
+1. **LibreChat** — https://github.com/LibreChat-AI/LibreChat
+
+   LibreChat is an upstream dependency and replaceable user-facing shell.
+   Its source repository declares MIT licensing. The upstream v0.8.8
+   reference is pinned to commit
+   e8f3be08623663d4ad7f7241e693c94469b63bb0.
+   This source-only repository does not redistribute a complete LibreChat
+   checkout, private frontend binary, or complete custom patch series.
+   The patches/librechat/README.md file contains a private-modification
+   path/SHA inventory only. Any later copy or patch redistribution must
+   carry upstream's applicable license/copyright notices.
+
+2. **markdown-it 14.3.1** — copyright (c) 2014 Vitaly Puzrin and
+   Alex Kocharin, among relevant upstream rights holders.
+
+   The separately retained vendor license is:
+   src/universal_runtime/web_vendor/LICENSE.markdown-it-14.3.1.txt.
+   Its notice and permission terms are preserved and not replaced by this
+   repository's original-source MIT license.
+
+This repository intentionally excludes the user's canonical Project data,
+Mongo content, protected File blobs, local test Packs, installed Pack state,
+keys, credentials, Production archives and private MAINLINE Handoff.
+An open-source source repo is not a released Windows installer.
