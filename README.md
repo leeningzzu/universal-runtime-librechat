@@ -31,4 +31,4 @@ If a later LibreChat release absorbs a custom seam, deletion or deprecation is p
 
 This repository staging is a sanitized public-source foundation, not a Production snapshot. It intentionally excludes user data, current Mongo data, browser state, machine-local resolver state, secrets, rollback bytes, private Projects, unpublished domain Packs, and build caches.
 
-Publication is blocked until the repository-level license is explicitly selected. See `LICENSE_DECISION_REQUIRED.md`.
+The repository's original-source code and documentation are licensed under [MIT](LICENSE) (owner decision: 2026-10-09). Third-party notices and the pinned LibreChat upstream source appear in [NOTICE](NOTICE) and [the attribution review](docs/upstream/SOURCE_LICENSE_AND_ATTRIBUTION_REVIEW.md). This source-only GitHub project is **not** an installable Windows Product or a complete private LibreChat fork. Pack content is never included in the fresh Shell.

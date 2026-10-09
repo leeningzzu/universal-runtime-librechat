@@ -18,8 +18,9 @@ Ordinary users must not manually manage Docker/PowerShell/ports/proxies/MCP.
 
 ## Required evidence before normal-user installability claim
 
-1. Authorized public source sync, exact remote SHA and separately chosen
-   license/attribution. Never push user files, real Handoff or local Packs.
+1. MIT original-source license chosen on 2026-10-09; LICENSE and NOTICE
+   reviewed. Verify the exact authorized **public GitHub main SHA** after
+   source push; never upload user files, private Handoff or local test Packs.
 2. Protect current canonical user blobs before any UI replacement; three
    currently unlocated native File assets remain STOP. Preserve rollback.
 3. Disable unsafe legacy RAG bulk retrieval by default or close its owner
@@ -34,8 +35,9 @@ Ordinary users must not manually manage Docker/PowerShell/ports/proxies/MCP.
 
 ## Conditional milestone windows
 
-- **9–13 Oct**: public repository, authenticated source push only after
-  explicit license choice and NOTICE review.
+- **9–13 Oct**: public GitHub repository created; MIT owner decision and
+  NOTICE prepared. Verify the authenticated exact source push and remote
+  branch SHA before calling remote source continuity PASS.
 - **14–19 Oct**: guarded canonical user file protection and security route.
 - **20–25 Oct**: assemble thin-shell distribution via mature Windows route;
   prove actual release includes zero Packs and no internal proxy dependency.

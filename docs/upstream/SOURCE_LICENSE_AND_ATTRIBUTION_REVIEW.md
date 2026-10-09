@@ -1,8 +1,10 @@
 # Public Source License and Attribution Review
 
-This document is **not a repository LICENSE**. Publication remains blocked
-until the repository owner explicitly selects a source license and the
-resulting LICENSE/NOTICE review completes.
+This document records a bounded source-only attribution review; the actual
+repository copyright grant is the root **LICENSE**. On 2026-10-09 the owner
+explicitly selected MIT for original Universal Runtime source. The root
+**NOTICE** preserves applicable third-party licensing references. Later
+LibreChat source patch or Windows binary releases require separate review.
 
 ## Source-owned boundaries
 
@@ -34,14 +36,22 @@ contains original authors' copyright and MIT-style license. Preserve it
 with any corresponding vendored Markdown-it material. An original project
 license must not override a third-party notice.
 
-## Owner decision still required
+## Repository license decision: accepted MIT
 
-Before pushing the reviewed source into the public repository, choose how
-**original Universal Runtime code** is licensed (e.g. MIT, Apache-2.0,
-or retaining all rights with no downstream reuse license). MIT upstream
-does not automatically grant rights to original downstream code.
-Review selected license compatibility and notices; close or supersede
-LICENSE_DECISION_REQUIRED.md only after acceptance.
+The owner explicitly replied **采用 MIT** on 2026-10-09 and earlier authorized
+public GitHub repository creation and sanitized source upload under
+https://github.com/leeningzzu/universal-runtime-librechat.
 
-Public GitHub empty repository creation is separately authorized and now
-completed. A public empty repo is not a public source release.
+- Original Universal Runtime source: root MIT LICENSE, leeningzzu 2026.
+- Upstream LibreChat: MIT, exact verified v0.8.8 commit recorded above.
+- Separate markdown-it license: retained in source as originally provided.
+- Historical license gate: preserved in
+  docs/upstream/REPOSITORY_LICENSE_DECISION_R001.md with status
+  **ACCEPTED_MIT_R001**.
+- Raw LibreChat patches/compiled Shell: not included in current source-only
+  publication; require future exact-diff and notice review.
+
+This decision lifts the original-source-license choice blocker for the
+reviewed source-only branch. It is **not** a Product PASS, Windows installer,
+permission to publish private data, or a claim that all future distributions
+have already been reviewed.

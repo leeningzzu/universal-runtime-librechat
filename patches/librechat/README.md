@@ -1,6 +1,6 @@
 # LibreChat custom seam inventory
 
-This staging does not yet publish a raw LibreChat fork or patch series. Exact patch export is blocked until the full upstream v0.8.8 commit SHA and repository-level licensing/provenance review are bound.
+This source repository publishes only a private-build patch path/SHA inventory, **not** a raw LibreChat fork, source patch series, or compiled shell. The full upstream v0.8.8 tag SHA is now recorded in docs/upstream/librechat.lock.json; the original Universal Runtime source has an MIT owner decision, but a future actual LibreChat patch export still requires an exact upstream diff and all required third-party copyright notices. This inventory is not a substitute for source code.
 
 Known current private-build modified/added files observed during the absorption audit:
 

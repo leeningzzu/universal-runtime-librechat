@@ -81,12 +81,16 @@ replay of all old gates.
 ## GitHub source-sync contract
 
 A local Git commit is **not** a pushed GitHub backup or Product release.
-The file LICENSE_DECISION_REQUIRED.md still blocks public publication.
-Before a private/public remote push, verify the authorized GitHub target,
-connection, repository visibility and user effect scope. Bind the exact
-LibreChat upstream release commit and review license/redistribution and
-patch provenance. Run public_repo_guard.py and affected source tests.
-Prefer a **private** development repository initially.
+The owner chose MIT for the original source on 2026-10-09. The root LICENSE
+and NOTICE apply; the historical decision is archived under
+docs/upstream/REPOSITORY_LICENSE_DECISION_R001.md. The authorized public
+remote is https://github.com/leeningzzu/universal-runtime-librechat.
+Before any push, verify the GitHub account and repository visibility, exact
+source branch/commit, third-party notices, and user-approved effect scope.
+LibreChat upstream release v0.8.8 is pinned to the complete official tag
+commit; private patch export remains a separate publication decision. Run
+public_repo_guard.py, the Packless guard, and directly affected tests.
+A Git commit is not proof of GitHub remote sync or Product release.
 
 Never send actual .env/key material, cookies, browser profiles, Mongo
 snapshots, Artifacts, protected File blobs, machine-local resolver roots,

@@ -15,9 +15,13 @@ jobs:
         with:
           python-version: "3.12"
       - run: python scripts/public_repo_guard.py
-      - name: Block release while repository license is unresolved
+      - name: Verify MIT original-source license and provenance notices
         run: |
-          test ! -f LICENSE_DECISION_REQUIRED.md || {
-            echo "Repository license decision is still a publication blocker."
-            exit 1
-          }
+          test -s LICENSE
+          test -s NOTICE
+          test -s src/universal_runtime/web_vendor/LICENSE.markdown-it-14.3.1.txt
+          grep -Fq 'ACCEPTED_MIT_R001' docs/upstream/REPOSITORY_LICENSE_DECISION_R001.md
+          grep -Fq 'e8f3be08623663d4ad7f7241e693c94469b63bb0' docs/upstream/librechat.lock.json
+          test ! -e LICENSE_DECISION_REQUIRED.md
+      - name: Test zero bundled-Packs source contract
+        run: python scripts/check_packless_final_shell.py --self-test
