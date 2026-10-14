@@ -29,6 +29,8 @@ Recent same-Project context may be injected automatically within a bounded budge
 
 Continuity must be Provider-neutral. Selecting ChatAnywhere, another provider, or an Agent must not silently remove Project Memory/history semantics.
 
+Model choice is also Provider-neutral: a Project may recommend a model, but the native selector must preserve every model actually authorized for the current user and provider. A transient catalogue failure or one-item fallback must not be promoted as the complete authorized set.
+
 ## File capacity
 
 The Product should preserve LibreChat native Project-file capacity rather than lowering it to an internal Runtime retrieval prototype limit. Runtime retrieval limits are implementation ceilings, not user-visible Project limits.

@@ -10,6 +10,7 @@ Accepted design direction:
 - Pack consumer lifecycle has been proven in the private build, but Pack Formation representative flow remains open.
 - Portable ArtifactStore and privacy clean-room have been proven in the private build.
 - Fresh install/repair/update/uninstall and final packaging remain open.
+- ChatAnywhere native per-user model catalogue recovery has an exact source patch, isolated two-user/cache proof, and current-machine menu visibility proof; one natural Human selection remains open, and individual model callability is not claimed.
 - Product PASS and Program PASS are not claimed.
 
 The private build contains additional receipts and user data that are intentionally excluded from this public staging.
