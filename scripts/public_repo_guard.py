@@ -30,7 +30,7 @@ CONTENT_RULES = [
 ]
 TEXT_SUFFIXES = {
     ".py", ".js", ".ts", ".tsx", ".md", ".json", ".yaml", ".yml", ".toml",
-    ".ps1", ".txt", ".csv", ".html", ".css", ".sh",
+    ".ps1", ".txt", ".csv", ".html", ".css", ".sh", ".patch",
 }
 
 findings: list[str] = []

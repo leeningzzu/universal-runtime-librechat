@@ -1,0 +1,136 @@
+--- a/packages/api/src/endpoints/models.ts
++++ b/packages/api/src/endpoints/models.ts
+@@ -55,6 +55,10 @@
+   userObject?: Partial<IUser>;
+   /** Skip MODEL_QUERIES cache (e.g., for user-provided keys) */
+   skipCache?: boolean;
++  /** Bounded model-catalogue request timeout; defaults to the native 5 seconds. */
++  timeoutMs?: number;
++  /** Positive model-catalogue cache lifetime; defaults to the native 2 minutes. */
++  cacheTtl?: number;
+ }
+
+ function applyUserProvidedBaseURLProtection(
+@@ -166,6 +170,8 @@
+   headers,
+   userObject,
+   skipCache = false,
++  timeoutMs = 5000,
++  cacheTtl = Time.TWO_MINUTES,
+ }: FetchModelsParams): Promise<string[]> {
+   let models: string[] = [];
+   const baseURL = direct ? extractBaseURL(_baseURL ?? '') : _baseURL;
+@@ -228,7 +234,7 @@
+     }
+     if (ollamaModels !== null) {
+       if (modelsCache && cacheKey && ollamaModels.length > 0) {
+-        await modelsCache.set(cacheKey, ollamaModels, Time.TWO_MINUTES);
++        await modelsCache.set(cacheKey, ollamaModels, cacheTtl);
+       }
+       return ollamaModels;
+     }
+@@ -251,7 +257,7 @@
+       headers: {
+         ...resolvedHeaders,
+       },
+-      timeout: 5000,
++      timeout: Math.min(Math.max(Number.parseInt(String(timeoutMs), 10) || 5000, 1000), 60000),
+     };
+
+     if (name === EModelEndpoint.anthropic) {
+@@ -305,7 +311,7 @@
+   }
+
+   if (modelsCache && cacheKey && models.length > 0) {
+-    await modelsCache.set(cacheKey, models, Time.TWO_MINUTES);
++    await modelsCache.set(cacheKey, models, cacheTtl);
+   }
+
+   return models;
+--- a/packages/api/src/endpoints/config/models.ts
++++ b/packages/api/src/endpoints/config/models.ts
+@@ -3,6 +3,7 @@
+ import {
+   ErrorTypes,
+   EModelEndpoint,
++  Time,
+   extractEnvVariable,
+   normalizeEndpointName,
+ } from 'librechat-data-provider';
+@@ -268,8 +269,13 @@
+                 headers: baseURLIsUserProvided ? undefined : endpointHeaders,
+                 direct: endpoint.directEndpoint,
+                 userIdQuery: models.userIdQuery,
+-                skipCache: true,
+-                /** Fetched with the user's key/URL — always user-scoped */
++                skipCache: name.toLowerCase() !== 'chatanywhere',
++                timeoutMs: name.toLowerCase() === 'chatanywhere' ? 20000 : 5000,
++                cacheTtl:
++                  name.toLowerCase() === 'chatanywhere'
++                    ? Time.TEN_MINUTES
++                    : Time.TWO_MINUTES,
++                /** ChatAnywhere catalogue metadata is credential-fingerprinted; all other user-provided endpoints preserve the native no-cache policy. */
+                 tokenKey: getTokenConfigKey(endpoint, name, req.user?.id ?? '', tenantId),
+               });
+             })();
+--- a/packages/api/src/endpoints/config/models.spec.ts
++++ b/packages/api/src/endpoints/config/models.spec.ts
+@@ -210,6 +210,59 @@
+   });
+ });
+
++describe('createLoadConfigModels – ChatAnywhere user catalogue durability', () => {
++  const fetchModels = jest.fn().mockResolvedValue(['catalog-a', 'catalog-b']);
++
++  beforeEach(() => {
++    fetchModels.mockReset().mockResolvedValue(['catalog-a', 'catalog-b']);
++  });
++
++  const loadUserEndpoint = async (name: string) => {
++    const loadConfigModels = createLoadConfigModels({
++      getAppConfig: jest.fn().mockResolvedValue({
++        endpoints: {
++          [EModelEndpoint.custom]: [
++            {
++              name,
++              baseURL: 'https://admin-trusted.example.com/v1',
++              apiKey: AuthType.USER_PROVIDED,
++              models: { fetch: true, default: ['verified-fallback'] },
++            },
++          ],
++        },
++      }),
++      getUserKeyValues: jest.fn().mockResolvedValue({ apiKey: 'sk-user-key' }),
++      fetchModels,
++    });
++    return loadConfigModels({ user: { id: 'user-1' } } as unknown as ServerRequest);
++  };
++
++  it('uses a bounded longer timeout and credential-fingerprinted cache for ChatAnywhere', async () => {
++    const models = await loadUserEndpoint('ChatAnywhere');
++    expect(models.ChatAnywhere).toEqual(['catalog-a', 'catalog-b']);
++    expect(fetchModels).toHaveBeenCalledWith(
++      expect.objectContaining({
++        name: 'ChatAnywhere',
++        skipCache: false,
++        timeoutMs: 20000,
++        cacheTtl: 600000,
++      }),
++    );
++  });
++
++  it('preserves the native no-cache and five-second policy for other user-provided endpoints', async () => {
++    await loadUserEndpoint('OtherUserEndpoint');
++    expect(fetchModels).toHaveBeenCalledWith(
++      expect.objectContaining({
++        name: 'OtherUserEndpoint',
++        skipCache: true,
++        timeoutMs: 5000,
++        cacheTtl: 120000,
++      }),
++    );
++  });
++});
++
+ describe('createLoadConfigModels – in-request fetch coalescing', () => {
+   const fetchModels = jest.fn().mockResolvedValue([]);

@@ -1,6 +1,14 @@
 # LibreChat custom seam inventory
 
-This source repository publishes only a private-build patch path/SHA inventory, **not** a raw LibreChat fork, source patch series, or compiled shell. The full upstream v0.8.8 tag SHA is now recorded in docs/upstream/librechat.lock.json; the original Universal Runtime source has an MIT owner decision, but a future actual LibreChat patch export still requires an exact upstream diff and all required third-party copyright notices. This inventory is not a substitute for source code.
+This source repository publishes a reviewed private-build seam inventory plus narrowly scoped exact upstream-relative patches when provenance, license, current-consumer proof, and regression evidence are complete. It remains **not** a raw LibreChat fork or compiled shell. The full upstream v0.8.8 tag SHA is recorded in `docs/upstream/librechat.lock.json`, and LibreChat attribution remains in `NOTICE`.
+
+## Published exact patch
+
+- `chatanywhere-native-model-catalog-r002.patch` — preserves LibreChat's native `user_provided` credential and selector ownership while adding a bounded ChatAnywhere catalogue timeout and credential-fingerprinted positive cache.
+- `chatanywhere-native-model-catalog-r002.manifest.json` — binds exact source and compiled parent/candidate SHAs plus isolated/current-consumer proof ceilings.
+- `tests/test_chatanywhere_model_catalog_patch_contract.py` — fails if the patch, manifest, provider scope, or promoted strategy linkage drifts.
+
+The patch does not contain user credentials, model responses, private Project data, Mongo data, or a Docker image.
 
 Known current private-build modified/added files observed during the absorption audit:
 
