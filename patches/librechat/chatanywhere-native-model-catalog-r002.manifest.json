@@ -1,0 +1,33 @@
+{
+  "schema": "UR_CHATANYWHERE_NATIVE_MODEL_CATALOG_SOURCE_PATCH_R002",
+  "status": "SOURCE_CANDIDATE_MATCHING_DEPLOYED_COMPILED_PATCH",
+  "upstream": "LibreChat v0.8.8 source snapshot used by current isolated build",
+  "scope": "ChatAnywhere user_provided catalogue timeout + per-credential positive cache; other providers unchanged",
+  "compiled_parent_sha256": "a9b119a170e7ccc3cd5a61c8943f114048fcdd17d41f37344a83638e249787a7",
+  "compiled_candidate_sha256": "b3956edb6db79e709800216daf57d6400c3fb4fedbacea234be7627bebb5d5a2",
+  "patch_sha256": "760da17d7039232212738750e641ade84f50b8ecad5135e192dc285cf54915a8",
+  "files": [
+    {
+      "path": "packages/api/src/endpoints/models.ts",
+      "parent_sha256": "f1531211af205492c0c0166364ad0852d6c53d76f149ac93f80dcb6b827816e0",
+      "candidate_sha256": "b53c679b81eec4805fad743c3a2b0123b5b6d8a8bb0b5a65dfc50feae3440399"
+    },
+    {
+      "path": "packages/api/src/endpoints/config/models.ts",
+      "parent_sha256": "490fa4ed17c4fb1b356b5356140ce9f36244c716383c567a7c5c70eb315c6f92",
+      "candidate_sha256": "edd20cebb9e90f26d7240331b5a7c2e0f062dbf426be39ac46644c5be93165af"
+    },
+    {
+      "path": "packages/api/src/endpoints/config/models.spec.ts",
+      "parent_sha256": "c35039141bc9dc9e87ea72dfe3332269e850452979380c7d9177db235b6a6a0c",
+      "candidate_sha256": "2948956f43a1c5f07ca399868ef3f8f61ef938fc24a66faf1ca6573a0f14e67f"
+    }
+  ],
+  "isolated_functional": "PASS_ORIGINAL_TIMEOUT_CANDIDATE_SUCCESS_CACHE_CREDENTIAL_ISOLATION",
+  "isolated_full_route": "PASS_REAL_LIBRECHAT_HTTP_TWO_SYNTHETIC_USERS_PROVIDER_DOWN_CACHE",
+  "production_machine_visibility": "PASS_MULTIPLE_CHATANYWHERE_MODELS_VISIBLE_NO_INFERENCE",
+  "human_acceptance": "NOT_RUN",
+  "production_image_rebuild": false,
+  "other_provider_change": false,
+  "c4_file_reattach": "NOT_PROVEN_INDEPENDENT_GAP"
+}
