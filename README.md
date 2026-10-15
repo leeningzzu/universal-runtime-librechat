@@ -1,4 +1,6 @@
-# Universal Runtime / AI Workbench
+# Aides — Project-first Universal Runtime / AI Workbench
+
+Aides is the local-first, Project-first user-facing AI workbench; Universal Runtime is its internal governance plane. The final delivery sequence is complete Project experience -> LibreChat native MCP/Skills/Agents/models -> user-created optional governed Packs -> packaged EXE fresh installation on any supported Windows PC; cloud synchronization or old-machine Project migration is not a prerequisite.
 
 Universal Runtime is a Windows-first product built on the current LibreChat shell. The product goal is not to copy LibreChat or accept its present limitations; it reuses LibreChat native capabilities wherever they satisfy the product contract and adds only the smallest governed extensions needed for Project continuity, explicit Project Memory, exact Source currentness, portable local work, Pack lifecycle, and release governance.
 
