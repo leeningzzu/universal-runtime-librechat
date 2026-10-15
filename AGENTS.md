@@ -2,7 +2,17 @@
 
 ## North star
 
-Any supported Windows PC -> LibreChat shared AI Web/Desktop shell -> Runtime Authority/Governance -> optional governed Packs / AI Workbench.
+Aides (local-first Project-first AI workbench) -> current single LibreChat shell + Runtime Authority -> optional native MCP/Skills/Agents/providers -> user-created governed optional Packs -> fresh-install packaged Windows EXE on any supported PC; no cloud sync or old-PC Project migration required.
+
+## Point-of-use Aides purpose consumer
+
+Before each material successor, inherit the latest accepted Handoff and current proven Product scope, then select a **direct user-visible Project** consumer before technical components. User-confirmed product sequence:
+1. Complete normal Project: Instructions, scoped Memory, Files/Sources to new Chats with bounded citations, history/exact recall, durable Artifacts, Archive/Delete and local data safety.
+2. Compose LibreChat native Providers/Models, Agents, Skills, MCP and tools; do not build duplicate infrastructure.
+3. Enable user-created governed optional Pack Candidates, review/Promotion, user Install/Activate/Deactivate/Uninstall/Update, without mandatory or prebundled user Packs.
+4. Finally package Aides using mature Windows EXE installation technology; the new PC must create a **new** Project and operate without any external cloud synchronization or old-PC Project-data migration.
+
+Do not re-enter a stopped C4 build/tsdown, C6 historical data transfer or C7 installer microgate as a replacement for an independent Project product feature. Protect directly affected user data, owner isolation and rollback; stopped unsafe File Search/RAG remains off. Exact current Stage is determined only by accepted Handoff/Build Status and machine evidence; GitHub docs and supporting graphs are not Runtime Authority.
 
 ## Product rules
 

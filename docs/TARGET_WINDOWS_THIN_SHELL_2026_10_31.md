@@ -1,6 +1,6 @@
 # Target: Windows thin-shell downloadable preview — 31 October 2026
 
-**Conditional engineering target, not a Product or Program PASS.**
+**Historical conditional engineering preview target, not current phase authority, a shipping commitment, or Product/Program PASS.** The accepted Aides priority is complete Project experience -> native LibreChat composition -> user-created optional Packs -> final fresh-install EXE. Do not advance packaging just to meet this historical window; no external cloud sync or old-PC Project migration is an EXE prerequisite.
 Inherit previously accepted Windows thin-shell/Daily launcher baseline.
 Do not create a second LibreChat shell or custom installer/updater by default.
 Ordinary users must not manually manage Docker/PowerShell/ports/proxies/MCP.
