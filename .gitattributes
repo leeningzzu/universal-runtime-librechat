@@ -8,3 +8,7 @@
 *.yaml text eol=lf
 *.yml text eol=lf
 *.ps1 text eol=crlf
+# SHA-bound exact-byte fixtures must checkout LF on every platform.
+scripts/urt_dev_ps51_final_boundary_probe_r002.ps1 text eol=lf
+patches/librechat/chatanywhere-native-model-catalog-r002.patch text eol=lf
+packs/simplified_market_reference/fixtures/sample_ohlcv.csv text eol=lf
