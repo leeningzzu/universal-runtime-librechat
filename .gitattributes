@@ -11,4 +11,5 @@
 # SHA-bound exact-byte fixtures must checkout LF on every platform.
 scripts/urt_dev_ps51_final_boundary_probe_r002.ps1 text eol=lf
 patches/librechat/chatanywhere-native-model-catalog-r002.patch text eol=lf
+patches/librechat/r085-project-delete-pack-lifecycle-r001.patch text eol=lf whitespace=-blank-at-eol
 packs/simplified_market_reference/fixtures/sample_ohlcv.csv text eol=lf

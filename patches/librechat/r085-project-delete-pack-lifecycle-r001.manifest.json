@@ -1,0 +1,64 @@
+{
+  "files": [
+    {
+      "candidate_sha256": "fa29148410256ce3b7b6022a5e75c2c86b11fb14c7c8f7220fbb38dc3bbacdd0",
+      "parent_sha256": "a496e16743619b1e7e94f50d73f8396cbaa89b0ab95ff3d6b0248a7d542fcb27",
+      "path": "client/src/data-provider/Projects/mutations.ts"
+    },
+    {
+      "candidate_sha256": "54671d34fd491627a481f80fb6dfc9235a0e7d4b8cb95e920e3fdffb154a6d72",
+      "parent_sha256": "48fdc816d2f2bff956a139e5741647409f69e05512cde66c57303fe2799417fe",
+      "path": "client/src/components/Projects/ProjectDeleteDialog.tsx"
+    },
+    {
+      "candidate_sha256": "729c10412774cf845b6487c25d62b32851d144e1f8c04656f243cacf2526526f",
+      "parent_sha256": "30a1e4c01f08836cd13ebf83983f0e5578804340d1b09fb6ee278158a01f754a",
+      "path": "client/src/components/Projects/RuntimeProjectWorkspace.tsx"
+    },
+    {
+      "candidate_sha256": "45a6f6549d0c8f9e27c2c5bff15317dbf237005de9615e943bd608917082bec1",
+      "parent_sha256": "4e2bdab47a6f461d32767722c34cb7f4ac1311ebb17db18e4341bb05096fe5ed",
+      "path": "api/server/routes/runtimeProjects.js"
+    }
+  ],
+  "github_publication_target": "feature branch and pull request; no force-push or direct main mutation",
+  "isolated_acceptance": {
+    "browser_checks": 29,
+    "browser_delete_global_backups_created": 0,
+    "browser_direct_delete_click_count": 1,
+    "browser_direct_delete_seconds": 6.437,
+    "cumulative_capability_families": 72,
+    "delete_reliability_checks_per_run": 19,
+    "delete_reliability_runs": 2,
+    "pack_lifecycle": [
+      "Packless Project",
+      "Install without Activate",
+      "Activate exact revision",
+      "new revision no auto-adopt",
+      "active uninstall blocked",
+      "Deactivate preserves install",
+      "Uninstall after unbind",
+      "one Primary Pack"
+    ]
+  },
+  "isolated_candidate_image": "sha256:043805f7da09ad65334c652edbad84d4ceb97e778cb2add6c90d6d9b7992dfd1",
+  "parent_product_image": "sha256:dd53f1e4476755c3b2dd2f401e7ce9f2fe82965b78ca413b9acf38961d13c5ea",
+  "patch_sha256": "e44a0d53d4bfcf2a3582478044487aec9bfb68d2b346a9cce3af1cf7055f9d30",
+  "production_mutation": false,
+  "proof_ceiling": "SANITIZED_SOURCE_PATCH_AND_ISOLATED_ACCEPTANCE_ONLY__NOT_PRODUCTION_ADOPTION_OR_PRODUCT_PASS",
+  "real_user_project_delete": false,
+  "schema": "UR_R085_PROJECT_DELETE_PACK_LIFECYCLE_SOURCE_PATCH_R001",
+  "scope": [
+    "replace obsolete protected-backup Project-delete Client with direct-forward one-prepare/one-DELETE flow",
+    "truthful no-global-backup and forward-only durable-receipt confirmation",
+    "restore Project-scoped Installed Pack lifecycle: Packless, Install, Activate, Deactivate, Uninstall, exact revision and no auto-adopt",
+    "add authenticated Project-owned server proxies to existing Runtime Adapter Pack lifecycle endpoints"
+  ],
+  "status": "SOURCE_CANDIDATE_MATCHING_ISOLATED_IMAGE_AND_BROWSER_ACCEPTANCE",
+  "upstream": {
+    "commit": "e8f3be08623663d4ad7f7241e693c94469b63bb0",
+    "release": "v0.8.8",
+    "repository": "https://github.com/LibreChat-AI/LibreChat"
+  },
+  "written_at_utc": "2026-10-20T00:43:27.934644+00:00"
+}
