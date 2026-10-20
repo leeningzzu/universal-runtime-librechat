@@ -7,6 +7,9 @@ This source repository publishes a reviewed private-build seam inventory plus na
 - `chatanywhere-native-model-catalog-r002.patch` — preserves LibreChat's native `user_provided` credential and selector ownership while adding a bounded ChatAnywhere catalogue timeout and credential-fingerprinted positive cache.
 - `chatanywhere-native-model-catalog-r002.manifest.json` — binds exact source and compiled parent/candidate SHAs plus isolated/current-consumer proof ceilings.
 - `tests/test_chatanywhere_model_catalog_patch_contract.py` — fails if the patch, manifest, provider scope, or promoted strategy linkage drifts.
+- `r085-project-delete-pack-lifecycle-r001.patch` — preserves the complete cumulative Project-first Client while replacing the obsolete protected-backup delete consumer with direct-forward deletion and restoring Project-scoped Installed Pack lifecycle controls.
+- `r085-project-delete-pack-lifecycle-r001.manifest.json` — binds LibreChat v0.8.8, exact parent/candidate source hashes, the sanitized isolated image, and the bounded 72-family acceptance ceiling.
+- `tests/test_r085_project_delete_pack_lifecycle_patch_contract.py` — fails if direct deletion, no-global-backup truthfulness, Packless/Install/Activate/Deactivate/Uninstall semantics, source scope, or public-source hygiene drifts.
 
 The patch does not contain user credentials, model responses, private Project data, Mongo data, or a Docker image.
 

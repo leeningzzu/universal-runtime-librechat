@@ -1,0 +1,878 @@
+--- a/client/src/data-provider/Projects/mutations.ts
++++ b/client/src/data-provider/Projects/mutations.ts
+@@ -52,137 +52,105 @@
+ > => {
+   const queryClient = useQueryClient();
+   const pollDelay = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+-  type C5Prepare = {
+-    schema?: string;
+-    operationId?: string | null;
+-    phase?: string;
+-    backupVerified?: boolean;
+-    retryAutomatically?: boolean;
+-    recordRevision?: number;
+-    lastFailureCode?: string | null;
++  type C5DirectDelete = {
++    status?: string;
+     code?: string;
+-    status?: string;
+     projectId?: string;
+     wholeProjectCascadeReady?: boolean;
++    operationId?: string;
++    protectionMode?: string;
++    backupCreated?: boolean;
+     verified?: boolean;
+     userRecoverable?: boolean;
+     receiptRevision?: number;
++    retryAutomatically?: boolean;
+   };
+   const requestJson = async (
+     url: string,
+     options: RequestInit,
+-  ): Promise<{ ok: boolean; status: number; body: C5Prepare }> => {
++  ): Promise<{ ok: boolean; status: number; body: C5DirectDelete }> => {
+     const response = await request.authenticatedFetch(url, { ...options, cache: 'no-store' });
+-    const body = (await response.json().catch(() => null)) as C5Prepare | null;
++    const body = (await response.json().catch(() => null)) as C5DirectDelete | null;
+     return { ok: response.ok, status: response.status, body: body ?? {} };
+   };
+   return useMutation(async (projectId: string) => {
+-    if (!/^[a-f0-9]{24}$/i.test(projectId)) throw new Error('C5_PROJECT_ID_INVALID');
++    if (!/^[a-f0-9]{24}$/i.test(projectId)) {
++      throw new Error('C5_PROJECT_ID_INVALID');
++    }
+     const actor = getSessionPrincipal();
+-    if (!actor) throw new Error('C5_SIGNED_IN_NATIVE_PROJECT_OWNER_REQUIRED');
+-    const path = '/api/projects/' + encodeURIComponent(projectId);
+-    const expectedSchema = 'AIDES_C5_PROTECTED_BACKUP_PREPARE_OPERATION_R001';
+-    const opRegex = /^C5PREP_[0-9A-F]{64}$/;
+-    const options = { 'Content-Type': 'application/json' };
+-
+-    // One explicit click may resume a currently safe operation or explicitly
+-    // restart a terminal PRE-EFFECT operation. Nothing below auto-retries after
+-    // a later failure, and no PREPARE worker can invoke irreversible DELETE.
+-    const latest = await requestJson(path + '/c5-whole-delete/prepare-status', { method: 'GET' });
+-    let prepare = latest.body;
+-    let manualRetry = false;
+-    if (!latest.ok) {
+-      if (prepare.code !== 'C5_PREPARE_ORIGINAL_FENCE_EXPIRED_OR_LOST') {
+-        throw new Error(prepare.code || 'C5_CURRENT_PREPARE_STATUS_READ_UNVERIFIED');
+-      }
+-      manualRetry = true;
+-    } else if (prepare.schema !== expectedSchema || prepare.retryAutomatically !== false) {
+-      throw new Error('C5_CURRENT_PREPARE_STATUS_READ_UNVERIFIED');
+-    } else if (prepare.phase === 'FAILED_PRE_EFFECT' ||
+-               prepare.phase === 'INTERRUPTED_OR_UNKNOWN') {
+-      manualRetry = true;
+-    }
+-
+-    if (manualRetry || (prepare.phase === 'NOT_STARTED' && prepare.operationId == null &&
+-        prepare.backupVerified === false)) {
+-      const initial = await requestJson(path + '/c5-whole-delete/prepare-start', {
+-        method: 'POST', headers: options,
+-        body: JSON.stringify({
+-          confirmedIrreversibleProjectDelete: true,
+-          manualRetry,
+-        }),
+-      });
+-      if (!initial.ok) {
+-        throw new Error(initial.body.code || 'C5_BACKUP_PREPARE_NOT_ADMITTED_NO_AUTO_RETRY');
+-      }
+-      prepare = initial.body;
+-    }
+-    if (prepare.schema !== expectedSchema ||
+-        !opRegex.test(String(prepare.operationId || '')) ||
+-        !['PREPARING', 'BACKUP_VERIFIED'].includes(String(prepare.phase)) ||
+-        prepare.retryAutomatically !== false) {
+-      throw new Error('C5_BACKUP_PREPARE_PREVIOUS_OR_CURRENT_OUTCOME_UNVERIFIED');
+-    }
+-
+-    const operationId = prepare.operationId as string;
+-    let current = prepare;
+-    const deadline = Date.now() + 30 * 60 * 1000;
+-    while (current.phase === 'PREPARING') {
+-      if (Date.now() > deadline) throw new Error('C5_BACKUP_PREPARE_POLL_WINDOW_EXCEEDED_NO_DELETE');
+-      if (getSessionPrincipal() !== actor) throw new Error('C5_OWNER_CHANGED_DURING_PREPARE');
+-      await pollDelay(1500);
+-      const status = await requestJson(
+-        path + '/c5-whole-delete/prepare-status?operationId=' + encodeURIComponent(operationId),
+-        { method: 'GET' },
+-      );
+-      if (!status.ok || status.body.schema !== expectedSchema ||
+-          status.body.operationId !== operationId || status.body.retryAutomatically !== false) {
+-        throw new Error(status.body.code || 'C5_PROTECTED_BACKUP_STATUS_UNVERIFIED_NO_DELETE');
+-      }
+-      current = status.body;
+-    }
+-    if (current.phase !== 'BACKUP_VERIFIED' || current.backupVerified !== true ||
+-        getSessionPrincipal() !== actor) {
+-      throw new Error(current.lastFailureCode || 'C5_BACKUP_NOT_VERIFIED_NO_DELETE');
+-    }
+-
+-    // The same confirmed browser tab must be active at the irreversible effect.
++    if (!actor) {
++      throw new Error('C5_SIGNED_IN_NATIVE_PROJECT_OWNER_REQUIRED');
++    }
++
++    // Keep the one user-confirmed tab visible before acquiring the short-lived
++    // direct-delete lease. This is a wait only: it never repeats a mutation.
+     const visibleDeadline = Date.now() + 5 * 60 * 1000;
+     while (typeof document !== 'undefined' && document.visibilityState === 'hidden') {
+-      if (Date.now() > visibleDeadline) throw new Error('C5_DELETE_TAB_NOT_ACTIVE_NO_AUTO_RETRY');
+-      await pollDelay(1500);
+-      if (getSessionPrincipal() !== actor) throw new Error('C5_OWNER_CHANGED_DURING_PREPARE');
+-    }
+-
+-    const prepared = await requestJson(path + '/c5-whole-delete/prepare', {
+-      method: 'POST', headers: options,
+-      body: JSON.stringify({
+-        confirmedIrreversibleProjectDelete: true,
+-        c5PrepareOperationId: operationId,
+-      }),
+-    });
+-    if (!prepared.ok || prepared.body.status !== 'C5_WHOLE_PROJECT_DELETE_READY' ||
+-        prepared.body.projectId !== projectId ||
+-        prepared.body.wholeProjectCascadeReady !== true ||
+-        getSessionPrincipal() !== actor) {
+-      throw new Error(prepared.body.code || 'C5_FINAL_PREPARE_OR_OWNER_CURRENTNESS_UNVERIFIED');
+-    }
+-
+-    const result = await requestJson(path, {
+-      method: 'DELETE',
+-      headers: { ...options,
+-        'x-c5-irrevocable-project-delete': 'CONFIRMED_C5_WHOLE_PROJECT_DELETE_R001' },
++      if (Date.now() > visibleDeadline) {
++        throw new Error('C5_DELETE_TAB_NOT_ACTIVE_NO_AUTO_RETRY');
++      }
++      await pollDelay(500);
++      if (getSessionPrincipal() !== actor) {
++        throw new Error('C5_OWNER_CHANGED_BEFORE_PREPARE');
++      }
++    }
++
++    const path = '/api/projects/' + encodeURIComponent(projectId);
++    const policy = 'FORWARD_ONLY_DURABLE_RECEIPT_R001';
++    const operationRegex = /^C5LEASE_[A-Za-z0-9_-]{16,128}$/;
++    const headers = {
++      'Content-Type': 'application/json',
++      'x-c5-delete-protection-policy': policy,
++    };
++    const prepare = await requestJson(path + '/c5-whole-delete/prepare', {
++      method: 'POST',
++      headers,
+       body: JSON.stringify({
+         projectId,
+         confirmedIrreversibleProjectDelete: true,
+-        c5PrepareOperationId: operationId,
++        deleteProtectionPolicy: policy,
++      }),
++    });
++    const prepared = prepare.body;
++    if (
++      !prepare.ok ||
++      prepared.status !== 'C5_WHOLE_PROJECT_DELETE_READY' ||
++      prepared.projectId !== projectId ||
++      prepared.wholeProjectCascadeReady !== true ||
++      !operationRegex.test(String(prepared.operationId || '')) ||
++      prepared.protectionMode !== policy ||
++      prepared.backupCreated !== false ||
++      getSessionPrincipal() !== actor
++    ) {
++      throw new Error(prepared.code || 'C5_DIRECT_DELETE_PREPARE_UNVERIFIED_NO_RETRY');
++    }
++
++    // Exactly one irreversible DELETE follows the current prepare proof. No
++    // protected/global backup is created and no automatic retry is permitted.
++    const result = await requestJson(path, {
++      method: 'DELETE',
++      headers: {
++        ...headers,
++        'x-c5-irrevocable-project-delete': 'CONFIRMED_C5_WHOLE_PROJECT_DELETE_R001',
++      },
++      body: JSON.stringify({
++        projectId,
++        confirmedIrreversibleProjectDelete: true,
++        deleteProtectionPolicy: policy,
++        c5PrepareOperationId: prepared.operationId,
+       }),
+     });
+     const reply = result.body;
+-    if (!result.ok || reply.status !== 'COMPLETE_VERIFIED_PROJECT_DELETE' ||
+-        reply.projectId !== projectId || reply.verified !== true ||
+-        reply.userRecoverable !== false || !Number.isInteger(reply.receiptRevision) ||
+-        (reply.receiptRevision ?? 0) < 1 || getSessionPrincipal() !== actor) {
++    if (
++      !result.ok ||
++      reply.status !== 'COMPLETE_VERIFIED_PROJECT_DELETE' ||
++      reply.projectId !== projectId ||
++      reply.verified !== true ||
++      reply.userRecoverable !== false ||
++      !Number.isInteger(reply.receiptRevision) ||
++      (reply.receiptRevision ?? 0) < 1 ||
++      getSessionPrincipal() !== actor
++    ) {
+       throw new Error(reply.code || 'C5_FULL_PROJECT_DELETE_OUTCOME_UNVERIFIED_NO_RETRY');
+     }
+     return reply as unknown as TDeleteChatProjectResponse;
+@@ -199,7 +167,6 @@
+     },
+   });
+ };
+-
+ /** One queue per conversation: assignments to different chats stay independent. */
+ const ASSIGN_CONVERSATION_QUEUE = 'assign-conversation:';
+ 
+--- a/client/src/components/Projects/ProjectDeleteDialog.tsx
++++ b/client/src/components/Projects/ProjectDeleteDialog.tsx
+@@ -62,17 +62,17 @@
+         <div className="text-sm text-text-secondary" role="alert">
+           Permanently delete &quot;{project.name}&quot;, including its Project-owned chats,
+           messages, instructions, memories, sources and unshared files? This cannot be
+-          undone. Moved chats and shared or Library files remain.
++          undone. Moved chats and shared or Library files remain. No global backup is
++          created; recovery can only continue forward from the durable operation receipt.
+         </div>
+         {deleteProject.isLoading && (
+           <div role="status" aria-live="polite" className="text-sm text-text-secondary">
+-            Preparing and independently restoring a protected backup before deletion.
+-            This can take several minutes. No Project content is deleted until every
++            Checking current Project ownership, active jobs, exclusive references and durable
++            forward-recovery state. Permanent deletion is sent once only after every current
+             safety check passes.
+           </div>
+         )}
+-        <div className="flex justify-end gap-4 pt-4">
+-          <OGDialogClose asChild>
++        <div className="flex justify-end gap-4 pt-4">          <OGDialogClose asChild>
+             <Button aria-label={localize('com_ui_cancel')} variant="outline" disabled={deleteProject.isLoading}>
+               {localize('com_ui_cancel')}
+             </Button>
+--- a/client/src/components/Projects/RuntimeProjectWorkspace.tsx
++++ b/client/src/components/Projects/RuntimeProjectWorkspace.tsx
+@@ -125,6 +125,25 @@
+   packs: RuntimePromotedPackItem[];
+ };
+ 
++type RuntimeUserInstallablePackItem = {
++  schema_revision: 'RUNTIME_USER_INSTALLABLE_PACK_POLICY_R001';
++  pack_id: string;
++  pack_version: string;
++  pack_manifest_sha256: string;
++  pack_content_manifest_sha256: string;
++  pack_promotion_receipt_sha256: string;
++  visibility: string | null;
++  eligibility: string;
++  installed: boolean;
++};
++
++type RuntimeUserInstallablePackCatalog = {
++  schema: 'UR_RUNTIME_USER_INSTALLABLE_PACK_CATALOG_R001';
++  authority_class: 'NON_AUTHORITY_PRESENTATION_PROJECTION';
++  pack_count: number;
++  packs: RuntimeUserInstallablePackItem[];
++};
++
+ type RuntimeProjectPackBinding = {
+   pack_id: string;
+   pack_version: string;
+@@ -165,6 +184,20 @@
+     const message = (error as { message?: unknown }).message;
+     if (typeof message === 'string' && message) {
+       return message;
++    }
++  }
++  const detail = (body as { detail?: unknown }).detail;
++  if (typeof detail === 'string' && detail) {
++    return detail;
++  }
++  if (detail && typeof detail === 'object') {
++    const message = (detail as { message?: unknown; code?: unknown }).message;
++    const code = (detail as { code?: unknown }).code;
++    if (typeof message === 'string' && message) {
++      return message;
++    }
++    if (typeof code === 'string' && code) {
++      return code;
+     }
+   }
+   return fallback;
+@@ -186,6 +219,32 @@
+     /^[0-9a-f]{64}$/.test(binding.pack_content_manifest_sha256) &&
+     typeof binding.pack_promotion_receipt_sha256 === 'string' &&
+     /^[0-9a-f]{64}$/.test(binding.pack_promotion_receipt_sha256)
++  );
++}
++
++function isRuntimeUserInstallablePackItem(
++  value: unknown,
++): value is RuntimeUserInstallablePackItem {
++  if (!value || typeof value !== 'object') {
++    return false;
++  }
++  const pack = value as RuntimeUserInstallablePackItem;
++  return (
++    pack.schema_revision === 'RUNTIME_USER_INSTALLABLE_PACK_POLICY_R001' &&
++    typeof pack.pack_id === 'string' &&
++    pack.pack_id.length > 0 &&
++    typeof pack.pack_version === 'string' &&
++    pack.pack_version.length > 0 &&
++    typeof pack.pack_manifest_sha256 === 'string' &&
++    /^[0-9a-f]{64}$/.test(pack.pack_manifest_sha256) &&
++    typeof pack.pack_content_manifest_sha256 === 'string' &&
++    /^[0-9a-f]{64}$/.test(pack.pack_content_manifest_sha256) &&
++    typeof pack.pack_promotion_receipt_sha256 === 'string' &&
++    /^[0-9a-f]{64}$/.test(pack.pack_promotion_receipt_sha256) &&
++    (pack.visibility === null || typeof pack.visibility === 'string') &&
++    typeof pack.eligibility === 'string' &&
++    pack.eligibility.length > 0 &&
++    typeof pack.installed === 'boolean'
+   );
+ }
+ 
+@@ -247,6 +306,11 @@
+   const [promotedPacks, setPromotedPacks] = useState<RuntimePromotedPackItem[]>([]);
+   const [isPromotedPacksLoading, setIsPromotedPacksLoading] = useState(false);
+   const [promotedPacksError, setPromotedPacksError] = useState('');
++  const [userInstallablePacks, setUserInstallablePacks] =
++    useState<RuntimeUserInstallablePackItem[]>([]);
++  const [isUserInstallablePacksLoading, setIsUserInstallablePacksLoading] = useState(false);
++  const [userInstallablePacksError, setUserInstallablePacksError] = useState('');
++  const [packInstallMutation, setPackInstallMutation] = useState<string | null>(null);
+   const [projectPackBinding, setProjectPackBinding] = useState<RuntimeProjectPackBinding | null>(null);
+   const [packBindingProjectRevision, setPackBindingProjectRevision] = useState<number | null>(null);
+   const [runtimePackBindingInitialized, setRuntimePackBindingInitialized] = useState(false);
+@@ -907,6 +971,53 @@
+     void loadPromotedPacks();
+   }, [loadPromotedPacks]);
+ 
++  const loadUserInstallablePacks = useCallback(async () => {
++    if (!activeProjectId) {
++      setUserInstallablePacks([]);
++      return;
++    }
++    if (!isAuthReady || !token) {
++      return;
++    }
++    setIsUserInstallablePacksLoading(true);
++    setUserInstallablePacksError('');
++    try {
++      const response = await request.authenticatedFetch(
++        `/api/projects/${encodeURIComponent(activeProjectId)}/runtime-user-installable-packs`,
++        { cache: 'no-store' },
++      );
++      const body = (await response.json().catch(() => ({}))) as Partial<RuntimeUserInstallablePackCatalog> & {
++        error?: unknown;
++        detail?: unknown;
++      };
++      const validPacks =
++        Array.isArray(body.packs) && body.packs.every(isRuntimeUserInstallablePackItem);
++      if (
++        !response.ok ||
++        body.schema !== 'UR_RUNTIME_USER_INSTALLABLE_PACK_CATALOG_R001' ||
++        body.authority_class !== 'NON_AUTHORITY_PRESENTATION_PROJECTION' ||
++        !Number.isInteger(body.pack_count) ||
++        (body.pack_count ?? -1) < 0 ||
++        !validPacks ||
++        body.pack_count !== body.packs?.length
++      ) {
++        throw new Error(runtimeErrorMessage(body, 'Unable to load Installed Packs'));
++      }
++      setUserInstallablePacks(body.packs ?? []);
++    } catch (error) {
++      setUserInstallablePacks([]);
++      setUserInstallablePacksError(
++        error instanceof Error ? error.message : 'Unable to load Installed Packs',
++      );
++    } finally {
++      setIsUserInstallablePacksLoading(false);
++    }
++  }, [activeProjectId, isAuthReady, token]);
++
++  useEffect(() => {
++    void loadUserInstallablePacks();
++  }, [loadUserInstallablePacks]);
++
+   const loadProjectPackBinding = useCallback(async () => {
+     if (!activeProjectId) {
+       setProjectPackBinding(null);
+@@ -1036,6 +1147,54 @@
+       });
+     },
+     [packBindingProjectRevision, runProjectPackBindingMutation],
++  );
++
++  const runUserPackInstallMutation = useCallback(
++    async (pack: RuntimeUserInstallablePackItem, action: 'install' | 'uninstall') => {
++      if (!activeProjectId || !isAuthReady || !token) {
++        return false;
++      }
++      const identity = `${pack.pack_id}@${pack.pack_version}`;
++      setPackInstallMutation(`${action}:${identity}`);
++      setUserInstallablePacksError('');
++      try {
++        const response = await request.authenticatedFetch(
++          `/api/projects/${encodeURIComponent(activeProjectId)}/runtime-user-pack-install`,
++          {
++            method: action === 'install' ? 'POST' : 'DELETE',
++            headers: { 'Content-Type': 'application/json' },
++            body: JSON.stringify({
++              pack_id: pack.pack_id,
++              pack_version: pack.pack_version,
++              ...(action === 'uninstall'
++                ? { command_id: `PACK_UNINSTALL_${crypto.randomUUID()}` }
++                : {}),
++            }),
++          },
++        );
++        const body = (await response.json().catch(() => ({}))) as unknown;
++        if (!response.ok) {
++          throw new Error(
++            runtimeErrorMessage(
++              body,
++              action === 'install'
++                ? 'Unable to install this exact Pack revision'
++                : 'Unable to uninstall this exact Pack revision',
++            ),
++          );
++        }
++        await Promise.all([loadUserInstallablePacks(), loadProjectPackBinding()]);
++        return true;
++      } catch (error) {
++        setUserInstallablePacksError(
++          error instanceof Error ? error.message : 'Unable to update Installed Packs',
++        );
++        return false;
++      } finally {
++        setPackInstallMutation(null);
++      }
++    },
++    [activeProjectId, isAuthReady, loadProjectPackBinding, loadUserInstallablePacks, token],
+   );
+ 
+   const runProjectMemoryMutation = useCallback(
+@@ -1523,142 +1682,200 @@
+               Developer tools and capability details
+             </span>
+           </summary>
+-        <section className="border-t border-border-light p-4">
+-          <div className="flex items-start justify-between gap-3">
+-            <div>
+-              <h2 className="text-sm font-semibold text-text-primary">Runtime Packs</h2>
+-              <p className="mt-1 text-xs leading-5 text-text-secondary">
+-                Runtime-promoted Packs available to this installation. Binding stores exact Project
+-                metadata only; it does not execute the Pack or change the current chat/model path.
+-              </p>
++          <section
++            data-testid="project-pack-lifecycle"
++            className="border-t border-border-light p-4"
++          >
++            <div className="flex items-start justify-between gap-3">
++              <div>
++                <h2 className="text-sm font-semibold text-text-primary">Project Packs</h2>
++                <p className="mt-1 text-xs leading-5 text-text-secondary">
++                  Install stores one exact Pack revision on this machine. Activate binds one Primary
++                  Pack to this Project. Deactivate keeps it installed; Uninstall removes only the
++                  installed projection and is blocked while a Project or running Job still uses it.
++                  Installing or updating another revision never auto-adopts it or rewrites history.
++                </p>
++              </div>
++              <span
++                data-testid="project-pack-mode"
++                className="shrink-0 rounded-full border border-border-light bg-surface-primary px-2 py-1 text-[10px] font-semibold tracking-wide text-text-secondary"
++              >
++                {projectPackBinding ? 'ONE PRIMARY PACK' : 'PACKLESS PROJECT'}
++              </span>
+             </div>
+-            {!isPromotedPacksLoading && !promotedPacksError ? (
+-              <span className="shrink-0 text-xs text-text-secondary">
+-                {promotedPacks.length} promoted
+-              </span>
+-            ) : null}
+-          </div>
+-
+-          <div className="mt-3 text-xs text-text-secondary">
+-            {promotedPacksError ? (
+-              <span className="text-red-500">{promotedPacksError}</span>
+-            ) : isPromotedPacksLoading || isPackBindingLoading ? (
+-              'Loading Runtime Packs…'
+-            ) : promotedPacks.length ? (
+-              'Authority-validated Runtime catalog'
+-            ) : (
+-              'No Runtime-promoted Packs available'
+-            )}
+-          </div>
+-
+-          <div className="mt-2 text-xs leading-5 text-text-secondary">
+-            {packBindingError ? (
+-              <span className="text-red-500">{packBindingError}</span>
+-            ) : projectPackBinding ? (
+-              <>
+-                Bound to{' '}
+-                <span className="font-medium text-text-primary">
+-                  {projectPackBinding.pack_id}@{projectPackBinding.pack_version}
++
++            <div className="mt-3 text-xs leading-5 text-text-secondary">
++              {packBindingError || promotedPacksError || userInstallablePacksError ? (
++                <span className="text-red-500">
++                  {packBindingError || promotedPacksError || userInstallablePacksError}
+                 </span>
+-                . Binding only — execution is not enabled by this action.
+-              </>
+-            ) : runtimePackBindingInitialized ? (
+-              'No Pack is bound to this Project. Binding only — execution remains disabled.'
+-            ) : (
+-              'Runtime Project metadata is not initialized yet. The first Bind will initialize it without executing the Pack.'
+-            )}
+-          </div>
+-
+-          {promotedPacks.length ? (
+-            <div className="mt-4 space-y-2">
+-              {promotedPacks.map((pack) => {
+-                const isBound = promotedPackMatchesBinding(pack, projectPackBinding);
+-                return (
+-                  <div
+-                    key={`${pack.pack_id}@${pack.version}`}
+-                    className="rounded-xl border border-border-light bg-surface-primary px-3 py-3"
+-                  >
+-                    <div className="flex items-start justify-between gap-3">
+-                      <div className="min-w-0">
+-                        <div
+-                          className="truncate text-sm font-medium text-text-primary"
+-                          title={`${pack.pack_id}@${pack.version}`}
+-                        >
+-                          {pack.pack_id}@{pack.version}
++              ) : isPromotedPacksLoading ||
++                isUserInstallablePacksLoading ||
++                isPackBindingLoading ? (
++                'Loading Pack lifecycle…'
++              ) : projectPackBinding ? (
++                <>
++                  Active exact revision:{' '}
++                  <span className="font-medium text-text-primary">
++                    {projectPackBinding.pack_id}@{projectPackBinding.pack_version}
++                  </span>
++                  . Deactivate does not uninstall it.
++                </>
++              ) : runtimePackBindingInitialized ? (
++                'Packless Project. No Pack is active; normal Project use remains available.'
++              ) : (
++                'Packless Project. Runtime Project metadata initializes only when you activate a Pack.'
++              )}
++            </div>
++
++            {promotedPacks.length ? (
++              <div className="mt-4 space-y-2">
++                {promotedPacks.map((pack) => {
++                  const installable = userInstallablePacks.find(
++                    (candidate) =>
++                      candidate.pack_id === pack.pack_id &&
++                      candidate.pack_version === pack.version &&
++                      candidate.pack_manifest_sha256 === pack.manifest_sha256 &&
++                      candidate.pack_content_manifest_sha256 === pack.content_manifest_sha256 &&
++                      candidate.pack_promotion_receipt_sha256 === pack.promotion_receipt_sha256,
++                  );
++                  const installed = installable?.installed === true;
++                  const isActive = promotedPackMatchesBinding(pack, projectPackBinding);
++                  const identity = `${pack.pack_id}@${pack.version}`;
++                  const lifecycleBusy =
++                    isPackBindingMutating ||
++                    packInstallMutation !== null ||
++                    isPromotedPacksLoading ||
++                    isUserInstallablePacksLoading ||
++                    isPackBindingLoading;
++                  return (
++                    <div
++                      key={identity}
++                      data-testid={`project-pack-${pack.pack_id}-${pack.version}`}
++                      className="rounded-xl border border-border-light bg-surface-primary px-3 py-3"
++                    >
++                      <div className="flex items-start justify-between gap-3">
++                        <div className="min-w-0">
++                          <div className="truncate text-sm font-medium text-text-primary" title={identity}>
++                            {identity}
++                          </div>
++                          <div className="mt-1 text-xs leading-5 text-text-secondary">
++                            {pack.purpose || 'No Pack purpose declared'}
++                          </div>
+                         </div>
+-                        <div className="mt-1 text-xs leading-5 text-text-secondary">
+-                          {pack.purpose || 'No Pack purpose declared'}
++                        <div className="flex shrink-0 flex-wrap items-center justify-end gap-1.5">
++                          <span className="rounded-full border border-border-light bg-surface-tertiary px-2 py-0.5 text-[10px] font-semibold tracking-wide text-text-secondary">
++                            PROMOTED
++                          </span>
++                          {installable ? (
++                            <span className="rounded-full border border-border-light bg-surface-tertiary px-2 py-0.5 text-[10px] font-semibold tracking-wide text-text-secondary">
++                              {installed ? 'INSTALLED' : 'AVAILABLE'}
++                            </span>
++                          ) : (
++                            <span className="rounded-full border border-border-light bg-surface-tertiary px-2 py-0.5 text-[10px] font-semibold tracking-wide text-text-tertiary">
++                              NOT USER-INSTALLABLE
++                            </span>
++                          )}
++                          {isActive ? (
++                            <span className="rounded-full border border-border-heavy bg-surface-primary px-2 py-0.5 text-[10px] font-semibold tracking-wide text-text-primary">
++                              ACTIVE PRIMARY
++                            </span>
++                          ) : null}
+                         </div>
+                       </div>
+-                      <div className="flex shrink-0 flex-wrap items-center justify-end gap-1.5">
+-                        <span className="rounded-full border border-border-light bg-surface-tertiary px-2 py-0.5 text-[10px] font-semibold tracking-wide text-text-secondary">
+-                          PROMOTED
++
++                      {pack.capabilities.length ? (
++                        <div className="mt-2 flex flex-wrap gap-1.5">
++                          {pack.capabilities.map((capability) => (
++                            <span
++                              key={capability}
++                              className="rounded-md bg-surface-tertiary px-2 py-1 text-[11px] text-text-secondary"
++                            >
++                              {capability}
++                            </span>
++                          ))}
++                        </div>
++                      ) : null}
++
++                      <div
++                        className="mt-2 truncate font-mono text-[11px] text-text-tertiary"
++                        title={`Manifest ${pack.manifest_sha256} · Content ${pack.content_manifest_sha256} · Receipt ${pack.promotion_receipt_sha256}`}
++                      >
++                        Manifest {pack.manifest_sha256.slice(0, 12)}… · Content{' '}
++                        {pack.content_manifest_sha256.slice(0, 12)}… · Receipt{' '}
++                        {pack.promotion_receipt_sha256.slice(0, 12)}…
++                      </div>
++
++                      <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
++                        <span className="text-[11px] leading-5 text-text-secondary">
++                          {isActive
++                            ? 'Active Jobs pin this exact revision. Deactivate before uninstalling.'
++                            : installed
++                              ? 'Installed only. Activation is a separate Project action.'
++                              : installable
++                                ? 'Available to install. Installation does not activate it.'
++                                : 'Promoted authority exists, but this revision is not user-installable.'}
+                         </span>
+-                        {isBound ? (
+-                          <span className="rounded-full border border-border-heavy bg-surface-primary px-2 py-0.5 text-[10px] font-semibold tracking-wide text-text-primary">
+-                            BOUND TO PROJECT
+-                          </span>
+-                        ) : null}
++                        <div className="flex flex-wrap items-center justify-end gap-2">
++                          {installable && !installed ? (
++                            <button
++                              type="button"
++                              data-testid={`install-pack-${pack.pack_id}-${pack.version}`}
++                              onClick={() => void runUserPackInstallMutation(installable, 'install')}
++                              disabled={lifecycleBusy || !isAuthReady || !token}
++                              className="inline-flex h-8 items-center justify-center rounded-lg border border-border-medium bg-surface-primary px-3 text-xs font-medium text-text-primary transition-opacity disabled:cursor-not-allowed disabled:opacity-40"
++                            >
++                              {packInstallMutation === `install:${identity}` ? 'Installing…' : 'Install'}
++                            </button>
++                          ) : null}
++                          {installed && !isActive ? (
++                            <button
++                              type="button"
++                              data-testid={`activate-pack-${pack.pack_id}-${pack.version}`}
++                              onClick={() => void bindProjectPack(pack)}
++                              disabled={lifecycleBusy || !isAuthReady || !token}
++                              className="inline-flex h-8 items-center justify-center rounded-lg bg-text-primary px-3 text-xs font-medium text-surface-primary transition-opacity disabled:cursor-not-allowed disabled:opacity-40"
++                            >
++                              Activate
++                            </button>
++                          ) : null}
++                          {isActive ? (
++                            <button
++                              type="button"
++                              data-testid={`deactivate-pack-${pack.pack_id}-${pack.version}`}
++                              onClick={() => void unbindProjectPack()}
++                              disabled={lifecycleBusy || !isAuthReady || !token}
++                              className="inline-flex h-8 items-center justify-center rounded-lg border border-border-medium bg-surface-primary px-3 text-xs font-medium text-text-primary transition-opacity disabled:cursor-not-allowed disabled:opacity-40"
++                            >
++                              Deactivate
++                            </button>
++                          ) : null}
++                          {installable && installed && !isActive ? (
++                            <button
++                              type="button"
++                              data-testid={`uninstall-pack-${pack.pack_id}-${pack.version}`}
++                              onClick={() => void runUserPackInstallMutation(installable, 'uninstall')}
++                              disabled={lifecycleBusy || !isAuthReady || !token}
++                              className="inline-flex h-8 items-center justify-center rounded-lg border border-border-medium bg-surface-primary px-3 text-xs font-medium text-text-destructive transition-opacity disabled:cursor-not-allowed disabled:opacity-40"
++                            >
++                              {packInstallMutation === `uninstall:${identity}`
++                                ? 'Uninstalling…'
++                                : 'Uninstall'}
++                            </button>
++                          ) : null}
++                        </div>
+                       </div>
+                     </div>
+-
+-                    {pack.capabilities.length ? (
+-                      <div className="mt-2 flex flex-wrap gap-1.5">
+-                        {pack.capabilities.map((capability) => (
+-                          <span
+-                            key={capability}
+-                            className="rounded-md bg-surface-tertiary px-2 py-1 text-[11px] text-text-secondary"
+-                          >
+-                            {capability}
+-                          </span>
+-                        ))}
+-                      </div>
+-                    ) : null}
+-
+-                    <div
+-                      className="mt-2 truncate font-mono text-[11px] text-text-tertiary"
+-                      title={`Manifest ${pack.manifest_sha256} · Content ${pack.content_manifest_sha256} · Receipt ${pack.promotion_receipt_sha256}`}
+-                    >
+-                      Manifest {pack.manifest_sha256.slice(0, 12)}… · Content{' '}
+-                      {pack.content_manifest_sha256.slice(0, 12)}… · Receipt{' '}
+-                      {pack.promotion_receipt_sha256.slice(0, 12)}…
+-                    </div>
+-
+-                    <div className="mt-3 flex items-center justify-between gap-3">
+-                      <span className="text-[11px] leading-5 text-text-secondary">
+-                        {isBound
+-                          ? 'Exact promoted identity is stored in Runtime Project Authority.'
+-                          : 'Available for Project metadata binding; this does not run the Pack.'}
+-                      </span>
+-                      <button
+-                        type="button"
+-                        onClick={() =>
+-                          void (isBound ? unbindProjectPack() : bindProjectPack(pack))
+-                        }
+-                        disabled={
+-                          isPromotedPacksLoading ||
+-                          isPackBindingLoading ||
+-                          isPackBindingMutating ||
+-                          !isAuthReady ||
+-                          !token
+-                        }
+-                        className="inline-flex h-8 shrink-0 items-center justify-center rounded-lg border border-border-medium bg-surface-primary px-3 text-xs font-medium text-text-primary transition-opacity disabled:cursor-not-allowed disabled:opacity-40"
+-                      >
+-                        {isPackBindingMutating && isBound
+-                          ? 'Updating…'
+-                          : isBound
+-                            ? 'Unbind'
+-                            : 'Bind'}
+-                      </button>
+-                    </div>
+-                  </div>
+-                );
+-              })}
+-            </div>
+-          ) : null}
+-        </section>
+-        </details>
+-    </>
++                  );
++                })}
++              </div>
++            ) : !isPromotedPacksLoading && !promotedPacksError ? (
++              <div className="mt-4 rounded-xl border border-dashed border-border-light bg-surface-primary px-3 py-4 text-xs leading-5 text-text-secondary">
++                No Runtime-promoted Packs are available. This remains a normal Packless Project.
++              </div>
++            ) : null}
++          </section>
++        </details>    </>
+   );
+ 
+   return <>{runtimePanels}</>;
+--- a/api/server/routes/runtimeProjects.js
++++ b/api/server/routes/runtimeProjects.js
+@@ -249,6 +249,80 @@
+   }
+ }
+ 
++async function proxyRuntimeUserInstallablePacks(req, res) {
++  const { projectId } = req.params;
++  if (!isValidObjectIdString(projectId)) {
++    return res.status(404).json({ error: 'Project not found' });
++  }
++  const project = await db.getChatProject(getUserId(req), projectId);
++  if (!project) {
++    return res.status(404).json({ error: 'Project not found' });
++  }
++  const key = String(process.env.UR_SHELL_ADAPTER_KEY || '');
++  if (!key) {
++    return res.status(503).json({ error: 'Installed Pack lifecycle unavailable' });
++  }
++  try {
++    const response = await fetch(`${RUNTIME_ADAPTER_BASE}/v1/runtime-user-installable-packs`, {
++      method: 'GET',
++      headers: {
++        Accept: 'application/json',
++        Authorization: `Bearer ${key}`,
++        'X-LibreChat-Project-ID': projectId,
++      },
++    });
++    const raw = await response.text();
++    res.set('Cache-Control', 'no-store');
++    res.type('application/json');
++    return res.status(response.status).send(raw || '{}');
++  } catch (_) {
++    return res.status(502).json({ error: 'Installed Pack catalog bridge unavailable' });
++  }
++}
++
++async function proxyRuntimeUserPackInstall(req, res, method) {
++  const { projectId } = req.params;
++  if (!isValidObjectIdString(projectId)) {
++    return res.status(404).json({ error: 'Project not found' });
++  }
++  const project = await db.getChatProject(getUserId(req), projectId);
++  if (!project) {
++    return res.status(404).json({ error: 'Project not found' });
++  }
++  const packId = typeof req.body?.pack_id === 'string' ? req.body.pack_id.trim() : '';
++  const packVersion = typeof req.body?.pack_version === 'string' ? req.body.pack_version.trim() : '';
++  const commandId = typeof req.body?.command_id === 'string' ? req.body.command_id.trim() : '';
++  if (!packId || !packVersion || (method === 'DELETE' && !commandId)) {
++    return res.status(400).json({ error: 'Exact Pack identity and uninstall command are required' });
++  }
++  const key = String(process.env.UR_SHELL_ADAPTER_KEY || '');
++  if (!key) {
++    return res.status(503).json({ error: 'Installed Pack lifecycle unavailable' });
++  }
++  try {
++    const response = await fetch(`${RUNTIME_ADAPTER_BASE}/v1/runtime-user-pack-install`, {
++      method,
++      headers: {
++        Accept: 'application/json',
++        'Content-Type': 'application/json',
++        Authorization: `Bearer ${key}`,
++        'X-LibreChat-Project-ID': projectId,
++      },
++      body: JSON.stringify({
++        pack_id: packId,
++        pack_version: packVersion,
++        ...(method === 'DELETE' ? { command_id: commandId } : {}),
++      }),
++    });
++    const raw = await response.text();
++    res.set('Cache-Control', 'no-store');
++    res.type('application/json');
++    return res.status(response.status).send(raw || '{}');
++  } catch (_) {
++    return res.status(502).json({ error: 'Installed Pack lifecycle bridge unavailable' });
++  }
++}
++
+ async function proxyRuntimeProjectPackBinding(req, res, method) {
+   const { projectId } = req.params;
+   if (!isValidObjectIdString(projectId)) {
+@@ -512,6 +586,13 @@
+ router.post('/:projectId/runtime-library/from-message/:messageId', proxyRuntimeProjectLibrarySaveFromMessage);
+ router.post('/:projectId/runtime-library/source/:sourceRefId/remove', proxyRuntimeProjectLibraryRemove);
+ router.get('/:projectId/runtime-packs', proxyRuntimePromotedPacks);
++router.get('/:projectId/runtime-user-installable-packs', proxyRuntimeUserInstallablePacks);
++router.post('/:projectId/runtime-user-pack-install', (req, res) =>
++  proxyRuntimeUserPackInstall(req, res, 'POST'),
++);
++router.delete('/:projectId/runtime-user-pack-install', (req, res) =>
++  proxyRuntimeUserPackInstall(req, res, 'DELETE'),
++);
+ router.get('/:projectId/runtime-pack-binding', (req, res) =>
+   proxyRuntimeProjectPackBinding(req, res, 'GET'),
+ );
