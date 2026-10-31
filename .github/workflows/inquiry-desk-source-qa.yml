@@ -18,6 +18,9 @@ jobs:
       - name: Verify exact source, privacy surface and uninstall ownership
         shell: pwsh
         run: python tools/verify_distribution.py
+      - name: Verify native Windows owner integrity and no-blind-upgrade guards
+        shell: pwsh
+        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File tests/test_r239_owner_integrity.ps1
       - name: Check exact source formatting
         shell: pwsh
         run: git diff --check

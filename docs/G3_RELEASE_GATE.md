@@ -1,11 +1,11 @@
 # G3 - 从 GitHub 到用户 EXE 的产品发行验收门槛
 
-当前 R232 是 NONSHIPPING 候选。GitHub Remote 尚无可信绑定，不能声称已 push、已运行 GitHub Actions、已发布 Release 或完成了签名。
+当前 R239 是 NONSHIPPING 候选。GitHub Remote 尚无可信绑定，不能声称已 push、已运行 GitHub Actions、已发布 Release 或完成了签名。
 
-| 证明族 | R232 当前状态 |
+| 证明族 | R239 当前状态 |
 | --- | --- |
 | 单一 LibreChat 产品壳、Core 在零 Pack 条件正常使用 | 旧基线可继承；全新安装未完成 |
-| NSIS 编译与实际 EXE 提取、真实启动脚本存在 | PASS - R231/R232 文件消费者 |
+| NSIS 编译与实际 EXE 提取、真实启动脚本存在 | PASS - R231/R239 文件消费者 |
 | SHA256 80 个发行源文件、81 精确卸载清单 | PASS - 候选源码与 EXE |
 | 清洁 Windows Python 3.12 Runtime 52 个锁依赖 | PASS - 独立离线安装、真实 Project/Memory HTTP |
 | 清洁 Windows Docling 49 个锁依赖 | PASS - 独立离线安装、真实 DOCX 转换 |

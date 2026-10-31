@@ -1,5 +1,5 @@
-# Inquiry Desk｜普通用户安装与使用（R227 内部候选）
-1. 双击 InquiryDesk_Setup_R227_NONSHIPPING.exe。该安装程序只安装产品代码、快捷方式和卸载入口，不安装你的私人数据。
+# Inquiry Desk｜普通用户安装与使用（R239 内部候选；不得作为正式版使用）
+1. 双击 InquiryDesk_Setup_R239_NONSHIPPING.exe。该安装程序只安装产品代码、快捷方式和卸载入口，不安装你的私人数据。
 2. 桌面双击 Inquiry Desk；若缺少 Microsoft WSL2、Docker Desktop、Python 3.12 或 Edge，会提示打开各软件官方安装网页。按厂家许可、UAC 和重启提示操作，然后再次点击同一个桌面图标，无需输入端口、容器名或 PowerShell 命令。
 3. 首次组件准备按用户同意从精确版本摘要拉取 LibreChat、Mongo、Node 镜像，并从 PyPI 下载 SHA256 锁定的 Python 依赖。在线下载需联网、官方仓库可用以及足够磁盘空间。
 4. Inquiry Desk 在 Docker Desktop 已安装但尚未运行时尝试自动启动，然后启动本地 Runtime、LibreChat 与用户独立数据卷，健康检查后打开 Edge 应用窗口。
@@ -19,3 +19,9 @@ R230 文档校验：本地 Runtime PDF 和 DOCX 两类合成文档已经通过�
 - 想连接 Qwen、DeepSeek 等其他 OpenAI 兼容模型时，应使用 LibreChat 原生 Custom Endpoint 配置并自行提供对应密钥；不预置测试凭据，不额外开发第二套 Provider/Key 管理器。
 - 模型 API 配置属于用户凭据，Project/Pack 身份与模型提供商身份互不等同。
 - LibreChat 官方帮助：https://www.librechat.ai/docs/quick_start/first_chat
+
+## 安装安全与更新状态（R239）
+- 每次日常点击启动图标、卸载前，会对当前发行清单列出的所有程序文件重新计算 SHA256；文件被篡改时立即拒绝启动或卸载。
+- **此版本仍不支持直接覆盖升级**：如果检测到旧 Inquiry Desk 程序安装，安装器会终止而不是盲目覆盖程序文件、更新 owner.json 或删除任何 Project 数据。
+- 已证明此严格阻断行为，但可回滚的完整升级/修复流程仍需受支持 Windows 真实机验收；不得误认为已实现无缝更新。GitHub 中的 Source、CI 和 Draft EXE 不是用户数据备份。
+- LibreChat 原生 Project 文件检索需 RAG API 和 pgvector 的真实服务链，当前 EXE 尚未整合并验收；Docling 解析与 Runtime Source 不能被宣称为完全的原生 File Search。用户上传的重要文档仍应独立备份。

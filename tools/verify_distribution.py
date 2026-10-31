@@ -17,7 +17,7 @@ RELEASE=REPO/"release"/"RELEASE_CANDIDATE.json"
 
 def check(value, reason):
     if not value:
-        raise SystemExit("BLOCK_R232_SOURCE: "+reason)
+        raise SystemExit("BLOCK_R239_SOURCE: "+reason)
 
 def digest(data):
     return hashlib.sha256(data).hexdigest()
@@ -74,7 +74,7 @@ def main():
           "third party redistribution NOTICE does not match branch")
     # GitHub executable upload is a separate owner-approved, private DRAFT effect.
     # The Git commit stores only its immutable identity and release notes.
-    asset_policy=json.loads((REPO/"release/R232_DRAFT_RELEASE_ASSET_POLICY.json").read_text(encoding="utf8"))
+    asset_policy=json.loads((REPO/"release/R239_DRAFT_RELEASE_ASSET_POLICY.json").read_text(encoding="utf8"))
     check(asset_policy["status"]=="LOCAL_READY_NOT_UPLOADED","GitHub draft status falsely promoted")
     check(asset_policy["release_channel"]=="EXACT_PUBLIC_GITHUB_REPOSITORY_UNPUBLISHED_DRAFT_ONLY" and asset_policy["target_repository"]=="leeningzzu/universal-runtime-librechat" and asset_policy["target_repository_visibility"]=="PUBLIC","selected GitHub source target not exact")
     check(asset_policy["product_pass"] is False and asset_policy["release_allowed_public"] is False,
@@ -84,9 +84,9 @@ def main():
     check(asset_policy["asset_sha256"]==record["exe_sha256"],"release EXE digest mismatch")
     check(asset_policy["binary_asset_not_git_commit"] is True,"binary must be Release asset only")
     expected_asset_sum=asset_policy["asset_sha256"]+"  "+asset_policy["asset_name"]
-    actual_asset_sum=(REPO/"release/R232_NONSHIPPING_EXE_SHA256SUMS.txt").read_text(encoding="utf8").strip()
+    actual_asset_sum=(REPO/"release/R239_NONSHIPPING_EXE_SHA256SUMS.txt").read_text(encoding="utf8").strip()
     check(expected_asset_sum==actual_asset_sum,"Release checksum sidecar differs")
-    notes=(REPO/"release/R232_PRIVATE_DRAFT_NOTES.md").read_text(encoding="utf8")
+    notes=(REPO/"release/R239_PRIVATE_DRAFT_NOTES.md").read_text(encoding="utf8")
     check("NONSHIPPING" in notes and "PRIVATE DRAFT" in notes,"release notes safety status absent")
     # Real GitHub release SHA verification is performed only after remote upload.
     entry=PAYLOAD/"product"/"windows"/"InquiryDesk.ps1"
@@ -100,15 +100,24 @@ def main():
     check(len(pins.get("upstream_images",[]))==3,"pinned image roles changed")
     for image in pins["upstream_images"]:
         check(re.fullmatch("sha256:[a-f0-9]{64}",image["digest"]),"digest not pinned")
-    nsi=(INSTALLER/"InquiryDesk_Setup_R232_NONSHIPPING.nsi").read_text(encoding="utf-8-sig")
+    nsi=(INSTALLER/"InquiryDesk_Setup_R239_NONSHIPPING.nsi").read_text(encoding="utf-8-sig")
     callbacks=[s for s in nsi.splitlines() if s.strip().startswith(("CreateShortCut ","Exec ","ExecWait ")) and "product\\windows\\" in s]
     check(len(callbacks)==4 and all("product\\windows\\InquiryDesk.ps1" in line for line in callbacks),"missing real entrypoints")
     check("!if /FileExists" in nsi,"compile-time file guard missing")
+    check("    Assert-CodeOnlyManifest\n    if(!(Test-Path -LiteralPath $OwnerFile" in content,
+          "daily user owner did not verify actual product file SHA")
+    check("function Shutdown-Core {\n    # Exact code integrity is mandatory" in content,
+          "uninstaller failed to verify exact product source")
+    check('IfFileExists "$INSTDIR\\manifest\\SHA256SUMS" 0 +3' in nsi,
+          "untrusted silent in-place overwrite is not prevented")
+    check(record.get("proof_ceiling",{}).get("R239_native_librechat_project_file_search") ==
+          "NOT_PROVEN_RAG_API_VECTORDB_NOT_IN_THIN_COMPOSE",
+          "native Project File Search is being overstated")
     check("RMDir /r" not in nsi and "down -v" not in content and "docker prune" not in content,"unsafe deletion")
-    inc=(INSTALLER/"R232_EXACT_UNINSTALL_ALLOWLIST.nsh").read_text(encoding="utf-8-sig")
+    inc=(INSTALLER/"R239_EXACT_UNINSTALL_ALLOWLIST.nsh").read_text(encoding="utf-8-sig")
     deleted=[x.replace("\\","/") for x in re.findall(r'(?m)^\s*Delete "\$INSTDIR\\([^"]+)"$',inc)]
     check(len(deleted)==81 and set(deleted)==actual,"uninstall source allowlist diverged")
-    print(json.dumps({"status":"PASS_R232_NONSHIPPING_SOURCE_INTEGRITY_ONLY","manifest_files":len(actual),"recorded_sha":len(rows),"setup_shortcut_uninstall_sources":len(callbacks),"uninstall_allowlist_count":len(deleted),"GitHub_release_and_Product_PASS":False}))
+    print(json.dumps({"status":"PASS_R239_NONSHIPPING_SOURCE_INTEGRITY_ONLY","manifest_files":len(actual),"recorded_sha":len(rows),"setup_shortcut_uninstall_sources":len(callbacks),"uninstall_allowlist_count":len(deleted),"GitHub_release_and_Product_PASS":False}))
 
 if __name__=="__main__":
     main()

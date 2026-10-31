@@ -111,6 +111,9 @@ function Get-Python312 {
     VendorLink 'Python 3.12' 'https://www.python.org/downloads/windows/'
 }
 function Get-Owner {
+    # Daily use, shutdown, resume and any future approved upgrade must all
+    # verify the exact installed product bytes, not merely the manifest SHA.
+    Assert-CodeOnlyManifest
     if(!(Test-Path -LiteralPath $OwnerFile -PathType Leaf)){throw 'NO_LOCAL_PRODUCT_OWNER_RUN_SETUP'}
     $o=Get-Content -Raw -LiteralPath $OwnerFile | ConvertFrom-Json
     if($o.schema -ne 'INQUIRY_DESK_LOCAL_OWNER_R227' -or $o.compose_project -cnotmatch '^aidescore-[0-9a-f]{16}$'){throw 'FOREIGN_OWNER_INVALID'}
@@ -391,6 +394,9 @@ function Open-Core {
     Wait-ForFirstUserAndSeal $owner $docker $pins
 }
 function Shutdown-Core {
+    # Exact code integrity is mandatory even on the uninstaller's path.
+    # Do not stop unrelated Docker containers or delete user-owned volumes.
+    Assert-CodeOnlyManifest
     if(!(Test-Path -LiteralPath $OwnerFile)){return}
     $o=Get-Owner
     $docker=Get-Command docker.exe -ErrorAction SilentlyContinue
