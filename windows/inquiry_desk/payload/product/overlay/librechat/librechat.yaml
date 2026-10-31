@@ -1,0 +1,6 @@
+# P4A R206 NONSHIPPING generated template, not user live config
+# Provider keys and accounts must be created on target machine
+version: 1.3.17
+cache: true
+fileConfig:
+  retainedFileCleanup: false

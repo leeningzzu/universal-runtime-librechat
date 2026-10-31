@@ -1,0 +1,23 @@
+{
+  "schema": "RUNTIME_MODEL_CATALOG_CORE_CAPABILITY_ADOPTION_V1",
+  "authority_owner": "RUNTIME_MODEL_CATALOG_LIFECYCLE",
+  "catalog_revision": "LOCAL_MODEL_CATALOG_V0_R002",
+  "catalog_file_sha256": "58800336c5eaf514ddba594f8755b06c53d66c24de8d9ab09c4d424fd55a80e7",
+  "catalog_semantic_sha256": "ae9706f0710cffb63abc3dfbc460fe0725dfd099a7f7dce11f0f3cac0766597c",
+  "logical_profile": "reason_high",
+  "model_entry_id": "deepseek-v4-pro@DeepSeek-V4-Pro-0813",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "target_capability_id": "general_chat",
+  "target_capability_revision": "1",
+  "target_capability_manifest_sha256": "cdac6fa6337180d4af92cc7e4f02f6d07c115cde43166ce9bdecd0d614a66c3d",
+  "target_action_id": "general_text_reply",
+  "target_action_sha256": "c703f82c0b02a40a8e22a00a3461293296385558a51c57462967bd639adf2a6f",
+  "adoption_scope": "EXACT_CORE_CAPABILITY_ACTION_PROFILE_ENTRY_ONLY",
+  "global_default_changed": false,
+  "other_capability_auto_adoption": false,
+  "running_jobs_rebound": false,
+  "network_authorized": false,
+  "model_call_authorized": false,
+  "credential_read_authorized": false
+}

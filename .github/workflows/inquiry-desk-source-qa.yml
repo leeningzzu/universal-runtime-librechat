@@ -1,0 +1,24 @@
+name: Inquiry Desk candidate source integrity (no release)
+on:
+  push:
+    branches:
+      - candidate/inquiry-desk-windows-product
+  workflow_dispatch:
+
+jobs:
+  source-integrity:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify exact source, privacy surface and uninstall ownership
+        shell: pwsh
+        run: python tools/verify_distribution.py
+      - name: Check exact source formatting
+        shell: pwsh
+        run: git diff --check
+# This is SOURCE QA only; real installer and Product/Program PASS remain unproven.

@@ -1,0 +1,106 @@
+# R227 online, official pinned digest reuse; nonshipping pilot.
+# Project-first Core: single LibreChat UI, Mongo and official Node runtime for thin first-party adapter.
+name: ${AIDES_LOCAL_COMPOSE_ID:?owner isolated project required}
+services:
+  mongodb:
+    container_name: "${AIDES_LOCAL_COMPOSE_ID}-mongodb"
+    image: "${AIDES_MONGODB_IMAGE:?exact locked public image}"
+    pull_policy: never
+    command: ["mongod", "--bind_ip_all", "--noauth"]
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+      - mongo-configdb:/data/configdb
+    networks: [app-internal]
+  runtime-adapter:
+    container_name: "${AIDES_LOCAL_COMPOSE_ID}-runtime-adapter"
+    image: "${AIDES_ADAPTER_IMAGE:?official pinned node image required}"
+    pull_policy: never
+    entrypoint: ["node"]
+    command: ["/tmp/adapter.js"]
+    restart: unless-stopped
+    env_file:
+      - path: "${AIDES_PRIVATE_ENV_FILE:?machine-local user-owned secret env required}"
+        required: true
+    environment:
+      HOST: "0.0.0.0"
+      PORT: "9000"
+      UR_RUNTIME_BASE: "${AIDES_RUNTIME_BASE_URL:?owner runtime URL required}"
+    volumes:
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT:?versioned product overlay path required}/adapter/adapter.js"
+        target: /tmp/adapter.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/adapter/c5CurrentRuntimeSourceRefOwner.js"
+        target: /tmp/c5CurrentRuntimeSourceRefOwner.candidate.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/adapter/native_file_source_adapter.js"
+        target: /tmp/native_file_source_adapter.js
+        read_only: true
+    networks:
+      app-internal: {aliases: ["ur-runtime-adapter"]}
+      host-bridge: {}
+  librechat:
+    container_name: "${AIDES_LOCAL_COMPOSE_ID}-librechat"
+    image: "${AIDES_LIBRECHAT_IMAGE:?official pinned image required}"
+    pull_policy: never
+    entrypoint: ["docker-entrypoint.sh"]
+    command: ["npm", "run", "backend"]
+    working_dir: /app
+    restart: unless-stopped
+    depends_on:
+      mongodb: {condition: service_started}
+      runtime-adapter: {condition: service_started}
+    env_file:
+      - path: "${AIDES_PRIVATE_ENV_FILE:?machine-local user-owned secret env required}"
+        required: true
+    environment:
+      HOST: "0.0.0.0"
+      PORT: "3080"
+      APP_TITLE: "Inquiry Desk"
+      MONGO_URI: "mongodb://mongodb:27017/LibreChat"
+      UR_RUNTIME_ADAPTER_BASE: "http://ur-runtime-adapter:9000"
+      DOMAIN_CLIENT: "http://127.0.0.1:${AIDES_LOOPBACK_PORT:?assigned loopback}"
+      DOMAIN_SERVER: "http://127.0.0.1:${AIDES_LOOPBACK_PORT:?assigned loopback}"
+    ports:
+      - "127.0.0.1:${AIDES_LOOPBACK_PORT:?assigned loopback}:3080"
+    volumes:
+      - files-images:/app/client/public/images
+      - files-uploads:/app/uploads
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/librechat.yaml"
+        target: /app/librechat.yaml
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/api.index.cjs"
+        target: /app/packages/api/dist/index.cjs
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/empty-native-skill"
+        target: /app/skill/workbench-product-guide
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/agent.client.js"
+        target: /app/api/server/controllers/agents/client.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/agent.chat.js"
+        target: /app/api/server/routes/agents/chat.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/projectChatRecall.js"
+        target: /app/api/server/services/Endpoints/agents/projectChatRecall.js
+        read_only: true
+    networks: [app-internal, ui-ingress, ui-egress]
+networks:
+  app-internal: {internal: true}
+  ui-ingress: {}
+  ui-egress: {}
+  host-bridge: {}
+volumes:
+  mongo-data: {}
+  mongo-configdb: {}
+  files-uploads: {}
+  files-images: {}

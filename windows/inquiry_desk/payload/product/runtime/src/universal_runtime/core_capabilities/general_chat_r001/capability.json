@@ -1,0 +1,33 @@
+{
+  "schema": "UR_CORE_CAPABILITY_MANIFEST_V1",
+  "capability_id": "general_chat",
+  "capability_revision": "1",
+  "members": [
+    {
+      "path": "actions/general_text_reply.action.json",
+      "sha256": "c703f82c0b02a40a8e22a00a3461293296385558a51c57462967bd639adf2a6f",
+      "bytes": 1437
+    },
+    {
+      "path": "prompts/general_text_reply.system.md",
+      "sha256": "c7dee12afebe567e8f2c9a73a32718832fdf067b5f361d59485ec85481900650",
+      "bytes": 778
+    },
+    {
+      "path": "schemas/general_text_reply_input.schema.json",
+      "sha256": "2e28ee4150eadaf9ab895222b06680550635cc52fb37329f617f6e822d3ea2ba",
+      "bytes": 336
+    },
+    {
+      "path": "schemas/general_text_reply_output.schema.json",
+      "sha256": "b7170111f2b43fa78b405e44223c45e5ec60337b796543034bb67f97b86f8e44",
+      "bytes": 395
+    }
+  ],
+  "content_tree_sha256": "49ec946cce6feda48bd69cc13f6de8bd10f0994ed461a31310e472dbc67c0cd4",
+  "permissions": {
+    "filesystem": "READ_DECLARED_INPUTS_ONLY",
+    "network": "PROVIDER_TRANSPORT_ONLY",
+    "writes": "RUNTIME_AUTHORITY_ONLY"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "General Chat Text Reply Input V1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "current_user_text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 65536
+    }
+  },
+  "required": [
+    "current_user_text"
+  ]
+}

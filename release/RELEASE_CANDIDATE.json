@@ -1,0 +1,26 @@
+{
+  "schema": "INQUIRY_DESK_R232_SOURCE_DISTRIBUTION_CANDIDATE_R001",
+  "status": "NONSHIPPING_DO_NOT_RELEASE",
+  "source_owner": "Existing Universal Runtime Git repository, isolated privacy release candidate branch",
+  "compiler": "NSIS 3.13 official preinstalled local tool (for candidate build)",
+  "exe_name": "InquiryDesk_Setup_R232_NONSHIPPING.exe",
+  "exe_sha256": "648ce1a712b68d7c5b4739f7e3d253eb97a82ed88d0251e9de1a6583d9d0faf3",
+  "exe_bytes": 2073787,
+  "payload_file_count": 81,
+  "payload_manifest_rows": 80,
+  "payload_SHA256SUMS_sha256": "b03c07a9e79e11c657e9c28f2a53f53ffeec559c8e5626a6d61f74c9ea23e6bf",
+  "offlined_Docker_images_bundled": 0,
+  "python_wheels_bundled": 0,
+  "installed_docker_network_and_complete_user_project_proven": false,
+  "signing_valid": false,
+  "GitHub_release_published": false,
+  "GitHub_source_to_installed_parity": false,
+  "local_build_evidence_is_not_stable_authority": true,
+  "proof_ceiling": {
+    "R231_source_SHA_and_stable_launcher": "PASS",
+    "R231_fresh_52_PyPI_runtime": "PASS_isolated",
+    "R231_fresh_49_Docling": "PASS_isolated",
+    "R229_R230_Project_Chat_Memory_PDF_DOCX": "PASS_isolated_only",
+    "real_Windows_full_UI_Install_Uninstall": "NOT_RUN"
+  }
+}

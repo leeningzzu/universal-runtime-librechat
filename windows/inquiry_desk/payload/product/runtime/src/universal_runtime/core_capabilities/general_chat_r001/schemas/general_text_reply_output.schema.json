@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "General Chat Text Reply Proposal V1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "response_kind": {
+      "const": "text_reply_proposal"
+    },
+    "assistant_text": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "response_kind",
+    "assistant_text"
+  ]
+}

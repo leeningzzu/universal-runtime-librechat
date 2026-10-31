@@ -1,0 +1,50 @@
+{
+  "schema": "UR_CORE_ACTION_CONTRACT_V1",
+  "capability_id": "general_chat",
+  "capability_revision": "1",
+  "action_id": "general_text_reply",
+  "description": "Produce one plain-text assistant response proposal to one exact current user message.",
+  "input_schema": "schemas/general_text_reply_input.schema.json",
+  "output_schema": "schemas/general_text_reply_output.schema.json",
+  "prompt": "prompts/general_text_reply.system.md",
+  "logical_model_profile_request": {
+    "allowed_profiles": [
+      "reason_high"
+    ],
+    "default_profile": "reason_high"
+  },
+  "external_capabilities": [],
+  "forbidden_capabilities": [
+    "projects",
+    "library",
+    "memory",
+    "local_filesystem",
+    "images",
+    "web_search",
+    "tools",
+    "agents",
+    "schedules",
+    "provider_selection",
+    "credential_resolution",
+    "direct_network_execution",
+    "runtime_commit"
+  ],
+  "runtime_owned": [
+    "project_chat_user_event_identity",
+    "job_and_capability_pin",
+    "permission_and_human_approval",
+    "model_policy_and_catalog_resolution",
+    "provider_execution_config",
+    "attempt_claim_and_no_replay",
+    "artifact_and_formal_result_commit",
+    "stale_safe_web_projection"
+  ],
+  "task_requirement": {
+    "task_kind": "GENERAL",
+    "reasoning_level": "HIGH",
+    "risk_level": "LOW",
+    "structured_output": false
+  },
+  "side_effects": "NONE_AT_CAPABILITY_SEMANTIC_LAYER",
+  "visibility": "hidden_core"
+}

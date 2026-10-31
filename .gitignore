@@ -1,0 +1,12 @@
+**/__pycache__/
+*.pyc
+.env
+*.env
+*.key
+*.pem
+*.pfx
+*.p12
+.venv/
+windows/inquiry_desk/output/
+windows/inquiry_desk/installer/tmp/
+*.log

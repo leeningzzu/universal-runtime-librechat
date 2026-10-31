@@ -1,0 +1,8 @@
+windows/inquiry_desk/payload/** -text whitespace=cr-at-eol
+windows/inquiry_desk/installer/*.nsi -text whitespace=cr-at-eol
+windows/inquiry_desk/installer/*.nsh -text whitespace=cr-at-eol
+*.md text eol=lf
+*.py text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+windows/inquiry_desk/payload/product/overlay/librechat/api.index.cjs -diff -text
