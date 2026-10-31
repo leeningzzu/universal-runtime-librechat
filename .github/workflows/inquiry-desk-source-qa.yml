@@ -21,6 +21,9 @@ jobs:
       - name: Verify native Windows owner integrity and no-blind-upgrade guards
         shell: pwsh
         run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File tests/test_r239_owner_integrity.ps1
+      - name: Verify native LibreChat same-Project chat search and exact read isolation
+        shell: pwsh
+        run: node tests/test_r239_project_chat_recall_scope.js
       - name: Check exact source formatting
         shell: pwsh
         run: git diff --check
