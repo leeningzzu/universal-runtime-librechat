@@ -1,0 +1,21 @@
+{
+  "schema": "INQUIRY_DESK_PRIVATE_DRAFT_RELEASE_UPLOAD_PLAN_R001",
+  "status": "LOCAL_READY_NOT_UPLOADED",
+  "release_channel": "PRIVATE_GITHUB_DRAFT_PRERELEASE_ONLY",
+  "product_pass": false,
+  "program_pass": false,
+  "release_allowed_public": false,
+  "tag_prefix": "inquiry-desk-r232-nonshipping",
+  "asset_name": "InquiryDesk_Setup_R232_NONSHIPPING.exe",
+  "asset_bytes": 2073787,
+  "asset_sha256": "648ce1a712b68d7c5b4739f7e3d253eb97a82ed88d0251e9de1a6583d9d0faf3",
+  "asset_checksum_file": "release/R232_NONSHIPPING_EXE_SHA256SUMS.txt",
+  "notes": "release/R232_PRIVATE_DRAFT_NOTES.md",
+  "canonical_source_branch": "candidate/inquiry-desk-windows-product",
+  "requires_owner_confirmed_private_github_repository": true,
+  "requires_authenticated_github_cli_or_connected_app": true,
+  "requires_exact_remote_branch_commit_equal_local_HEAD": true,
+  "binary_asset_not_git_commit": true,
+  "upstream_legal_security_release_review": "NOT_PROVEN",
+  "signed_windows_exe": "NOT_SIGNED"
+}

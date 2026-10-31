@@ -59,6 +59,23 @@ def main():
     check(actual==listed|{"manifest/SHA256SUMS"},"source inventory drift")
     check(record["payload_file_count"]==81 and record["payload_manifest_rows"]==80,"cardinality drift")
     check(digest(MANIFEST.read_bytes())==record["payload_SHA256SUMS_sha256"],"manifest identity drift")
+    # GitHub executable upload is a separate owner-approved, private DRAFT effect.
+    # The Git commit stores only its immutable identity and release notes.
+    asset_policy=json.loads((REPO/"release/R232_DRAFT_RELEASE_ASSET_POLICY.json").read_text(encoding="utf8"))
+    check(asset_policy["status"]=="LOCAL_READY_NOT_UPLOADED","GitHub draft status falsely promoted")
+    check(asset_policy["release_channel"]=="PRIVATE_GITHUB_DRAFT_PRERELEASE_ONLY","asset channel not private")
+    check(asset_policy["product_pass"] is False and asset_policy["release_allowed_public"] is False,
+          "unsafe public release promotion")
+    check(asset_policy["asset_name"]==record["exe_name"],"release EXE name mismatch")
+    check(asset_policy["asset_bytes"]==record["exe_bytes"],"release EXE size mismatch")
+    check(asset_policy["asset_sha256"]==record["exe_sha256"],"release EXE digest mismatch")
+    check(asset_policy["binary_asset_not_git_commit"] is True,"binary must be Release asset only")
+    expected_asset_sum=asset_policy["asset_sha256"]+"  "+asset_policy["asset_name"]
+    actual_asset_sum=(REPO/"release/R232_NONSHIPPING_EXE_SHA256SUMS.txt").read_text(encoding="utf8").strip()
+    check(expected_asset_sum==actual_asset_sum,"Release checksum sidecar differs")
+    notes=(REPO/"release/R232_PRIVATE_DRAFT_NOTES.md").read_text(encoding="utf8")
+    check("NONSHIPPING" in notes and "PRIVATE DRAFT" in notes,"release notes safety status absent")
+    # Real GitHub release SHA verification is performed only after remote upload.
     entry=PAYLOAD/"product"/"windows"/"InquiryDesk.ps1"
     check(entry.is_file() and not (PAYLOAD/"product/windows/InquiryDesk_R227.ps1").exists(),"wrong entry path")
     content=entry.read_text(encoding="utf-8-sig")
