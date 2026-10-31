@@ -26,7 +26,10 @@ jobs:
         run: node tests/test_r239_project_chat_recall_scope.js
       - name: Restore previously accepted SHA256-locked Runtime dependencies for C5 actual module
         shell: pwsh
-        run: python -m pip install --disable-pip-version-check --no-input --retries 0 --timeout 25 --require-hashes --only-binary=:all: -r windows/inquiry_desk/payload/product/requirements/requirements-runtime-complete-SHA256-R211.txt
+        run: >-
+          python -m pip install --disable-pip-version-check --no-input
+          --retries 0 --timeout 25 --require-hashes --only-binary=:all:
+          -r windows/inquiry_desk/payload/product/requirements/requirements-runtime-complete-SHA256-R211.txt
       - name: Verify C5 full Project delete completion truth and Source byte erasure
         shell: pwsh
         run: python -B tests/test_r241_c5_full_project_delete_truth.py
