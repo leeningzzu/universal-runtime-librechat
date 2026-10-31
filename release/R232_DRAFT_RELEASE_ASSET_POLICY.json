@@ -1,7 +1,7 @@
 {
   "schema": "INQUIRY_DESK_PRIVATE_DRAFT_RELEASE_UPLOAD_PLAN_R001",
   "status": "LOCAL_READY_NOT_UPLOADED",
-  "release_channel": "PRIVATE_GITHUB_DRAFT_PRERELEASE_ONLY",
+  "release_channel": "EXACT_PUBLIC_GITHUB_REPOSITORY_UNPUBLISHED_DRAFT_ONLY",
   "product_pass": false,
   "program_pass": false,
   "release_allowed_public": false,
@@ -12,10 +12,15 @@
   "asset_checksum_file": "release/R232_NONSHIPPING_EXE_SHA256SUMS.txt",
   "notes": "release/R232_PRIVATE_DRAFT_NOTES.md",
   "canonical_source_branch": "candidate/inquiry-desk-windows-product",
-  "requires_owner_confirmed_private_github_repository": true,
   "requires_authenticated_github_cli_or_connected_app": true,
   "requires_exact_remote_branch_commit_equal_local_HEAD": true,
   "binary_asset_not_git_commit": true,
   "upstream_legal_security_release_review": "NOT_PROVEN",
-  "signed_windows_exe": "NOT_SIGNED"
+  "signed_windows_exe": "NOT_SIGNED",
+  "target_repository": "leeningzzu/universal-runtime-librechat",
+  "target_repository_visibility": "PUBLIC",
+  "draft_release_visibility": "UNPUBLISHED_REQUIRES_WRITE_ACCESS_TO_VIEW",
+  "candidate_source_branch_publicly_readable_if_pushed": true,
+  "requires_owner_approved_exact_public_source_branch": true,
+  "requires_source_commit_remote_sha_confirmation": true
 }

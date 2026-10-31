@@ -1,0 +1,42 @@
+# NOTICE — Universal Runtime / AI Workbench
+
+Original Universal Runtime source code and documentation in this repository
+are licensed under the MIT License (see the root LICENSE file).
+
+Copyright (c) 2026 leeningzzu.
+
+Third-party content is not relicensed by the original-source LICENSE:
+
+1. **LibreChat** — https://github.com/LibreChat-AI/LibreChat
+
+   LibreChat is an upstream dependency and replaceable user-facing shell.
+   Its source repository declares MIT licensing. The upstream v0.8.8
+   reference is pinned to commit
+   e8f3be08623663d4ad7f7241e693c94469b63bb0.
+   The main branch is source-only. This isolated NONSHIPPING candidate
+   branch contains a modified compiled LibreChat API overlay; it retains the
+   upstream MIT license separately under licenses/LibreChat-v0.8.8-MIT-LICENSE.txt.
+   The patches/librechat/README.md file contains a private-modification
+   path/SHA inventory only. Any later copy or patch redistribution must
+   carry upstream's applicable license/copyright notices.
+
+2. **markdown-it 14.3.1** — copyright (c) 2014 Vitaly Puzrin and
+   Alex Kocharin, among relevant upstream rights holders.
+
+   The separately retained vendor license is:
+   src/universal_runtime/web_vendor/LICENSE.markdown-it-14.3.1.txt.
+   Its notice and permission terms are preserved and not replaced by this
+   repository's original-source MIT license.
+
+This repository intentionally excludes the user's canonical Project data,
+Mongo content, protected File blobs, local test Packs, installed Pack state,
+keys, credentials, Production archives and private MAINLINE Handoff.
+An open-source source repo is not a released Windows installer.
+
+## Candidate branch distribution boundary
+
+This candidate branch is published for reproducible source review, not as a
+working or security-approved public Windows binary. The unsigned R232 EXE and
+its source are not a Product or Program PASS. Its third-party dependency image
+layers, full notices/SBOM and end-to-end Windows installation still require
+separate review before any public Release publication.

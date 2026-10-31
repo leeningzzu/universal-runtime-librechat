@@ -10,9 +10,9 @@ $Checksum = Join-Path $Root "release\R232_NONSHIPPING_EXE_SHA256SUMS.txt"
 $Notes = Join-Path $Root "release\R232_PRIVATE_DRAFT_NOTES.md"
 $Integrity = Join-Path $Root "tools\verify_distribution.py"
 $Policy = Get-Content -LiteralPath $PolicyPath -Raw | ConvertFrom-Json
-if ($Policy.release_channel -cne "PRIVATE_GITHUB_DRAFT_PRERELEASE_ONLY" -or
+if ($Policy.release_channel -cne "EXACT_PUBLIC_GITHUB_REPOSITORY_UNPUBLISHED_DRAFT_ONLY" -or
     $Policy.product_pass -ne $false -or $Policy.release_allowed_public -ne $false) {
-    throw "PRIVATE_DRAFT_RELEASE_POLICY_MISSING_OR_NOT_ACCEPTED"
+    throw "UNPUBLISHED_DRAFT_RELEASE_POLICY_MISSING_OR_NOT_ACCEPTED"
 }
 if (-not $InstallerPath) { throw "EXACT_R232_INSTALLER_PATH_REQUIRED_BY_DEVELOPER_CALLER" }
 $Installer = [IO.Path]::GetFullPath($InstallerPath)
@@ -52,7 +52,7 @@ if (-not $ApprovePrivateDraftUpload) {
     } | ConvertTo-Json -Compress
     exit 0
 }
-if ($GitHubRepository -cnotmatch "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$") {
+if ($GitHubRepository -cne [string]$Policy.target_repository) {
     throw "EXACT_GITHUB_OWNER_REPOSITORY_REQUIRED"
 }
 $Gh = Get-Command gh.exe -ErrorAction SilentlyContinue
@@ -68,9 +68,9 @@ $Raw = @(& $Gh.Source repo view $GitHubRepository --json nameWithOwner,isPrivate
 if ($LASTEXITCODE -ne 0) { throw "TARGET_GITHUB_REPOSITORY_NOT_AUTHORIZED" }
 $RepoInfo = ($Raw -join [Environment]::NewLine) | ConvertFrom-Json
 if ($RepoInfo.nameWithOwner -cne $GitHubRepository -or
-    $RepoInfo.isPrivate -ne $true -or
+    $RepoInfo.isPrivate -ne $false -or
     $RepoInfo.viewerPermission -notin @("WRITE","MAINTAIN","ADMIN")) {
-    throw "GITHUB_REPOSITORY_MUST_BE_OWNER_APPROVED_PRIVATE_WITH_WRITE_PERMISSION"
+    throw "GITHUB_TARGET_MUST_MATCH_USER_SPECIFIED_PUBLIC_REPO_AND_AUTH_WRITE"
 }
 # Public GitHub branch must already contain exactly the locally approved
 # privacy-clean commit. The Git history is never force-pushed by this action.

@@ -59,11 +59,24 @@ def main():
     check(actual==listed|{"manifest/SHA256SUMS"},"source inventory drift")
     check(record["payload_file_count"]==81 and record["payload_manifest_rows"]==80,"cardinality drift")
     check(digest(MANIFEST.read_bytes())==record["payload_SHA256SUMS_sha256"],"manifest identity drift")
+    # The PUBLIC source-review branch must retain the original project's
+    # MIT rights and the exact LibreChat v0.8.8 attribution; compiled overlays
+    # must never silently become copyright-free code.
+    root_license=(REPO/"LICENSE").read_bytes()
+    upstream_license=(REPO/"licenses/LibreChat-v0.8.8-MIT-LICENSE.txt").read_bytes()
+    notice=(REPO/"NOTICE").read_text(encoding="utf8")
+    check(digest(root_license)=="573a7a3f058cf7b94dfd1c6df413e5aa86b2d4af5865775e80aaf8a78c7282d3",
+          "public repository MIT original license not identical")
+    check(digest(upstream_license)=="1ce5c9d51e5ab764b44142cd44d1e687f5bfe32f807c7221c14d061007309b97",
+          "pinned LibreChat v0.8.8 MIT attribution missing")
+    check("modified compiled LibreChat API overlay" in notice and
+          "Public" not in notice.split("## Candidate branch distribution boundary")[-1][:20],
+          "third party redistribution NOTICE does not match branch")
     # GitHub executable upload is a separate owner-approved, private DRAFT effect.
     # The Git commit stores only its immutable identity and release notes.
     asset_policy=json.loads((REPO/"release/R232_DRAFT_RELEASE_ASSET_POLICY.json").read_text(encoding="utf8"))
     check(asset_policy["status"]=="LOCAL_READY_NOT_UPLOADED","GitHub draft status falsely promoted")
-    check(asset_policy["release_channel"]=="PRIVATE_GITHUB_DRAFT_PRERELEASE_ONLY","asset channel not private")
+    check(asset_policy["release_channel"]=="EXACT_PUBLIC_GITHUB_REPOSITORY_UNPUBLISHED_DRAFT_ONLY" and asset_policy["target_repository"]=="leeningzzu/universal-runtime-librechat" and asset_policy["target_repository_visibility"]=="PUBLIC","selected GitHub source target not exact")
     check(asset_policy["product_pass"] is False and asset_policy["release_allowed_public"] is False,
           "unsafe public release promotion")
     check(asset_policy["asset_name"]==record["exe_name"],"release EXE name mismatch")

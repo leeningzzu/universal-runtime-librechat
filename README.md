@@ -11,3 +11,7 @@ This is the source-and-build candidate in the existing Universal Runtime Git rep
 - Future code changes should be made here and verified with python tools/verify_distribution.py before a signed release candidate can be built. Exact branch/commit and CI receipts must be recorded before claiming source-to-EXE parity.
 
 See docs/INSTALL_USER.md, docs/SECURITY_AND_CLEANUP.md, and docs/G3_RELEASE_GATE.md for user acceptance requirements.
+
+## Exact GitHub target (R235)
+
+The user selected the already-PUBLIC repository leeningzzu/universal-runtime-librechat. Its main is protected. Only candidate/inquiry-desk-windows-product may receive this screened NONSHIPPING source candidate. Public Git branch visibility is not equivalent to a public release or Product/Program PASS. The unsigned binary is allowed only as an unpublished DRAFT release asset until complete acceptance; never silently publish it or make it latest.
