@@ -1,4 +1,4 @@
-﻿; R239 exact installed first-party files only; preserve Mongo/Project/user-owner
+﻿; R241 exact installed first-party files only; preserve Mongo/Project/user-owner
   Delete "$INSTDIR\product\runtime\src\universal_runtime\core_capabilities\general_chat_r001\actions\general_text_reply.action.json"
   Delete "$INSTDIR\product\runtime\src\universal_runtime\core_capabilities\general_chat_r001\prompts\general_text_reply.system.md"
   Delete "$INSTDIR\product\runtime\src\universal_runtime\core_capabilities\general_chat_r001\schemas\general_text_reply_input.schema.json"

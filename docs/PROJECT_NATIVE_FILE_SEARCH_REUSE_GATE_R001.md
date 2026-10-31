@@ -1,7 +1,7 @@
 # Project 原生文件检索与记忆闭合 — 官方复用证据和产品验收门槛（候选）
 
 FACT_CLASS = NON_AUTHORITY_PRODUCT_DESIGN_AND_TEST_GAP
-CURRENT_GIT_SOURCE_LINE = candidate/inquiry-desk-windows-product / R239 NONSHIPPING
+CURRENT_GIT_SOURCE_LINE = candidate/inquiry-desk-windows-product / R241 NONSHIPPING
 BINARY_PUBLIC_RELEASE = BLOCK_DO_NOT_SHIP
 PRODUCT_PASS = NO
 PROGRAM_PASS = NO
@@ -19,9 +19,9 @@ PROGRAM_PASS = NO
 
 ## 当前实证
 - R229/R230 独立 Runtime API 测试：Project、Instructions、Chat、Memory、文本 Source、PDF/DOCX 解析和 Source 恢复均有 PASS，范围仅独立合成 HTTP。
-- R239 原生 LibreChat projectChatRecall.js 正反模拟：搜索当前 Project 旧 Chat、读取准确消息 PASS，其他 Project/当前 Chat 读取拒绝 PASS；使用已有 LibreChat models 查询函数，不建第二个聊天存储。不是生产容器/真实模型回答 PASS。
-- R239 当前仅有 librechat + mongodb + runtime-adapter 三个 Compose 服务，未配置 RAG_API_URL、rag_api、vectordb；不能称 Project File Search 已经运行，也不能把 Runtime Docling 文档解析等同于原生文件检索。
-- R239 Project Memory 在独立 Runtime 存储中可读，但真正 LibreChat UI 发送消息时按 Project ID 注入 Memory 尚未验收。用户全局 Memory 不等于 Project Memory。
+- R241 原生 LibreChat projectChatRecall.js 正反模拟：搜索当前 Project 旧 Chat、读取准确消息 PASS，其他 Project/当前 Chat 读取拒绝 PASS；使用已有 LibreChat models 查询函数，不建第二个聊天存储。不是生产容器/真实模型回答 PASS。
+- R241 当前仅有 librechat + mongodb + runtime-adapter 三个 Compose 服务，未配置 RAG_API_URL、rag_api、vectordb；不能称 Project File Search 已经运行，也不能把 Runtime Docling 文档解析等同于原生文件检索。
+- R241 Project Memory 在独立 Runtime 存储中可读，但真正 LibreChat UI 发送消息时按 Project ID 注入 Memory 尚未验收。用户全局 Memory 不等于 Project Memory。
 
 ## 下一步不允许偷换
 优先 CURRENT LibreChat 官方 Compose/RAG API + 自带 pgvector，**不是再发明一套自建向量 DB/文件索引/Notes**。以 pinned 官方镜像/依赖、明确 embeddings 提供商与费用/隐私同意为前提，最小化接入 Project File Search；评估已有 Runtime Source consumer 与原生 File Search 的冲突、重复存储、所有权和删除语义。每个 Project 仍只用一个逻辑身份。

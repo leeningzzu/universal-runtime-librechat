@@ -1,4 +1,4 @@
-# Inquiry Desk R239 - PRIVATE Draft / NONSHIPPING
+# Inquiry Desk R241 - PRIVATE Draft / NONSHIPPING
 
 **Do not publish to users or call this Product PASS.**
 
@@ -21,13 +21,16 @@ The candidate source-to-EXE identity was locally rebuilt and matched SHA256 exac
 - The EXE is UNSIGNED. PRIVATE DRAFT ONLY.
 
 ## Attachments
-- InquiryDesk_Setup_R239_NONSHIPPING.exe -- exact Windows PE candidate.
-- R239_NONSHIPPING_EXE_SHA256SUMS.txt -- cryptographic checksum.
+- InquiryDesk_Setup_R241_NONSHIPPING.exe -- exact Windows PE candidate.
+- R241_NONSHIPPING_EXE_SHA256SUMS.txt -- cryptographic checksum.
 
 A private draft must remain unpublished until full Product and Program admission.
 
-## R239 point-of-use change and remaining blockers
+## R241 point-of-use change and remaining blockers
 - Every daily open and code-only uninstall now checks full installed product bytes against the pinned 80-file manifest, including synthetic positive/negative Windows PS5.1 tests.
 - Existing in-place installations are refused instead of overwritten; **full atomic update, reversible rollback and data migration are not yet implemented**.
 - Native LibreChat Project File Search is not claimed: the vendor RAG API plus vector persistence are not provisioned or verified in this 3-service Core.
 - This is an unsigned, nonshipping candidate, not a full Product/Program pass. The R232 draft is retained as historical evidence, never overwritten.
+
+## Exact C5 source proof and remaining product blocker
+The existing first-party Runtime C5 receipt owner now rejects a false COMPLETE when any expected archived Chat, exclusive File, frozen Runtime Source or physical content erasure evidence is missing. Sixteen positive and negative synthetic tests pass. The current compiled LibreChat **does not yet include the real fully-bound 13-hook C5 native Project Delete controller**. A truly supported fresh Windows installation, authenticated user GUI Delete and shared neighbor retention have NOT been verified. This is a NONSHIPPING test candidate, NOT a finished Project deletion release.

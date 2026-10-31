@@ -9,3 +9,5 @@ windows/inquiry_desk/payload/product/overlay/librechat/api.index.cjs -diff -text
 LICENSE -text -eol
 NOTICE -text -eol
 licenses/LibreChat-v0.8.8-MIT-LICENSE.txt -text -eol
+# Frozen previously-tested C5 candidate source: preserve archived bytes exactly.
+native_c5_candidate/** -text -eol -diff whitespace=cr-at-eol

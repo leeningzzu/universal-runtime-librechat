@@ -1,0 +1,189 @@
+{
+  "schema": "R241_C5_R006_MATURE_UNINSTALLED_SOURCE_R001",
+  "fact_class": "SOURCE_ONLY_NOT_INSTALLED_NOT_PRODUCT_PASS",
+  "zip_sha256": "c644f65e107ed6c949d2fa0d1d78a52c7ac1a1b3b1e5be3421075e4a37b27d35",
+  "archive_file_count": 36,
+  "archive_entries": [
+    {
+      "path": "MANIFEST.json",
+      "sha256": "5001d0196de187a797f337e098f966cb367e352bbbe8f533e29e8d2c2c1ee37d",
+      "bytes": 16331
+    },
+    {
+      "path": "README_CURRENT_PROOF_SCOPE.md",
+      "sha256": "cd0ac6480b7e1c6656a502c62e50f2d82f5dfcb24982f024a474d86a60ff0932",
+      "bytes": 2368
+    },
+    {
+      "path": "adapter/adapter.c5_full_cascade_receipt.candidate.js",
+      "sha256": "7ca34a714f13c6bc800cffade76b15af72345e0c0cb86b1a64df16b3a0939d4d",
+      "bytes": 138145
+    },
+    {
+      "path": "adapter/c5CurrentRuntimeSourceRefOwner.candidate.js",
+      "sha256": "f7244cef5235892390f9f835531e8889a9111ccfcbb6da86ab43860bd27eb4c5",
+      "bytes": 5585
+    },
+    {
+      "path": "api/server/routes/c5CanonicalNativeRetirement.candidate.js",
+      "sha256": "414965e8e58a986288353746a90f8b0b52c2b00cb1ff86cc90e41ef48a763cf8",
+      "bytes": 2350
+    },
+    {
+      "path": "api/server/routes/c5CurrentNativeRetirementCallbacks.candidate.js",
+      "sha256": "7534ecd5d853e16e28efbff460e28706c8ea130885f0e4e6bbac97cb6240c968",
+      "bytes": 6450
+    },
+    {
+      "path": "api/server/routes/c5NativeChatFileConsumers.candidate.js",
+      "sha256": "d008b6a2785932a0be32d681bc880f6e23fa9740d4d94db6f893eb6b6153b554",
+      "bytes": 7346
+    },
+    {
+      "path": "api/server/routes/c5NativeWholeProjectBinding.candidate.js",
+      "sha256": "5b9cd285968a37545124fa77e99bb287de60c3e31efbd419f63db06af0d7f057",
+      "bytes": 25513
+    },
+    {
+      "path": "api/server/routes/c5RuntimeOwnerNativeBridge.candidate.js",
+      "sha256": "24acee551074729b1b5bf8eacbe30f16eaf8126ea66224e85cbd15989a06db02",
+      "bytes": 9678
+    },
+    {
+      "path": "api/server/routes/c5WholeProjectProductEndpoints.candidate.js",
+      "sha256": "191c3d745ae6c0381e4a70f8b1c6e122276291941416866d21662c8c3bf125db",
+      "bytes": 6114
+    },
+    {
+      "path": "api/server/routes/c5WholeProjectProductNativeRoute.candidate.js",
+      "sha256": "92cbf18145ec393d31b7b971d0bbbd250339ef62cec1eb6bef3202b746163166",
+      "bytes": 19749
+    },
+    {
+      "path": "api/server/routes/projectDeleteOwnedCascade.c5.product.candidate.js",
+      "sha256": "a3ea0cf182ee871692ba40f293767259dd1774fe76a356a1d2f45289c9295b1c",
+      "bytes": 13473
+    },
+    {
+      "path": "api/server/routes/projects.js",
+      "sha256": "d0f04cb3810f9d849bcdf3e8f8dd0eef32ba3afc4ef3dddec6c60aa93f12daf0",
+      "bytes": 2279
+    },
+    {
+      "path": "api/server/routes/runtimeProjectDeleteRetirement.c5.js",
+      "sha256": "0562afadd583db5e0dd5b80af84303eef7a1ac55819c7ed16456506b704b4fd1",
+      "bytes": 8059
+    },
+    {
+      "path": "api/server/services/Files/Code/crud.js",
+      "sha256": "123890a7fa94ba8d3209429f656e4f32653f14a6616bcd44f60be317ca1b134d",
+      "bytes": 13277
+    },
+    {
+      "path": "api/server/services/Files/VectorDB/crud.js",
+      "sha256": "4477aea3df30814669d8006e72459645e23dbfbb8501539502e86ea4fcb631ec",
+      "bytes": 5572
+    },
+    {
+      "path": "candidate/c5ProjectDeleteProductLocales.candidate.json",
+      "sha256": "7be763ca96a4f356b57c546589c6544aca183c9731342059f7f289f756f0817d",
+      "bytes": 2318
+    },
+    {
+      "path": "client/src/components/Projects/ProjectDeleteDialog.tsx",
+      "sha256": "c5b4d0a3e4dc7830496ac1f960b8fc4023b8d853a938d6d16f43c48bf16fe5d9",
+      "bytes": 3033
+    },
+    {
+      "path": "client/src/data-provider/Projects/mutations.ts",
+      "sha256": "7f96fbbecca9d23fa45e37839bae85f4453e5f5ea4266b16f58edb6393a3c953",
+      "bytes": 12599
+    },
+    {
+      "path": "preflight/protected_snapshot_restore_r002.candidate.py",
+      "sha256": "cd933263b081e39987952d366204b552e04dff37c72e4b089741374138c1ce26",
+      "bytes": 28547
+    },
+    {
+      "path": "runtime/universal_runtime/c5_installed_retirement_service.py",
+      "sha256": "1f2a88054cda1900ed5520a6245d30c90be0761a1ffd071407adcff91814b506",
+      "bytes": 573
+    },
+    {
+      "path": "runtime/universal_runtime/c5_project_job_currentness.py",
+      "sha256": "2b97b243f07ad94d17b9f0cc96156dac25a68a25e6b0e24af9c77ecfbb45b7c1",
+      "bytes": 11353
+    },
+    {
+      "path": "runtime/universal_runtime/c5_project_retirement_owner.py",
+      "sha256": "a98664a4f292397ce5a4f4e819d721d406adf3bc2290f2f8efa7b55534a2c1c3",
+      "bytes": 22561
+    },
+    {
+      "path": "runtime/universal_runtime/c5_retirement_runtime_routes.py",
+      "sha256": "0d509da495dfb603e6d28d7423b3bac0a5cffeae660e31c3d36c83e3a0caf839",
+      "bytes": 12783
+    },
+    {
+      "path": "runtime/universal_runtime/c5_supported_runtime_owner.py",
+      "sha256": "a7a23653cdfc4766090f773ce0701ffd5e45cfc4db50012f8c259771c1623c91",
+      "bytes": 4160
+    },
+    {
+      "path": "runtime/universal_runtime/webapp.py",
+      "sha256": "e80da544b5c3e87babe258b68313740d3316d2edd490f0a69acf4a23b404577b",
+      "bytes": 253567
+    },
+    {
+      "path": "tests/test_c5CanonicalNativeRetirement.candidate.js",
+      "sha256": "4ef4b8c509fe457cf03ff4f5d20c0d375f1b7cfef563652d7289c9cc86374871",
+      "bytes": 7471
+    },
+    {
+      "path": "tests/test_c5CurrentRuntimeSourceRefOwner.candidate.js",
+      "sha256": "4a81da847f4a25aa212d2dce89ee3637135d714ab35d96f50c86059d93681f94",
+      "bytes": 6012
+    },
+    {
+      "path": "tests/test_c5NativeChatFileConsumers.candidate.js",
+      "sha256": "006c8b7820faa464df901b35010cd2b57a5cd0378943a255e7029aab3b129f69",
+      "bytes": 8357
+    },
+    {
+      "path": "tests/test_c5NativeCodeEnvDeletion.candidate.js",
+      "sha256": "17c17a1a4adb04b0cae5a6dc487e97f0beecaff84bea5a2b706289a47eb07692",
+      "bytes": 4559
+    },
+    {
+      "path": "tests/test_c5NativeVectorOwnerDeletion.candidate.js",
+      "sha256": "c5a8829ae6feea975f07b0f9ca8a9c0034cf4d45e413d2ec94b7ea3a928fce89",
+      "bytes": 5667
+    },
+    {
+      "path": "tests/test_c5NativeWholeProjectBinding.candidate.js",
+      "sha256": "e2802917255766939a6a4870214a983283615a92f48c1698c8cf70230f95c556",
+      "bytes": 21033
+    },
+    {
+      "path": "tests/test_c5WholeProjectProductEndpoints.candidate.js",
+      "sha256": "0772ce8053d3c2f8a7bda18ce298f23744dade2d9f3e383dcb70c5f3bc04cb24",
+      "bytes": 5426
+    },
+    {
+      "path": "tests/test_c5WholeProjectProductNativeRoute.candidate.js",
+      "sha256": "92f732243b11e6714a5dbebcb7e8bb3cb95571a47fe55ad0c0732237b8904082",
+      "bytes": 18681
+    },
+    {
+      "path": "tests/test_c5_project_job_currentness.py",
+      "sha256": "1e2514f9a22338f2e79b4ce3c41e2893148e2f68a87468a397a7e9b425741fdb",
+      "bytes": 10341
+    },
+    {
+      "path": "tests/test_c5_retired_runtime_reference_owner.py",
+      "sha256": "d5b1ede5b9b2b7bd6db578b4fec807430315fd7dde49808ac2dbbe1c63091d07",
+      "bytes": 7073
+    }
+  ],
+  "real_Product_c5_native_GUI_adopted": false
+}

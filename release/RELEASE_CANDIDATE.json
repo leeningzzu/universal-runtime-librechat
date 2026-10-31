@@ -1,14 +1,14 @@
 {
-  "schema": "INQUIRY_DESK_R239_SOURCE_DISTRIBUTION_CANDIDATE_R001",
+  "schema": "INQUIRY_DESK_R241_C5_COMPLETE_TRUTH_NONSHIPPING_R001",
   "status": "NONSHIPPING_DO_NOT_RELEASE",
   "source_owner": "Existing Universal Runtime Git repository, isolated privacy release candidate branch",
   "compiler": "NSIS 3.13 official preinstalled local tool (for candidate build)",
-  "exe_name": "InquiryDesk_Setup_R239_NONSHIPPING.exe",
-  "exe_sha256": "417fcddcd3703a3cb20cccd9be034838bf914cffa0234f6ee37eb68af1e59c95",
-  "exe_bytes": 2074496,
+  "exe_name": "InquiryDesk_Setup_R241_NONSHIPPING.exe",
+  "exe_sha256": "b9711ab8dd321da626ebc9073ae38e6fd2e1f72de94f0c70b20cdde293498e8b",
+  "exe_bytes": 2076166,
   "payload_file_count": 81,
   "payload_manifest_rows": 80,
-  "payload_SHA256SUMS_sha256": "442c66608a831c40c9a8896b0543aa189b90f105f7d3a9769449a941a1f00e41",
+  "payload_SHA256SUMS_sha256": "026d2f0a4c4a89164fc1fbf6e1d16d131901666cdff0ff0f6b0ed67552f90125",
   "offlined_Docker_images_bundled": 0,
   "python_wheels_bundled": 0,
   "installed_docker_network_and_complete_user_project_proven": false,
@@ -24,8 +24,12 @@
     "real_Windows_full_UI_Install_Uninstall": "NOT_RUN",
     "R239_daily_source_tamper_and_uninstall": "PASS_isolated_Windows_PS51",
     "R239_safe_upgrade": "EXPLICITLY_FENCED_NOT_IMPLEMENTED",
-    "R239_native_librechat_project_file_search": "NOT_PROVEN_RAG_API_VECTORDB_NOT_IN_THIN_COMPOSE",
     "R239_real_product_pass": "NO",
-    "R239_deterministic_NSIS_build_from_Git_Sources": "PASS_TWO_INDEPENDENT_BUILD_TREES_BYTE_IDENTICAL_SETDATESAVE_OFF"
-  }
+    "R239_deterministic_NSIS_build_from_Git_Sources": "PASS_TWO_INDEPENDENT_BUILD_TREES_BYTE_IDENTICAL_SETDATESAVE_OFF",
+    "R241_C5_complete_receipt_and_source_erasure": "PASS_16_isolated_synthetic_actual_Runtime_module",
+    "R241_native_LibreChat_delete_button_with_13hook_cascade": "NOT_WIRED_IN_COMPILED_CURRENT_LIBRECHAT",
+    "R241_real_Win11_full_product": "NOT_RUN",
+    "R241_native_librechat_project_file_search": "NOT_PROVEN_RAG_API_VECTORDB_NOT_IN_THIN_COMPOSE"
+  },
+  "build_pending": false
 }

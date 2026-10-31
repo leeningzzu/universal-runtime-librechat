@@ -20,10 +20,16 @@ jobs:
         run: python tools/verify_distribution.py
       - name: Verify native Windows owner integrity and no-blind-upgrade guards
         shell: pwsh
-        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File tests/test_r239_owner_integrity.ps1
+        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File tests/test_r241_owner_integrity.ps1
       - name: Verify native LibreChat same-Project chat search and exact read isolation
         shell: pwsh
         run: node tests/test_r239_project_chat_recall_scope.js
+      - name: Verify C5 full Project delete completion truth and Source byte erasure
+        shell: pwsh
+        run: python -B tests/test_r241_c5_full_project_delete_truth.py
+      - name: Verify reused C5 native 13-hook controller and owner-scoped Project Delete test suites
+        shell: pwsh
+        run: python -B tests/test_r241_mature_native_c5_source.py
       - name: Check exact source formatting
         shell: pwsh
         run: git diff --check

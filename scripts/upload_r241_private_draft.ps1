@@ -5,29 +5,29 @@ param(
 )
 $ErrorActionPreference = "Stop"
 $Root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot ".."))
-$PolicyPath = Join-Path $Root "release\R239_DRAFT_RELEASE_ASSET_POLICY.json"
-$Checksum = Join-Path $Root "release\R239_NONSHIPPING_EXE_SHA256SUMS.txt"
-$Notes = Join-Path $Root "release\R239_PRIVATE_DRAFT_NOTES.md"
+$PolicyPath = Join-Path $Root "release\R241_DRAFT_RELEASE_ASSET_POLICY.json"
+$Checksum = Join-Path $Root "release\R241_NONSHIPPING_EXE_SHA256SUMS.txt"
+$Notes = Join-Path $Root "release\R241_PRIVATE_DRAFT_NOTES.md"
 $Integrity = Join-Path $Root "tools\verify_distribution.py"
 $Policy = Get-Content -LiteralPath $PolicyPath -Raw | ConvertFrom-Json
 if ($Policy.release_channel -cne "EXACT_PUBLIC_GITHUB_REPOSITORY_UNPUBLISHED_DRAFT_ONLY" -or
     $Policy.product_pass -ne $false -or $Policy.release_allowed_public -ne $false) {
     throw "UNPUBLISHED_DRAFT_RELEASE_POLICY_MISSING_OR_NOT_ACCEPTED"
 }
-if (-not $InstallerPath) { throw "EXACT_R239_INSTALLER_PATH_REQUIRED_BY_DEVELOPER_CALLER" }
+if (-not $InstallerPath) { throw "EXACT_R241_INSTALLER_PATH_REQUIRED_BY_DEVELOPER_CALLER" }
 $Installer = [IO.Path]::GetFullPath($InstallerPath)
-if (!(Test-Path -LiteralPath $Installer -PathType Leaf)) { throw "R239_INSTALLER_NOT_AVAILABLE" }
+if (!(Test-Path -LiteralPath $Installer -PathType Leaf)) { throw "R241_INSTALLER_NOT_AVAILABLE" }
 $Asset = Get-Item -LiteralPath $Installer
 if ($Asset.Name -cne [string]$Policy.asset_name -or
-    $Asset.Length -ne [int64]$Policy.asset_bytes) { throw "R239_ASSET_NAME_OR_BYTES_CHANGED" }
+    $Asset.Length -ne [int64]$Policy.asset_bytes) { throw "R241_ASSET_NAME_OR_BYTES_CHANGED" }
 $Sha = (Get-FileHash -LiteralPath $Installer -Algorithm SHA256).Hash.ToLowerInvariant()
-if ($Sha -cne [string]$Policy.asset_sha256) { throw "R239_ASSET_SHA256_CHANGED" }
+if ($Sha -cne [string]$Policy.asset_sha256) { throw "R241_ASSET_SHA256_CHANGED" }
 $Line = [IO.File]::ReadAllText($Checksum).Trim()
-if ($Line -cne ($Sha + "  " + $Asset.Name)) { throw "R239_RELEASE_CHECKSUM_SIDECAR_CHANGED" }
+if ($Line -cne ($Sha + "  " + $Asset.Name)) { throw "R241_RELEASE_CHECKSUM_SIDECAR_CHANGED" }
 $Stream = [IO.File]::OpenRead($Installer)
 try { $Mz = ($Stream.ReadByte() -eq 77 -and $Stream.ReadByte() -eq 90) }
 finally { $Stream.Dispose() }
-if (-not $Mz) { throw "R239_NOT_WINDOWS_PE" }
+if (-not $Mz) { throw "R241_NOT_WINDOWS_PE" }
 $Git = Get-Command git.exe -ErrorAction Stop
 $Branch = (@(& $Git.Source -C $Root branch --show-current) -join "").Trim()
 if ($Branch -cne [string]$Policy.canonical_source_branch) { throw "WRONG_GIT_RELEASE_SOURCE_BRANCH" }
@@ -37,12 +37,12 @@ $Head = (@(& $Git.Source -C $Root rev-parse HEAD) -join "").Trim()
 if ($Head -cnotmatch "^[a-f0-9]{40}$") { throw "GIT_RELEASE_HEAD_NOT_EXACT" }
 $Py = Get-Command python.exe -ErrorAction Stop
 $VerifyOutput = @(& $Py.Source $Integrity)
-if ($LASTEXITCODE -ne 0 -or ($VerifyOutput -join "") -notmatch "PASS_R239_NONSHIPPING_SOURCE_INTEGRITY_ONLY") {
+if ($LASTEXITCODE -ne 0 -or ($VerifyOutput -join "") -notmatch "PASS_R241_NONSHIPPING_SOURCE_INTEGRITY_ONLY") {
     throw "EXACT_GIT_RELEASE_SOURCE_QA_NOT_PASS"
 }
 if (-not $ApprovePrivateDraftUpload) {
     [pscustomobject]@{
-        status = "R239_LOCAL_EXE_AND_SOURCE_VERIFIED_GITHUB_NOT_UPLOADED"
+        status = "R241_LOCAL_EXE_AND_SOURCE_VERIFIED_GITHUB_NOT_UPLOADED"
         asset_bytes = $Asset.Length
         sha256 = $Sha
         source_commit_sha = $Head
@@ -88,7 +88,7 @@ try {
     $ExistingCode = $LASTEXITCODE
 } finally { $ErrorActionPreference = $Previous }
 if ($ExistingCode -eq 0) { throw "GITHUB_DRAFT_TAG_ALREADY_EXISTS_NO_CLOBBER_OR_REPLACE" }
-$null = @(& $Gh.Source release create $Tag $Installer $Checksum -R $GitHubRepository --target $Head --draft --prerelease --latest=false --title "Inquiry Desk R239 NONSHIPPING (private QA)" --notes-file $Notes)
+$null = @(& $Gh.Source release create $Tag $Installer $Checksum -R $GitHubRepository --target $Head --draft --prerelease --latest=false --title "Inquiry Desk R241 NONSHIPPING (private QA)" --notes-file $Notes)
 if ($LASTEXITCODE -ne 0) { throw "GITHUB_PRIVATE_DRAFT_CREATE_OR_UPLOAD_FAILED_PARTIAL_DRAFT_POSSIBLE" }
 $VerificationJson = @(& $Gh.Source release view $Tag -R $GitHubRepository --json isDraft,isPrerelease,assets)
 if ($LASTEXITCODE -ne 0) { throw "GITHUB_DRAFT_POSTUPLOAD_METADATA_NOT_VERIFIED" }
@@ -97,11 +97,11 @@ if ($Result.isDraft -ne $true -or $Result.isPrerelease -ne $true) {
     throw "GITHUB_RELEASE_WAS_NOT_A_PRIVATE_DRAFT"
 }
 $ActualNames = @($Result.assets | ForEach-Object { $_.name })
-if ($Asset.Name -notin $ActualNames -or "R239_NONSHIPPING_EXE_SHA256SUMS.txt" -notin $ActualNames) {
+if ($Asset.Name -notin $ActualNames -or "R241_NONSHIPPING_EXE_SHA256SUMS.txt" -notin $ActualNames) {
     throw "GITHUB_RELEASE_EXPECTED_TWO_ASSETS_NOT_RECORDED"
 }
 # Verify the actual remote bytes; not a generic success message.
-$VerifyDir = Join-Path ([IO.Path]::GetTempPath()) ("r239-draft-verify-" + [Guid]::NewGuid().ToString("N"))
+$VerifyDir = Join-Path ([IO.Path]::GetTempPath()) ("r241-draft-verify-" + [Guid]::NewGuid().ToString("N"))
 New-Item -ItemType Directory -Path $VerifyDir -Force | Out-Null
 try {
     $null = @(& $Gh.Source release download $Tag -R $GitHubRepository --pattern $Asset.Name --dir $VerifyDir)
@@ -109,13 +109,13 @@ try {
     $Downloaded = Join-Path $VerifyDir $Asset.Name
     if (!(Test-Path -LiteralPath $Downloaded -PathType Leaf)) { throw "PRIVATE_RELEASE_ASSET_MISSING" }
     $DownloadedSHA = (Get-FileHash -LiteralPath $Downloaded -Algorithm SHA256).Hash.ToLowerInvariant()
-    if ($DownloadedSHA -cne $Sha) { throw "PRIVATE_RELEASE_ASSET_SHA256_DIFFERENT_FROM_LOCAL_R239" }
+    if ($DownloadedSHA -cne $Sha) { throw "PRIVATE_RELEASE_ASSET_SHA256_DIFFERENT_FROM_LOCAL_R241" }
 } finally {
-    if ($VerifyDir -match "r239-draft-verify-[a-f0-9]{32}$" -and
+    if ($VerifyDir -match "r241-draft-verify-[a-f0-9]{32}$" -and
         (Test-Path -LiteralPath $VerifyDir)) { Remove-Item -LiteralPath $VerifyDir -Recurse -Force }
 }
 [pscustomobject]@{
-    status = "PASS_PRIVATE_GITHUB_DRAFT_R239_EXE_REMOTE_SHA_VERIFIED_NOT_PUBLISHED"
+    status = "PASS_PRIVATE_GITHUB_DRAFT_R241_EXE_REMOTE_SHA_VERIFIED_NOT_PUBLISHED"
     repository = $GitHubRepository
     private_draft_tag = $Tag
     source_commit_sha = $Head

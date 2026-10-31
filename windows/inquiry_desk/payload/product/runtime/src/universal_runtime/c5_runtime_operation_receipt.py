@@ -13,6 +13,10 @@ import re
 from typing import Any, Callable
 
 from universal_runtime.web_continuity import WebContinuityService, WebContinuityError
+from universal_runtime.core.source_content_retirement import (
+    SourceRetirementStop,
+    list_project_source_retirement_candidates,
+)
 
 _C5_SCHEMA = "C5_PROJECT_CASCADE_R001"
 _SNAPSHOT_SCHEMA = "C5_PROJECT_DELETE_DURABLE_SNAPSHOT_R001"
@@ -297,6 +301,113 @@ def _assert_receipt(record: dict[str, Any], project_id: str, owner_id: str) -> N
     correction = record.get("legacyPlanCorrection")
     if correction is not None:
         _assert_legacy_correction(correction)
+    if record["phase"] == "COMPLETE":
+        # A native Mongo Project can disappear while its archived Chats,
+        # exclusive File blobs/vectors, and Runtime Source payloads remain.
+        # Complete is legal only for the exact frozen PRE-delete inventory.
+        if snapshot is None or retired is None:
+            raise C5ReceiptStop("C5_COMPLETE_DURABLE_SNAPSHOT_AND_SOURCE_RECEIPTS_REQUIRED")
+        if record.get("c5Confirmed") is not True or record.get("nativeEffectOutcomeUnknown") is not False:
+            raise C5ReceiptStop("C5_COMPLETE_NATIVE_DELETE_EFFECT_UNVERIFIED")
+        if set(record["deletedChats"]) != set(record["plan"]["chats"]):
+            raise C5ReceiptStop("C5_COMPLETE_OWNED_CHAT_CASCADE_INCOMPLETE")
+        exclusive = {row["id"] for row in record["plan"]["exclusive"]}
+        retained_files = {row["id"] for row in record["plan"]["retained"]}
+        if set(record["deletedFiles"]) != exclusive or not retained_files.isdisjoint(record["deletedFiles"]):
+            raise C5ReceiptStop("C5_COMPLETE_EXCLUSIVE_OR_SHARED_FILE_SCOPE_MISMATCH")
+        frozen_sources = {row["source_ref_id"] for row in snapshot["runtimeSources"]}
+        if set(retired) != frozen_sources:
+            raise C5ReceiptStop("C5_COMPLETE_RUNTIME_SOURCE_PAYLOADS_NOT_RETIRED")
+
+
+def _assert_complete_runtime_source_content_current(
+    service: WebContinuityService, runtime_project_id: str, receipt: dict[str, Any],
+) -> None:
+    """Read-only final C5 gate. Existing canonical Runtime Source retirement owns erasure.
+
+    COMPLETE cannot be written merely because Mongo Project/Chat is absent.
+    Source must have current independent CONTENT_RETIRED receipts and every
+    exclusively erased payload path must remain absent; shared files are not
+    deleted or enumerated for deletion here.
+    """
+    if receipt["phase"] != "COMPLETE":
+        return
+    runtime_project, _ = service._raw_project(runtime_project_id)
+    if (runtime_project.get("status") != "RETIRED"
+            or runtime_project.get("source_ref_ids") != []):
+        raise C5ReceiptStop("C5_COMPLETE_RUNTIME_PROJECT_STILL_ACTIVE_OR_BOUND")
+    snapshot = receipt["durableSnapshot"]
+    expected = {row["source_ref_id"] for row in snapshot["runtimeSources"]}
+    try:
+        rows = list_project_source_retirement_candidates(
+            service.store, project_id=runtime_project_id,
+            active_source_ref_ids=[],
+        )
+    except (SourceRetirementStop, OSError, ValueError, KeyError, TypeError) as exc:
+        raise C5ReceiptStop("C5_COMPLETE_RUNTIME_SOURCE_CURRENTNESS_UNAVAILABLE") from exc
+    if {row.get("source_ref_id") for row in rows} != expected or len(rows) != len(expected):
+        raise C5ReceiptStop("C5_COMPLETE_RUNTIME_SOURCE_INVENTORY_NOT_EXHAUSTIVE")
+
+    for row in rows:
+        source_id = row["source_ref_id"]
+        binding = row.get("completed_native_binding")
+        if (row.get("retirement_state") != "CONTENT_RETIRED"
+                or row.get("active_project_binding") is not False
+                or not isinstance(binding, dict)
+                or source_id not in binding.get("source_ref_ids", [])
+                or not isinstance(binding.get("binding_evidence_sha256"), str)
+                or _HEX_RE.fullmatch(binding["binding_evidence_sha256"]) is None):
+            raise C5ReceiptStop("C5_COMPLETE_SOURCE_CONTENT_RETIREMENT_NOT_PROVEN")
+
+        # The existing Source-retirement primitive writes the immutable
+        # completion receipt only AFTER deleting and readback-checking each
+        # exclusively owned artifact. Independently re-check those byte paths.
+        audit_dir = service.store._manifest_dir("WEB_SOURCE_REF_" + source_id)
+        marker = audit_dir / "PERMANENT_CONTENT_ERASURE_COMPLETE_R001.json"
+        if not marker.is_file() or marker.is_symlink():
+            raise C5ReceiptStop("C5_COMPLETE_SOURCE_ERASURE_MARKER_MISSING")
+        try:
+            done = json.loads(marker.read_text("utf8"))
+        except (OSError, ValueError, UnicodeError) as exc:
+            raise C5ReceiptStop("C5_COMPLETE_SOURCE_ERASURE_MARKER_INVALID") from exc
+        targets = done.get("content_sha256_records")
+        marker_binding = done.get("native_binding")
+        if (done.get("state") != "COMPLETED"
+                or done.get("project_id") != runtime_project_id
+                or done.get("source_ref_id") != source_id
+                or not isinstance(marker_binding, dict)
+                or marker_binding.get("binding_evidence_sha256") != binding["binding_evidence_sha256"]
+                or not isinstance(marker_binding.get("source_ref_ids"), list)
+                or source_id not in marker_binding["source_ref_ids"]
+                or not isinstance(targets, list)
+                or len(targets) != done.get("retired_payload_count")
+                or len(targets) > 4
+                or any(
+                    not isinstance(target, dict)
+                    or not isinstance(target.get("id"), str)
+                    or not isinstance(target.get("sha256"), str)
+                    or _HEX_RE.fullmatch(target["sha256"]) is None
+                    or type(target.get("bytes")) is not int
+                    or target["bytes"] < 1
+                    for target in targets
+                )):
+            raise C5ReceiptStop("C5_COMPLETE_SOURCE_ERASURE_RECEIPT_MISMATCH")
+        target_ids = [target["id"] for target in targets]
+        if len(set(target_ids)) != len(target_ids):
+            raise C5ReceiptStop("C5_COMPLETE_SOURCE_ERASURE_DUPLICATE_TARGET")
+        for target in targets:
+            target_id = target["id"]
+            if isinstance(target_id, str) and re.fullmatch(r"RUNTIME_OPAQUE_[0-9A-F]{64}", target_id):
+                opaque_id = target_id[len("RUNTIME_OPAQUE_"):].lower()
+                content_path = service.store._r009_exact_paths(opaque_id)[1]
+            elif isinstance(target_id, str) and re.fullmatch(r"WEB_TEXT_DERIVATION_SRC_[A-Z0-9]{8,64}", target_id):
+                content_path = service.store.root / "web_m001" / "derivations" / target_id / "R001.json"
+            elif isinstance(target_id, str) and re.fullmatch(r"WEB_COMMAND_[0-9A-F]{64}", target_id):
+                content_path = service.store.root / "web_m001" / "commands" / target_id / "R001.json"
+            else:
+                raise C5ReceiptStop("C5_COMPLETE_SOURCE_ERASURE_TARGET_CLASS_UNKNOWN")
+            if content_path.exists() or content_path.is_symlink():
+                raise C5ReceiptStop("C5_COMPLETE_RETIRED_SOURCE_PAYLOAD_STILL_PRESENT")
 
 
 class C5ProjectCascadeReceiptOwner:
@@ -384,6 +495,12 @@ class C5ProjectCascadeReceiptOwner:
                 and admitted.get("active_pinned_jobs") == 0
             ):
                 raise C5ReceiptStop("C5_WRITER_JOB_BACKUP_FENCE_NOT_PROVEN")
+
+            # A producer's COMPLETE flag is not proof of physical Source erasure.
+            # Reuse authoritative Runtime artifact retirement without new storage.
+            _assert_complete_runtime_source_content_current(
+                self.service, self.runtime_project_id, receipt,
+            )
 
             prior = self.load()
             wanted = receipt.get("c5_receipt_revision", 0)

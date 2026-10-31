@@ -1,0 +1,23 @@
+{
+  "schema": "AIDES_C5_PROJECT_DELETE_USER_COPY_CANDIDATE_R001",
+  "role": "SOURCE_COPY_DELTA_NOT_LIVE_LOCALE",
+  "fallback": "existing i18n fallbackLng to English or explicit defaultValue",
+  "languages": {
+    "en": {
+      "com_ui_c5_project_delete_irrevocable_confirm": "Permanently delete \"{{name}}\" and its Project-owned chats, messages, instructions, memories, sources and unshared files? This cannot be undone. Chats moved to another Project and shared or Library files are retained.",
+      "com_ui_c5_project_delete_unverified": "Permanent deletion could not be verified. The operation may be partially complete; do not retry automatically."
+    },
+    "zh-Hans": {
+      "com_ui_c5_project_delete_irrevocable_confirm": "确定永久删除“{{name}}”吗？此操作将删除删除时仍属于该项目的专属对话、消息、指令、记忆、资料及无共享引用的文件，用户无法恢复。已移至其他项目的对话和共享文件、独立资料库文件会保留。",
+      "com_ui_c5_project_delete_unverified": "无法确认整个项目已彻底删除。操作可能只完成了一部分，请勿自动重试。"
+    },
+    "zh-Hant": {
+      "com_ui_c5_project_delete_irrevocable_confirm": "確定永久刪除「{{name}}」嗎？此操作將刪除當時仍屬於該專案的專屬對話、訊息、指令、記憶、資料及無共享參照的檔案，使用者無法復原。已移至其他專案的對話、共享檔案及獨立檔案庫資料會保留。",
+      "com_ui_c5_project_delete_unverified": "無法確認整個專案已徹底刪除。操作可能只完成一部分，請勿自動重試。"
+    },
+    "ja": {
+      "com_ui_c5_project_delete_irrevocable_confirm": "「{{name}}」を完全に削除しますか？削除時点でこのプロジェクトに属するチャット、メッセージ、指示、メモリ、資料、共有されていないファイルが削除され、元に戻せません。別のプロジェクトに移したチャット、共有ファイル、独立したライブラリファイルは残ります。",
+      "com_ui_c5_project_delete_unverified": "プロジェクトの完全削除を確認できません。処理が一部しか完了していない可能性があります。自動再試行しないでください。"
+    }
+  }
+}

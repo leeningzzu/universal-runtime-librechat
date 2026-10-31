@@ -4,7 +4,7 @@ Unicode true
 !include "LogicLib.nsh"
 !include "WinVer.nsh"
 Name "Inquiry Desk (NONSHIPPING)"
-OutFile "..\output\InquiryDesk_Setup_R239_NONSHIPPING.exe"
+OutFile "..\output\InquiryDesk_Setup_R241_NONSHIPPING.exe"
 InstallDir "$LOCALAPPDATA\Programs\InquiryDesk"
 RequestExecutionLevel user
 ManifestDPIAware true
@@ -34,10 +34,10 @@ FunctionEnd
 
 !if /FileExists "X:\product\windows\InquiryDesk.ps1"
 !else
-  !error "R239_RELEASE_BLOCK_LAUNCH_SCRIPT_NOT_EMBEDDED"
+  !error "R241_RELEASE_BLOCK_LAUNCH_SCRIPT_NOT_EMBEDDED"
 !endif
 !if /FileExists "X:\product\windows\InquiryDesk_R227.ps1"
-  !error "R239_RELEASE_BLOCK_LEGACY_LAUNCH_SCRIPT_REFERENCES"
+  !error "R241_RELEASE_BLOCK_LEGACY_LAUNCH_SCRIPT_REFERENCES"
 !endif
 Section "Inquiry Desk Project Core (required)" Core
   SectionIn RO
@@ -50,12 +50,12 @@ Section "Inquiry Desk Project Core (required)" Core
   CreateShortCut "$DESKTOP\Inquiry Desk.lnk" "$WINDIR\System32\WindowsPowerShell\v1.0\powershell.exe" '-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "$INSTDIR\product\windows\InquiryDesk.ps1" -Mode Open'
   CreateShortCut "$SMPROGRAMS\Inquiry Desk\帮助与安装步骤.lnk" "$INSTDIR\docs\FIRST_RUN.zh-Hans.md"
   CreateShortCut "$SMPROGRAMS\Inquiry Desk\卸载 Inquiry Desk.lnk" "$INSTDIR\Uninstall.exe"
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\InquiryDeskR239" "DisplayName" "Inquiry Desk v0.8.8 (NONSHIPPING)"
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\InquiryDeskR239" "DisplayVersion" "0.8.8"
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\InquiryDeskR239" "Publisher" "Inquiry Desk (NONSHIPPING)"
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\InquiryDeskR239" "InstallLocation" "$INSTDIR"
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\InquiryDeskR239" "UninstallString" '"$INSTDIR\Uninstall.exe"'
-  WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\InquiryDeskR239" "NoModify" 1
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\InquiryDeskR241" "DisplayName" "Inquiry Desk v0.8.8 (NONSHIPPING)"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\InquiryDeskR241" "DisplayVersion" "0.8.8"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\InquiryDeskR241" "Publisher" "Inquiry Desk (NONSHIPPING)"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\InquiryDeskR241" "InstallLocation" "$INSTDIR"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\InquiryDeskR241" "UninstallString" '"$INSTDIR\Uninstall.exe"'
+  WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\InquiryDeskR241" "NoModify" 1
   DetailPrint "产品核心代码已安装。正在打开环境检查/官方下载安装向导。用户须自行确认供应商许可和授权。"
   Exec '"$WINDIR\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "$INSTDIR\product\windows\InquiryDesk.ps1" -Mode Open'
 SectionEnd
@@ -78,8 +78,8 @@ Section "Uninstall"
   Delete "$SMPROGRAMS\Inquiry Desk\帮助与安装步骤.lnk"
   Delete "$SMPROGRAMS\Inquiry Desk\卸载 Inquiry Desk.lnk"
   RMDir "$SMPROGRAMS\Inquiry Desk"
-  DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\InquiryDeskR239"
-  !include "R239_EXACT_UNINSTALL_ALLOWLIST.nsh"
+  DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\InquiryDeskR241"
+  !include "R241_EXACT_UNINSTALL_ALLOWLIST.nsh"
   Delete "$INSTDIR\Uninstall.exe"
   RMDir "$INSTDIR"
 SectionEnd
