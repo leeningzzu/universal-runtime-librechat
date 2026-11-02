@@ -17,6 +17,6 @@ NON_AUTHORITY / unpromoted candidates (two):
 NON_AUTHORITY supporting contract archive:
 - WINDOWS_PRODUCT_SHELL_USER_JOURNEY_CONTRACT_R001.md
 
-IMPORTANT KNOWN AUTHORITY GAP: Hard Invariants v0.2 Candidate explicitly refers to ACTIVE_STABLE_HARD_INVARIANTS_AUTHORITY = PROJECT_SOURCE_RUNTIME_HARD_INVARIANTS_v0_1.md. That original was not supplied among the 9 Project attachments and was not found in the known developer Runtime or Inbox roots. Do not invent its exact text and do not silently promote v0.2 Candidate. Other unseen historical authorities are not asserted to exist in this repository.
+ADDITIONAL RECOVERED STABLE TEXT: PROJECT_SOURCE_RUNTIME_HARD_INVARIANTS_v0_1.md was located in an authorized Project/Library index with five text-identical copies. The content was restored as normalized UTF-8 SHA-256 59c40f56e00a1089bf84efe3a9e8fccd200c26228f1fa9c1143355c241bbfcea (2,438 bytes, 78 lines). This is NOT part of the nine byte-original uploads in SOURCE_FILES_SHA256_R001.json. The original Library backing file could not be materialized; its original raw-byte SHA is NOT proven. See RECOVERED_HARD_INVARIANTS_V01_TEXT_PROVENANCE_R001.json. The existing v0.2 Candidate identified v0.1 as the active Stable predecessor; restoring its text is not Promotion, and v0.2 remains NON_AUTHORITY. Do not invent a physical-byte parity receipt or overwrite another Active Source based only on Git history.
 
 This source archive contains research and engineering constraints, NOT user Project data, secrets or install state.

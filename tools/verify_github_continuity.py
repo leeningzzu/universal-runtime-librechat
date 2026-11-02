@@ -33,6 +33,10 @@ BIN_SHA="81420f4aacc56100d0027f335e8eaa460d4c9322f79afe7362c7ac86d0822c18"
 BIN_SIZE=19341420
 PATCH_ROOT=ROOT/"patches/librechat/v0.8.9-rc1"
 SOURCE_ROOT=ROOT/"docs/project_sources"
+RECOVERED_NAME="PROJECT_SOURCE_RUNTIME_HARD_INVARIANTS_v0_1.md"
+RECOVERED_SHA="59c40f56e00a1089bf84efe3a9e8fccd200c26228f1fa9c1143355c241bbfcea"
+RECOVERED_METADATA="docs/project_sources/RECOVERED_HARD_INVARIANTS_V01_TEXT_PROVENANCE_R001.json"
+
 
 def verify(condition, reason):
     if not condition:
@@ -50,6 +54,8 @@ def main():
         "docs/PROGRAM_PURPOSE_R001.md",
         "docs/CURRENT_DELIVERY_STATE_R001.md",
         "docs/CURRENT_DELIVERY_STATE_R002.md",
+        "docs/CURRENT_DELIVERY_STATE_R003.md",
+        "release/P4A_RC1_R002_GITHUB_DRAFT_REMOTE_PASS_R001.json",
         "docs/GITHUB_ONLY_REENTRY_R001.md",
         "docs/BUILD_REPRODUCTION_R001.md",
         "docs/PORTABILITY_AND_LOCAL_RETIREMENT_R001.md",
@@ -58,7 +64,8 @@ def main():
     ]
     for name in expected_docs:
         verify((ROOT/name).is_file(),"missing source handoff "+name)
-    names={f.name for f in SOURCE_ROOT.glob("*.md") if f.name!="README.md"}
+    names={f.name for f in SOURCE_ROOT.glob("*.md")
+           if f.name not in ("README.md",RECOVERED_NAME)}
     verify(names==set(AUTHORITIES),"Project Source original set mismatch")
     s=json.loads((SOURCE_ROOT/"SOURCE_FILES_SHA256_R001.json").read_text(encoding="utf8"))
     verify(len(s.get("files",{}))==9 and
@@ -74,6 +81,21 @@ def main():
                  "PROJECT_SOURCE_RUNTIME_HARD_INVARIANTS_v0_2_CANDIDATE_R002.md"]:
         verify(s["files"][name]["authority_class"]=="UNPROMOTED_CANDIDATE",
                "silently promoted Source revision Candidate "+name)
+    recovered=SOURCE_ROOT/RECOVERED_NAME
+    verify(recovered.is_file() and sha(recovered.read_bytes())==RECOVERED_SHA,
+           "indexed Stable v0.1 text recovery drift")
+    text=recovered.read_text(encoding="utf8")
+    verify(text.startswith("# Universal Runtime｜Project Source｜Hard Invariants v0.1") and
+           "RUNTIME_IS_ONLY_COMMIT_OWNER = YES" in text and
+           len(text.splitlines())==78,
+           "recovered v0.1 Stable text content not grounded")
+    recovered_prov=json.loads((ROOT/RECOVERED_METADATA).read_text(encoding="utf8"))
+    verify(recovered_prov.get("indexed_instances_count")==5 and
+           recovered_prov.get("all_indexed_instance_contents_text_equal") is True and
+           recovered_prov.get("original_raw_file_sha256")=="UNAVAILABLE" and
+           recovered_prov.get("recovered_utf8_canonical_content_sha256")==RECOVERED_SHA and
+           recovered_prov.get("recovery_does_not_promote_v02_candidate") is True,
+           "v0.1 normalized-text source recovery overclaims original raw evidence")
     patches=json.loads((PATCH_ROOT/"SOURCE_PROVENANCE_R001.json").read_text(encoding="utf8"))
     verify(patches["upstream_exact_commit"]==
            "8d3da9bbb220a0a96be9330a2e1cbd385fb786d5",
@@ -118,7 +140,9 @@ def main():
         "promoted_stable_authority":6,
         "unpromoted_candidates":2,
         "supporting_contract":1,
-        "missing_historical_HardInvariants_v01":True,
+        "hard_invariants_v01_indexed_text_recovered":True,
+        "hard_invariants_v01_recovered_utf8_sha256":RECOVERED_SHA,
+        "hard_invariants_v01_original_raw_sha_unavailable":True,
         "native_R195_client_patch_sources_sha_pass":len(repl),
         "current_product_source_manifest_sha":expected_manifest,
         "DRAFT_EXE_download_verified":bool(args.exe),

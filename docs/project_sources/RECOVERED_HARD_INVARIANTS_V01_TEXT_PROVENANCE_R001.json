@@ -1,0 +1,19 @@
+{
+  "schema": "RUNTIME_HARD_INVARIANTS_ACTIVE_V01_INDEXED_TEXT_RECOVERY_R001",
+  "fact_class": "RECOVERED_STABLE_TEXT_PROVENANCE_NOT_NEW_PROMOTION",
+  "file": "PROJECT_SOURCE_RUNTIME_HARD_INVARIANTS_v0_1.md",
+  "recovery_source": "user-authorized Project/Library indexed text, five matching copies of same v0.1 title and content",
+  "indexed_instances_count": 5,
+  "all_indexed_instance_contents_text_equal": true,
+  "raw_file_materialization": "NOT_AUTHORIZED_BY_FILES_INTERFACE",
+  "original_raw_file_sha256": "UNAVAILABLE",
+  "recovered_utf8_canonical_content_sha256": "59c40f56e00a1089bf84efe3a9e8fccd200c26228f1fa9c1143355c241bbfcea",
+  "recovered_utf8_content_bytes": 2438,
+  "recovered_unicode_chars": 2434,
+  "recovered_text_lines": 78,
+  "original_nine_uploaded_SHA256_Sources_unchanged": true,
+  "active_stable_role_source": "existing v0.2 Candidate identifies v0.1 as active stable predecessor; no promotion by recovery",
+  "recovery_does_not_promote_v02_candidate": true,
+  "repo_usable_for_development_without_old_library": true,
+  "limitation": "This verifies byte identity of the normalized checked-in UTF8 text only. The original backing file bytes were unavailable; do not claim original physical-file SHA parity."
+}

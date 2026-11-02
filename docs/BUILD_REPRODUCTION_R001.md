@@ -35,5 +35,8 @@ Using official verified NSIS 3.13 on Windows PowerShell:
 The build uses a temporary short X: compile alias and then must release it. The alias is NOT a durable Project path or identity and never requires a whole-drive Docker mount. The builder fails if output already exists.
 Expected archived R002 compiled EXE sha256: 81420f4aacc56100d0027f335e8eaa460d4c9322f79afe7362c7ac86d0822c18, size 19,341,420 bytes; a different compiler timestamp or toolchain requires fresh exact SHA and receipt.
 
+## Additional Stable Source text recovery
+Nine originally uploaded Source files remain byte-for-byte SHA-verified. A further active Stable Hard Invariants v0.1 was restored from five identical indexed text copies with UTF-8 SHA 59c40f56e00a1089bf84efe3a9e8fccd200c26228f1fa9c1143355c241bbfcea. The original backing file byte SHA was inaccessible and is not claimed. See docs/project_sources/RECOVERED_HARD_INVARIANTS_V01_TEXT_PROVENANCE_R001.json.
+
 ## Proof limit
 Source QA, compiled frontend/dist, NSIS, PowerShell 5.1 Mode Check, Compose config and copied asset SHA are NOT live E2E. Gate 2 real provider model, Project File Search citing PDF/DOCX, Memory/cross-Chat; Gate 3 real physical deletion and shared-neighbor preservation; P4B maintenance; G3 signed release remain unproven.

@@ -13,4 +13,4 @@ Allowed to retire only exact inactive, reproducible scratch caches, obsolete inc
 
 NEVER delete or publish without separate authorization: real Chat/Project/Memory/File/Source/Library data, account credentials, API secrets, Mongo/pgvector volumes, user backups, rollback assets, signed production artifacts or original promoted Project Source authority. No Docker prune, compose down -v or recursive user-data deletion.
 
-KNOWN AUTHORITY GAP: Hard Invariants v0.1 stable original was not among the nine transferred files. The v0.2 revision Candidate remains unpromoted; repo alone does not recover the missing original verbatim.
+RECOVERED AUTHORITY TEXT LIMITATION: Nine uploaded originals retain exact raw-file SHA. Hard Invariants v0.1, absent from that set, is now additionally present as indexed canonical text with five matching copies, but the original physical file SHA is unavailable; do not claim raw byte parity. Hard Invariants v0.2 Candidate remains NON_AUTHORITY.

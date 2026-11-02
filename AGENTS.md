@@ -4,8 +4,8 @@ Read this file first when continuing from GitHub with a different AI model or Wi
 
 ## Read order
 1. docs/PROGRAM_PURPOSE_R001.md (North Star, architecture and user workflow).
-2. docs/project_sources/README.md and SOURCE_FILES_SHA256_R001.json (six active Stable Sources, two unpromoted Candidates, one supporting contract).
-3. docs/CURRENT_DELIVERY_STATE_R002.md (latest exact GitHub migration and product proof ceilings; R001 remains predecessor).
+2. docs/project_sources/README.md and SOURCE_FILES_SHA256_R001.json (nine original byte-verified uploads: six Stable, two unpromoted Candidates, one supporting Contract; plus recovered Stable Hard Invariants v0.1 text with original raw-file SHA unavailable).
+3. docs/CURRENT_DELIVERY_STATE_R003.md (latest verified GitHub Draft transfer and still-open installed Product Gate2/3).
 4. docs/GITHUB_ONLY_REENTRY_R001.md and docs/BUILD_REPRODUCTION_R001.md (recovery without local histories).
 5. release/P4A_RC1_R002_NONSHIPPING_RELEASE_NOTES.md, tools/verify_distribution.py, tools/verify_github_continuity.py, tests.
 6. Actual product source: windows/inquiry_desk/payload/product and SHA inventory: windows/inquiry_desk/payload/manifest/SHA256SUMS.
@@ -29,5 +29,5 @@ Do not push main, --all, --mirror or force. Do not promote this unsigned NONSHIP
 Do not auto-retry a partially executed or UNKNOWN C5 operation. Owner, Writer, lease, Source/File/Blob/Vector afterstate, shared neighbors and restart recovery require independent proof.
 
 ## Single current action
-UNIQUE_NEXT_ACTION = GITHUB_CI_SOURCE_REENTRY_PASS_THEN_ACTIONS_BUILD_EXACT_R002_EXE_AND_CREATE_OWNER_ONLY_DRAFT_WITH_REMOTE_SHA_READBACK_R002
-The screened source was pushed to the candidate branch at predecessor SHA 51de4a84fa764a8bbd403947f1affb8ffe754d23; its CI failed because the new continuity checker was accidentally omitted from the commit, not because the 496-file product failed its source SHA. A separate fresh GitHub clone rebuilt the exact 19,341,420-byte R002 EXE with the SAME SHA256. The new candidate revision adds the missing continuity checker and an official source-integrity-dependent GitHub Actions job which is allowed to publish ONLY an owner-visible NONSHIPPING Draft after exact source-to-binary SHA parity. Check the NEW remote commit/CI and Draft download SHA, not old status text, before considering any local staging retirement. After remote parity, resume supported isolated Windows11 synthetic Project Gate2/Gate3 real E2E. Do not change Production/Daily, real user data or public latest release.
+UNIQUE_NEXT_ACTION = P4A_GATE23_SUPPORTED_INDEPENDENT_WINDOWS11_FULL_PROJECT_NATIVE_E2E_R001
+GitHub source+EXE transfer is complete at exact R002 source commit 1a2a1aea3fb52f7d6cc0ce9c303407910506ecc6: workflow 41372068959 passed full source QA, SHA-pinned NSIS compilation, Actions artifact upload, owner-only Draft creation and actual Draft EXE re-download SHA. New handoff-only commits MUST NOT automatically recreate or republish the Draft: release job is now explicit manual opt-in only. The current source is documented in docs/CURRENT_DELIVERY_STATE_R003.md and release/P4A_RC1_R002_GITHUB_DRAFT_REMOTE_PASS_R001.json. A fresh GitHub clone independently passed native product/source tests. Next test the real Project-first Windows Product on a supported isolated Windows11 synthetic environment, including model-backed File Search, Project Memory/cross-Chat and protected C5 permanent physical deletion with shared-neighbor survival/restart. PRODUCT PASS=NO, PROGRAM PASS=NO, no Public Release/Promotion. Do not touch Production/Daily or real user data.

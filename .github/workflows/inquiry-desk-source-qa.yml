@@ -4,6 +4,12 @@ on:
     branches:
       - candidate/inquiry-desk-windows-product
   workflow_dispatch:
+    inputs:
+      create_draft_nonshipping:
+        description: 'Only for new explicitly approved test Draft; false by default'
+        type: boolean
+        required: false
+        default: false
 
 jobs:
   source-integrity:
@@ -55,7 +61,10 @@ jobs:
   draft-nonshipping:
     name: Exact R002 EXE to owner-only Draft (not public Product)
     needs: source-integrity
-    if: github.ref == 'refs/heads/candidate/inquiry-desk-windows-product'
+    # Release has been created and SHA-verified on exact R002 source commit.
+    # Ordinary future code/handoff pushes must run SOURCE QA only, never
+    # duplicate, silently retry, overwrite, or republish a candidate asset.
+    if: github.event_name == 'workflow_dispatch' && inputs.create_draft_nonshipping == true && github.ref == 'refs/heads/candidate/inquiry-desk-windows-product'
     runs-on: windows-latest
     permissions:
       contents: write
