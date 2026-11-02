@@ -1,0 +1,32 @@
+{
+  "schema": "R195_EXACT_SOURCE_REUSE_IN_V088_NATIVE_C5_GATE23_R001",
+  "source_class": "MATURE_PRIOR_CANDIDATE_NOT_PRODUCT_PASS",
+  "origin_official_librechat_git_sha40": "8d3da9bbb220a0a96be9330a2e1cbd385fb786d5",
+  "source_R195_file_count": 99,
+  "reused_modules": 18,
+  "expected_sha256_by_target_relative": {
+    "runtimeProjects.js": "d65c58aeb97f3f006df859b920b955a4f028c5335d08a8f43e0f9ccd4c28671d",
+    "nativeProjectDocumentBundle.js": "a52081828234965c6352f65071d6a9b5f09d58931a30f69d8577d0ce48df7290",
+    "C5WholeProjectDeleteOwners.js": "e88abf4a13fd9612b3b9a6b974bdb57175d7b73494561fe64025503596c13c7b",
+    "C5WriteFence.js": "fa7796d612afb4d70646d123c09a3374638c562de688b8a8b875cbd969fe758c",
+    "ProjectNativeFile.js": "82a3908da9a8e9a46d9dfeb4a053aa343c5227349682c08145836967f454b3d3",
+    "ProjectSource.js": "17f550af8192213731f77c368aa876aadcc5fced2b44fce63078c2d14159ccb8",
+    "Files/crossStorePermanentDelete.js": "625e2c2030195c7ae34cddfc4d8ba13161b9cc7c26c8f5c02988e4bdf66045b1",
+    "Files/nativeDeleteReferenceGuard.js": "e3fb9cf8aea856203100033296bd1564d4efbab16950d043b32ca473659bd45a",
+    "c5/c5CanonicalNativeRetirement.candidate.js": "414965e8e58a986288353746a90f8b0b52c2b00cb1ff86cc90e41ef48a763cf8",
+    "c5/c5CurrentNativeRetirementCallbacks.candidate.js": "7534ecd5d853e16e28efbff460e28706c8ea130885f0e4e6bbac97cb6240c968",
+    "c5/c5DurableDeleteSnapshot.candidate.js": "cf38dd43f343086e1194d729de59d1672b27dd35a520df3bdb574b320a97c5ad",
+    "c5/c5NativeChatFileConsumers.candidate.js": "f64b75c57066b6fa338ad207779e2aae80e2119f2d6cf5735aa5df8554e080d2",
+    "c5/c5NativeWholeProjectBinding.candidate.js": "05b6711c00941006e7505efb9673f856b2e1c22e5f81148b8440eb2ff5504451",
+    "c5/c5RuntimeOwnerNativeBridge.candidate.js": "24acee551074729b1b5bf8eacbe30f16eaf8126ea66224e85cbd15989a06db02",
+    "c5/c5WholeProjectProductEndpoints.candidate.js": "4ccbbba2798114279e3cdf456cb5bfdeee1bfd8e5cae8e22a4ec3dab98525193",
+    "c5/c5WholeProjectProductNativeRoute.candidate.js": "af0261e4ca710b0a91d1d3492f6fa1f75a4433a8465858e33a00f13e8559a668",
+    "c5/projectDeleteOwnedCascade.c5.product.candidate.js": "2ace2fe8da67357988c2dc2924a58f3a2dff3657344107948333607c1d6d9537",
+    "c5/runtimeProjectDeleteRetirement.c5.js": "0562afadd583db5e0dd5b80af84303eef7a1ac55819c7ed16456506b704b4fd1"
+  },
+  "all_preimage_shas_from_R195_owner_manifest": true,
+  "runtime_R241_source_physical_erasure_truth_untouched": true,
+  "cross_version_v088_rc1_native_abi": "PENDING_UNPROVEN",
+  "full_native_delete_permitted": "NO_UNTIL_REAL_OWNER_AND_ALL_AFTERSTATE",
+  "executable_built": "NO_NOT_YET"
+}

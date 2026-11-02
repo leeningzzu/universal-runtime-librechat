@@ -1,0 +1,67 @@
+{
+  "schema": "PROJECT_SOURCE_ORIGINAL_BYTES_GITHUB_REENTRY_R001",
+  "files": {
+    "PROJECT_SOURCE_EXTERNAL_CAPABILITY_ASSEMBLY_v0_7_CANDIDATE_R002.md": {
+      "sha256": "5b8f0a815a607f8bee724c471e9e1acfe715b8e6bfc35a5ba674726880ec7dac",
+      "bytes": 26607,
+      "authority_class": "UNPROMOTED_CANDIDATE",
+      "declared_status": "PROJECT_SOURCE_REVISION_CANDIDATE"
+    },
+    "PROJECT_SOURCE_NEW_CHAT_HANDOFF_PROTOCOL_v0_7.md": {
+      "sha256": "6fb2b4a724d0bd2474ea80d24e9d6b09b714c685e19ec7f5545f18ce68c75b8d",
+      "bytes": 23035,
+      "authority_class": "STABLE_AUTHORITY",
+      "declared_status": "STABLE_PROJECT_SOURCE"
+    },
+    "PROJECT_SOURCE_PACK_CREATION_PROTOCOL_v0_5.md": {
+      "sha256": "49cfc192c762df002309c37238d8fe5c071ebb7b2ae3a051539cbc9b7eb24468",
+      "bytes": 27266,
+      "authority_class": "STABLE_AUTHORITY",
+      "declared_status": "STABLE_PROJECT_SOURCE"
+    },
+    "PROJECT_SOURCE_PACK_INTAKE_AND_PROCESS_IMPROVEMENT_v0_25.md": {
+      "sha256": "b8442041050df8aa35af3bc6cd7c37090e39174fbf66a9e331177a7f34e96204",
+      "bytes": 89006,
+      "authority_class": "STABLE_AUTHORITY",
+      "declared_status": "STABLE_PROJECT_SOURCE"
+    },
+    "PROJECT_SOURCE_PACK_LIFECYCLE_AND_UPDATE_v0_3.md": {
+      "sha256": "ed73248ac64faaaedd8818728d379766a2a43f1bbe34ce19a31aa9478d0e508b",
+      "bytes": 12513,
+      "authority_class": "STABLE_AUTHORITY",
+      "declared_status": "STABLE_PROJECT_SOURCE"
+    },
+    "PROJECT_SOURCE_RUNTIME_ARCHITECTURE_v0_9.md": {
+      "sha256": "5628416ee59d44deef765c41474b3427f98148eddf2d7debefd298c7ed08a6eb",
+      "bytes": 49937,
+      "authority_class": "STABLE_AUTHORITY",
+      "declared_status": "STABLE_PROJECT_SOURCE"
+    },
+    "PROJECT_SOURCE_RUNTIME_DEVELOPMENT_STRATEGY_v0_8.md": {
+      "sha256": "e50094bbaa1e5cb4302520212491b3a2f16463d4788a3b6333c15df79f74ad85",
+      "bytes": 56045,
+      "authority_class": "STABLE_AUTHORITY",
+      "declared_status": "PROJECT_SOURCE_STABLE"
+    },
+    "PROJECT_SOURCE_RUNTIME_HARD_INVARIANTS_v0_2_CANDIDATE_R002.md": {
+      "sha256": "c5cc59939334c3eafb812ff7cda6b5b29e35ac4f2f70ff7bcce36c4a014b3a55",
+      "bytes": 5220,
+      "authority_class": "UNPROMOTED_CANDIDATE",
+      "declared_status": "PROJECT_SOURCE_REVISION_CANDIDATE"
+    },
+    "WINDOWS_PRODUCT_SHELL_USER_JOURNEY_CONTRACT_R001.md": {
+      "sha256": "f41d5180d1c3bcbc52981debd630aa35b9125dd8c6af24afd371f506ea6ebec5",
+      "bytes": 13686,
+      "authority_class": "SUPPORT_NON_AUTHORITY",
+      "declared_status": "PRODUCT_CONTRACT_CANDIDATE / SUPPORTING_CROSS_CHAT_ARCHIVE"
+    }
+  },
+  "original_user_upload_count": 9,
+  "stable_count": 6,
+  "candidate_count": 2,
+  "support_count": 1,
+  "active_stable_hard_invariants_v0_1_original_missing": true,
+  "export_does_not_promote_candidate": true,
+  "github_remote_sha_and_auth_not_yet_verified": true,
+  "private_user_data_excluded": true
+}

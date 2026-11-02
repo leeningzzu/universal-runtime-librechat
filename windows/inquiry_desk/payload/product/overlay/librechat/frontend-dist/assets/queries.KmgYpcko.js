@@ -1,0 +1,1 @@
+import{dx as e,zx as t}from"./hooks.O61geOIa.js";import{u as n}from"./tanstack-vendor.NtMqtWSc.js";var r=(r,i)=>n([e.insights,r],()=>t.getInsights(r),{keepPreviousData:!0,refetchOnWindowFocus:!1,...i}),i=(r,i)=>n([e.insightsAccess,r??`anonymous`],()=>t.getInsightsAccess(),{retry:!1,staleTime:6e4,refetchOnWindowFocus:!1,...i});export{r as n,i as t};

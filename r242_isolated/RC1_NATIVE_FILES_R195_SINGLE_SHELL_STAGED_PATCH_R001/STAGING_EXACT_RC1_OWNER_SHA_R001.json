@@ -1,0 +1,19 @@
+{
+  "schema": "RC1_MATURE_R195_NATIVE_PROJECT_FILES_C5_EXACT_BACKEND_ADOPTION_R001",
+  "root_official_commit": "8d3da9bbb220a0a96be9330a2e1cbd385fb786d5",
+  "node_compile_code_reuse": "EXACT_R195_SOURCE_PLUS_ONE_EXISTING_WRITE_FENCE_MIDDLEWARE",
+  "R195_exact_source_preimage_by_target": {
+    "server.index.js": "4e096a05751ffba0d0f7b23d3a991a02c6889c5fe9c5a1bc4e7c0872975bd033",
+    "projects.js": "8fd4303bcee8ce3029d9ed9583602698d741405476fd8d41f6f8d4d6cc29b704",
+    "agent.client.js": "7e32e775ef37379f895da8c3c5b59be20ca975dd6892029ecfd103b264a82a0e",
+    "agent.chat.js": "8e1f176e441bdda50a42a03f19bbdfe084bba8086171d58c1f72ecf50b9e57ce",
+    "projectRuntimeMemoryContext.js": "f10ad96e2f982a4f1802eb7d9fbcbe89cc3f65f39b6a607721c84e3e25c88ea9",
+    "projectChatToolsBridge.js": "3a030b9e9b22198a2d0a6019e19926c29ec7909019ffe9bf403915bf30ebb956"
+  },
+  "server_index_after_bounded_fence_sha256": "85c06b34d25a9e8eb11a98164e292db5f92a488062f36e43a0dc9fddff612184",
+  "reused_existing_project_memory_and_recall": "SAME_R195_SHA_IN_CURRENT_PRODUCT",
+  "vendor_librechat_image": "v0.8.9-rc1_linux_amd64_SHA256_4a540a793a573b0e0f674b7831dc9c71d64e544215469b3f69caebb622e4972d",
+  "NO_CUSTOM_FILE_DB_OR_SEARCH_ENGINE": true,
+  "current_old_v088_program_payload_unmodified": true,
+  "product_pass": false
+}

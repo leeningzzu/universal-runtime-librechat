@@ -1,5 +1,7 @@
 # G3 - 从 GitHub 到用户 EXE 的产品发行验收门槛
 
+> 这是 R241 历史 Gate 快照。当前 P4A rc1 R002 的 EXE、代码及真实证明上限见 [当前交付状态](CURRENT_DELIVERY_STATE_R001.md) 和 [NONSHIPPING 说明](../release/P4A_RC1_R002_NONSHIPPING_RELEASE_NOTES.md)。原 80/81 文件统计不得冒充当前 495/496 文件。GitHub DRAFT 上传是用户当前请求，但不等于签名、完整 Product PASS 或公开正式发行。
+
 当前 R241 是 NONSHIPPING 候选。GitHub Remote 尚无可信绑定，不能声称已 push、已运行 GitHub Actions、已发布 Release 或完成了签名。
 
 | 证明族 | R241 当前状态 |

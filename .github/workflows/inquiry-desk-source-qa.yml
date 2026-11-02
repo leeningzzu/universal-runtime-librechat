@@ -18,6 +18,18 @@ jobs:
       - name: Verify exact source, privacy surface and uninstall ownership
         shell: pwsh
         run: python tools/verify_distribution.py
+      - name: Verify nine original Project Source SHA and independent-model Github reentry
+        shell: pwsh
+        run: python tools/verify_github_continuity.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.22.2'
+      - name: Verify official RC1 native Project Files router and C5 no-fallback guards
+        shell: pwsh
+        run: node r242_isolated/tests/test_rc1_native_project_files_r195_owner_router.cjs
+      - name: Verify mature C5 global writer guard synthetic-only
+        shell: pwsh
+        run: node r242_isolated/tests/test_r195_write_fence_idle_and_synthetic.cjs
       - name: Verify native Windows owner integrity and no-blind-upgrade guards
         shell: pwsh
         run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File tests/test_r241_owner_integrity.ps1
@@ -39,4 +51,4 @@ jobs:
       - name: Check exact source formatting
         shell: pwsh
         run: git diff --check
-# This is SOURCE QA only; real installer and Product/Program PASS remain unproven.
+# This is SOURCE/continuity QA only; installed Gate2/3 and Product/Program PASS remain UNPROVEN.

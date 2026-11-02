@@ -1,16 +1,18 @@
 # Inquiry Desk - Windows online installer source (NONSHIPPING)
 
+**Other-model / other-PC reentry:** Start with [AGENTS.md](AGENTS.md), [Program purpose](docs/PROGRAM_PURPOSE_R001.md), [original nine Project Sources](docs/project_sources/README.md), [current delivery status](docs/CURRENT_DELIVERY_STATE_R001.md), and [GitHub-only reentry](docs/GITHUB_ONLY_REENTRY_R001.md). Reproduce code using [Build provenance](docs/BUILD_REPRODUCTION_R001.md) and [continuity verifier](tools/verify_github_continuity.py). The missing original Stable Hard Invariants v0.1 remains a known authority archive gap, not an implicitly promoted Candidate.
+
 This is the source-and-build candidate in the existing Universal Runtime Git repository. It is not a promoted Product/Program baseline or a public release. No retired Pack is installed by default.
 
-- Product: one LibreChat v0.8.8 shell plus Runtime Project/Memory/Chat/Source/C5 and optional governed capabilities.
-- The compact NSIS Windows installer contains 81 exact product files, not Docker images or bundled Python environments. The installer can open official vendor prerequisite URLs and fetch SHA-pinned components when authorized.
+- Product target: one LibreChat shell. The isolated NONSHIPPING successor uses the official v0.8.9-rc1 native Project reference-files UI/API, R195 Project Memory/Source/C5 extension and R241 strict deletion truth with official RAG API + pgvector. v0.8.8 remains retained as the proven source/EXE rollback baseline; no user Pack is needed.
+- The new rc1-based NSIS Windows installer candidate contains 496 exact controlled program files including 393 official compiled frontend assets, not Docker images or bundled Python environments. The installer can open official vendor prerequisite URLs and fetch SHA-pinned components when authorized.
 - The installer is currently unsigned and NOT approved for general users. A compiler PASS does not prove full clean-machine install, UI, provider-model, Project data deletion, uninstall, or Program PASS.
-- The exact built R241 candidate exists outside this Git source tree. See release/RELEASE_CANDIDATE.json; binary delivery belongs to a later approved GitHub Release asset rather than Git repository history.
+- R241 is the preserved historical EXE. P4A reuses that SAME launcher/NSIS product rather than creating another shell, and integrates official native RAG/pgvector into its real Compose source. The rc1 successor reuses native upstream Project reference files and the mature R195 C5 front/back consumer, with R241 strict Source erasure truth in one LibreChat service. The former v0.8.8 compiled API has no active consumer in the new candidate. Real Windows model-backed File Search and whole Project delete remain NOT PROVEN. Product/Program PASS and public production release remain blocked. Owner-only GitHub DRAFT release upload and candidate source push have been explicitly requested, but must be independently verified before claiming remote delivery. See release/P4A_RC1_NATIVE_PROJECT_FILES_SOURCE_CANDIDATE_R002.json and release/P4A_RC1_R002_NONSHIPPING_RELEASE_NOTES.md. The old R241 Draft is not changed.
 - Developer binaries, private .env, old Projects, uploaded user data, API keys, Mongo volumes, Docker archives, offline wheelhouses and retired Packs are not copied to this publication branch.
 - The historical developer main holds unrelated old source and six files with Windows user path literals. Never push main, --all or --mirror without separately auditing and approving it.
 - Future code changes should be made here and verified with python tools/verify_distribution.py before a signed release candidate can be built. Exact branch/commit and CI receipts must be recorded before claiming source-to-EXE parity.
 
-See docs/INSTALL_USER.md, docs/SECURITY_AND_CLEANUP.md, and docs/G3_RELEASE_GATE.md for user acceptance requirements.
+See docs/INSTALL_USER.md, docs/SECURITY_AND_CLEANUP.md, docs/PORTABILITY_AND_LOCAL_RETIREMENT_R001.md, and docs/G3_RELEASE_GATE.md for user acceptance and data-safe local retirement boundaries.
 
 ## Exact GitHub target (R235)
 

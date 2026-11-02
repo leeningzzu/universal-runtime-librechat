@@ -1,10 +1,12 @@
-﻿param([ValidateSet('Open','Setup','Check','Shutdown')][string]$Mode = 'Open')
+﻿param([ValidateSet('Open','Setup','Check','Shutdown','ConfigureFileSearch')][string]$Mode = 'Open')
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 2.0
 $Root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\..'))
 $OwnerRoot = Join-Path ([Environment]::GetFolderPath('LocalApplicationData')) 'InquiryDesk\Core_v088'
 $OwnerFile = Join-Path $OwnerRoot 'owner.json'
 $EnvFile = Join-Path $OwnerRoot 'secrets\core.env'
+$RagEnvFile = Join-Path $OwnerRoot 'secrets\rag.env'
+$PgEnvFile = Join-Path $OwnerRoot 'secrets\pgvector.env'
 $ComposeFile = Join-Path $Root 'product\compose\docker-compose.online-nonshipping.yaml'
 $SourceManifest = Join-Path $Root 'manifest\SHA256SUMS'
 $ReleaseManifest = Join-Path $Root 'manifest\upstream-pinned-sources.NONSHIPPING.json'
@@ -33,8 +35,26 @@ function Assert-CodeOnlyManifest {
         if(($item.Attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0){throw 'RELEASE_SYMLINK_FORBIDDEN'}
         if((Get-Digest $target) -cne $expect){throw 'RELEASE_HASH_DRIFT'}
     }
-    foreach($relative in @('product\runtime\src\universal_runtime\webapp.py','product\runtime\src\universal_runtime\cli.py','product\runtime\scripts\c5_current_protected_snapshot.py','product\overlay\adapter\adapter.js','product\overlay\librechat\api.index.cjs')) {
+    # The pinned rc1 official API comes from the exact vendor container image,
+    # not the removed v0.8.8 compiled API overlay. Verify all actual consumers.
+    foreach($relative in @(
+        'product\runtime\src\universal_runtime\webapp.py',
+        'product\runtime\src\universal_runtime\cli.py',
+        'product\runtime\scripts\c5_current_protected_snapshot.py',
+        'product\overlay\adapter\adapter.js',
+        'product\overlay\librechat\server.index.js',
+        'product\overlay\librechat\projects.js',
+        'product\overlay\librechat\ProjectAssistantProfile.js',
+        'product\overlay\librechat\projectRuntimeMemoryContext.js',
+        'product\overlay\librechat\projectChatToolsBridge.js',
+        'product\overlay\librechat\C5WholeProjectDeleteOwners.js',
+        'product\overlay\librechat\C5WriteFence.js',
+        'product\overlay\librechat\frontend-dist\index.html'
+    )) {
         if(!(Test-Path -LiteralPath (Join-Path $Root $relative) -PathType Leaf)){throw 'PROJECT_CORE_OWNER_MISSING'}
+    }
+    if(Test-Path -LiteralPath (Join-Path $Root 'product\overlay\librechat\api.index.cjs')) {
+        throw 'LEGACY_COMPILED_API_MUST_NOT_SHADOW_RC1_NATIVE_PROJECT_FILES'
     }
 }
 function Assert-Windows {
@@ -149,14 +169,23 @@ function New-Port {
 function Get-Pins {
     if(!(Test-Path -LiteralPath $ReleaseManifest -PathType Leaf)){throw 'EXACT_IMAGE_RELEASE_MANIFEST_REQUIRED'}
     $items=@((Get-Content -Raw -LiteralPath $ReleaseManifest | ConvertFrom-Json).upstream_images)
-    if($items.Count -ne 3){throw 'EXACT_IMAGE_COUNT_INVALID'}
-    $allowed=@('ghcr.io/librechat-ai/librechat','docker.io/library/mongo','docker.io/library/node')
+    $roles=@{
+        librechat='ghcr.io/librechat-ai/librechat'
+        mongodb='docker.io/library/mongo'
+        'node-adapter-runtime'='docker.io/library/node'
+        pgvector='docker.io/pgvector/pgvector'
+        'rag-api'='registry.librechat.ai/librechat-ai/librechat-rag-api-dev-lite'
+    }
+    if($items.Count -ne $roles.Count){throw 'EXACT_NATIVE_PROJECT_IMAGE_COUNT_INVALID'}
     $found=@{}
     foreach($x in $items) {
-        $repo=[string]$x.repository;$digest=[string]$x.digest
-        if($repo -notin $allowed -or $digest -cnotmatch '^sha256:[a-f0-9]{64}$' -or $found.ContainsKey([string]$x.role)){throw 'UNTRUSTED_REGISTRY_SOURCE'}
-        $found[[string]$x.role]=$repo+'@'+$digest
+        $role=[string]$x.role;$repo=[string]$x.repository;$digest=[string]$x.digest
+        if(!$roles.ContainsKey($role) -or $roles[$role] -cne $repo -or
+           $digest -cnotmatch '^sha256:[a-f0-9]{64}$' -or
+           $found.ContainsKey($role)) {throw 'UNTRUSTED_PROJECT_NATIVE_IMAGE_IDENTITY'}
+        $found[$role]=$repo+'@'+$digest
     }
+    if($found.Count -ne $roles.Count){throw 'MISSING_NATIVE_PROJECT_IMAGE'}
     return $found
 }
 function Set-ComposeEnv([psobject]$Owner,[hashtable]$Pins) {
@@ -165,6 +194,10 @@ function Set-ComposeEnv([psobject]$Owner,[hashtable]$Pins) {
         AIDES_LIBRECHAT_IMAGE=[string]$Pins['librechat']
         AIDES_ADAPTER_IMAGE=[string]$Pins['node-adapter-runtime']
         AIDES_MONGODB_IMAGE=[string]$Pins['mongodb']
+        AIDES_PGVECTOR_IMAGE=[string]$Pins['pgvector']
+        AIDES_RAG_API_IMAGE=[string]$Pins['rag-api']
+        AIDES_PGVECTOR_ENV_FILE=$PgEnvFile
+        AIDES_RAG_ENV_FILE=$RagEnvFile
         AIDES_PAYLOAD_ROOT=Join-Path $Root 'product\overlay'
         AIDES_PRIVATE_ENV_FILE=$EnvFile
         AIDES_RUNTIME_BASE_URL=('http://host.docker.internal:'+[string]$Owner.runtime_port)
@@ -338,7 +371,7 @@ function Complete-SetupCore([psobject]$Owner,[string]$Docker,[hashtable]$Pins) {
     $docpy=Join-Path $docling 'Scripts\python.exe'
     $doclock=Join-Path $Root 'product\requirements\requirements-docling-complete-SHA256-R211.txt'
     $null=Invoke-Native $docpy @('-m','pip','install','--disable-pip-version-check','--no-input','--retries','0','--timeout','25','--require-hashes','--only-binary=:all:','-r',$doclock) 'PYPI_DOCLING_LOCK'
-    foreach($role in @('mongodb','node-adapter-runtime','librechat')){
+    foreach($role in @('mongodb','node-adapter-runtime','librechat','pgvector','rag-api')){
         $null=Invoke-Native $Docker @('image','pull',$Pins[$role]) ('DOCKER_PULL_'+$role)
     }
     $null=New-Item -ItemType Directory -Path (Join-Path $Root 'product\overlay\librechat\empty-native-skill') -Force
@@ -355,7 +388,7 @@ function Setup-Core {
     $null=Get-Python312
     $docker=Ensure-Docker
     $pins=Get-Pins
-    if((Notify 'Install Inquiry Desk Core for this Windows user? It downloads three immutable official container images and hash-locked Python packages, creates isolated private user data, and can require significant disk space. Vendor license consent remains separate.' -Ask) -ne [Windows.Forms.DialogResult]::Yes){throw 'USER_DECLINED_FIRST_RUN_EFFECT'}
+    if((Notify 'Install Inquiry Desk Core for this Windows user? It downloads five digest-pinned official container images (including native Project File Search) and hash-locked Python packages, creates isolated private user data, and can require significant disk space. Vendor license consent remains separate.' -Ask) -ne [Windows.Forms.DialogResult]::Yes){throw 'USER_DECLINED_FIRST_RUN_EFFECT'}
     New-OwnerFolder
     $owner=[ordered]@{
         schema='INQUIRY_DESK_LOCAL_OWNER_R227'
@@ -374,8 +407,20 @@ function Setup-Core {
     $values+=('CREDS_IV='+(New-Hex 16))
     $values+=@('ALLOW_EMAIL_LOGIN=true','ALLOW_REGISTRATION=true','ALLOW_SOCIAL_LOGIN=false','ALLOW_SOCIAL_REGISTRATION=false','OPENAI_API_KEY=user_provided','ANTHROPIC_API_KEY=user_provided','GOOGLE_KEY=user_provided')
     [IO.File]::WriteAllLines($EnvFile,[string[]]$values,[Text.UTF8Encoding]::new($false))
+    # Private per-user vector storage credentials. RAG embeds require separately
+    # authorized provider settings: no copying a user_provided chat/model key.
+    $pgPassword=New-Hex 32
+    $pgValues=@('POSTGRES_DB=librechat_vectors','POSTGRES_USER=librechat_local',
+        ('POSTGRES_PASSWORD='+$pgPassword))
+    [IO.File]::WriteAllLines($PgEnvFile,[string[]]$pgValues,[Text.UTF8Encoding]::new($false))
+    $jwtLine=@($values | Where-Object {$_ -match '^JWT_SECRET=[a-f0-9]{64}$'})
+    if($jwtLine.Count -ne 1){throw 'RAG_NATIVE_USER_JWT_OWNER_NOT_EXACT'}
+    $ragValues=@($pgValues + @('DB_HOST=vectordb','DB_PORT=5432',
+        [string]$jwtLine[0], 'EMBEDDINGS_PROVIDER=openai'))
+    [IO.File]::WriteAllLines($RagEnvFile,[string[]]$ragValues,[Text.UTF8Encoding]::new($false))
     [IO.File]::WriteAllText($OwnerFile,($owner|ConvertTo-Json -Depth 6),[Text.UTF8Encoding]::new($false))
     Complete-SetupCore ([pscustomobject]$owner) $docker $pins
+    Configure-FileSearch -DuringSetup
 }
 function Open-Core {
     if(!(Test-Path -LiteralPath $OwnerFile -PathType Leaf)){Setup-Core;return}
@@ -393,6 +438,83 @@ function Open-Core {
     Open-Window $owner
     Wait-ForFirstUserAndSeal $owner $docker $pins
 }
+
+function Configure-FileSearch([switch]$DuringSetup) {
+    # Explicit opt-in to a DIFFERENT paid embeddings API credential. Do not
+    # borrow user_provided chat keys or log the entered value.
+    Assert-CodeOnlyManifest
+    $owner=Get-Owner
+    if(!(Test-Path -LiteralPath $RagEnvFile -PathType Leaf)){throw 'FILE_SEARCH_PRIVATE_ENV_MISSING'}
+    if((Notify 'Project 文件检索需要单独的 OpenAI Embeddings API Key，可能产生费用。ChatGPT 订阅不包含这项 API 额度。是否现在配置？取消不影响普通聊天。' -Ask) -ne [Windows.Forms.DialogResult]::Yes){return}
+    Add-Type -AssemblyName System.Windows.Forms
+    Add-Type -AssemblyName System.Drawing
+    $form=New-Object Windows.Forms.Form
+    $form.Text='Inquiry Desk｜配置文件检索'
+    $form.Size=[Drawing.Size]::new(490,205)
+    $form.StartPosition=[Windows.Forms.FormStartPosition]::CenterScreen
+    $form.FormBorderStyle=[Windows.Forms.FormBorderStyle]::FixedDialog
+    $form.MaximizeBox=$false
+    $form.MinimizeBox=$false
+    $label=New-Object Windows.Forms.Label
+    $label.Text='请输入用于文件检索的独立 OpenAI API Key（只保存到本机个人私有配置）：'
+    $label.Location=[Drawing.Point]::new(16,18)
+    $label.Size=[Drawing.Size]::new(445,38)
+    $field=New-Object Windows.Forms.TextBox
+    $field.Location=[Drawing.Point]::new(16,63)
+    $field.Size=[Drawing.Size]::new(445,26)
+    $field.MaxLength=256
+    $field.UseSystemPasswordChar=$true
+    $ok=New-Object Windows.Forms.Button
+    $ok.Text='保存'
+    $ok.Location=[Drawing.Point]::new(286,111)
+    $ok.DialogResult=[Windows.Forms.DialogResult]::OK
+    $cancel=New-Object Windows.Forms.Button
+    $cancel.Text='取消'
+    $cancel.Location=[Drawing.Point]::new(383,111)
+    $cancel.DialogResult=[Windows.Forms.DialogResult]::Cancel
+    $form.Controls.AddRange(@($label,$field,$ok,$cancel))
+    $form.AcceptButton=$ok
+    $form.CancelButton=$cancel
+    $key=$null
+    try {
+        if($form.ShowDialog() -ne [Windows.Forms.DialogResult]::OK){return}
+        $key=$field.Text.Trim()
+    } finally {
+        $field.Clear()
+        $form.Dispose()
+    }
+    if($key -cnotmatch '^sk-[A-Za-z0-9_-]{20,250}$'){
+        Notify '密钥格式无法验证，没有保存。请确认复制的是 OpenAI API Key，而不是 ChatGPT 登录密码。'|Out-Null
+        return
+    }
+    $before=[IO.File]::ReadAllLines($RagEnvFile)
+    if(@($before|Where-Object {$_ -cmatch '^RAG_OPENAI_API_KEY='}).Count -gt 1){
+        throw 'FILE_SEARCH_DUPLICATED_PRIVATE_KEY_ENTRY'
+    }
+    $clean=@($before|Where-Object {$_ -cnotmatch '^RAG_OPENAI_API_KEY='})
+    if(@($clean|Where-Object {$_ -ceq 'EMBEDDINGS_PROVIDER=openai'}).Count -ne 1){
+        throw 'FILE_SEARCH_PROVIDER_IDENTITY_CHANGED'
+    }
+    $pending=$RagEnvFile+'.new'
+    if(Test-Path -LiteralPath $pending){throw 'FILE_SEARCH_PENDING_SECRET_COLLISION'}
+    try {
+        [IO.File]::WriteAllLines($pending,[string[]]($clean+@('RAG_OPENAI_API_KEY='+$key)),[Text.UTF8Encoding]::new($false))
+        [IO.File]::Replace($pending,$RagEnvFile,$null)
+    } finally {
+        if(Test-Path -LiteralPath $pending){Remove-Item -LiteralPath $pending -Force}
+        $key=$null
+    }
+    # Both initial Setup and later explicit configuration must activate the
+    # new RAG env. Setup already started rag_api before the user's optional
+    # key entry; skipping recreation here silently left File Search disabled.
+    # Scope the effect to this one user's named Compose RAG service only.
+    $docker=Get-Command docker.exe -ErrorAction SilentlyContinue
+    if($docker -and (Test-Path -LiteralPath $docker.Source) -and (Test-DockerEngine $docker.Source)){
+        $null=Invoke-Compose $docker.Source $owner (Get-Pins) @('up','--detach','--no-deps','--force-recreate','--pull','never','rag_api')
+    }
+    Notify '文件检索密钥已保存到本机私有配置。重新打开 Inquiry Desk 后可测试 File Search。模型费用由你的 API 提供商另行计费。'|Out-Null
+}
+
 function Shutdown-Core {
     # Exact code integrity is mandatory even on the uninstaller's path.
     # Do not stop unrelated Docker containers or delete user-owned volumes.
@@ -422,6 +544,7 @@ try {
         Write-Output ([pscustomobject]@{Stage='R227_THIN_PRODUCT_STATIC_SOURCE_CHECK';CodeSHA='PASS';WindowsBuild=$os.Build;ProductPASS=$false} | ConvertTo-Json -Compress)
     } elseif($Mode -eq 'Setup'){Setup-Core}
     elseif($Mode -eq 'Open'){Open-Core}
+    elseif($Mode -eq 'ConfigureFileSearch'){Configure-FileSearch}
     else {Shutdown-Core}
 } catch {
     if($Mode -ne 'Check') {

@@ -1,15 +1,15 @@
 {
-  "schema": "R227_ONLINE_CORE_EXACT_UPSTREAM_REUSE_NONSHIPPING",
+  "schema": "P4A_FULL_PROJECT_NATIVE_RAG_EXACT_IMAGE_CANDIDATE_NONSHIPPING",
   "fact_class": "CANDIDATE_NOT_RELEASE_NOT_PROGRAM_AUTHORITY",
   "platform": "linux/amd64",
   "upstream_images": [
     {
       "role": "librechat",
       "repository": "ghcr.io/librechat-ai/librechat",
-      "version": "v0.8.8",
-      "digest": "sha256:5b706bcee1ca154a1e2987303aaeca0eb27f97919cccee4bb604226c2f8abf61",
-      "digest_scope": "multiarch_index",
-      "source": "LibreChat-AI GHCR public v0.8.8"
+      "version": "v0.8.9-rc1",
+      "digest": "sha256:4a540a793a573b0e0f674b7831dc9c71d64e544215469b3f69caebb622e4972d",
+      "digest_scope": "linux_amd64_manifest",
+      "source": "GHCR official v0.8.9-rc1 exact linux/amd64 manifest verified 2026-10-31; pre-release NONSHIPPING"
     },
     {
       "role": "mongodb",
@@ -26,6 +26,22 @@
       "digest": "sha256:4eefa1bfce4197942661ef9148247d779ddf1bb0ee006d3294a467609de60724",
       "digest_scope": "linux_amd64_manifest",
       "source": "Docker Hub official Node image layers"
+    },
+    {
+      "role": "pgvector",
+      "repository": "docker.io/pgvector/pgvector",
+      "version": "0.8.0-pg15-trixie",
+      "digest": "sha256:7ed468f55926b0284a51848dcb2d7a4cc645581a508f6293956f1fca51bdeceb",
+      "digest_scope": "linux_amd64_manifest",
+      "source": "Docker Hub published linux/amd64 digest, remote machine pull and runtime acceptance still NOT_PROVEN"
+    },
+    {
+      "role": "rag-api",
+      "repository": "registry.librechat.ai/librechat-ai/librechat-rag-api-dev-lite",
+      "version": "latest_metadata_snapshot_2026_10_31",
+      "digest": "sha256:3577689eedb1a74d4de69d70cee70b4cd42a9375ad74cdd5238ffc19a97392e3",
+      "digest_scope": "linux_amd64_manifest",
+      "source": "Docker manifest inspect --verbose 2026-10-31 linux/amd64 exact digest, remote pull and real embedding NOT_PROVEN"
     }
   ],
   "delivery_model": "THIN_ONLINE_SINGLE_EXE_PRODUCT_CODE_INLINE_DEPENDENCIES_DOWNLOADED_ON_USER_APPROVAL",

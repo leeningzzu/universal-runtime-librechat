@@ -10,15 +10,17 @@ Third-party content is not relicensed by the original-source LICENSE:
 1. **LibreChat** — https://github.com/LibreChat-AI/LibreChat
 
    LibreChat is an upstream dependency and replaceable user-facing shell.
-   Its source repository declares MIT licensing. The upstream v0.8.8
-   reference is pinned to commit
-   e8f3be08623663d4ad7f7241e693c94469b63bb0.
-   The main branch is source-only. This isolated NONSHIPPING candidate
-   branch contains a modified compiled LibreChat API overlay; it retains the
-   upstream MIT license separately under licenses/LibreChat-v0.8.8-MIT-LICENSE.txt.
-   The patches/librechat/README.md file contains a private-modification
-   path/SHA inventory only. Any later copy or patch redistribution must
-   carry upstream's applicable license/copyright notices.
+   Its source repository declares MIT licensing. The preserved v0.8.8
+   candidate used upstream commit e8f3be08623663d4ad7f7241e693c94469b63bb0.
+   The isolated NONSHIPPING full-Project successor reuses LibreChat
+   v0.8.9-rc1 at exact source commit 8d3da9bbb220a0a96be9330a2e1cbd385fb786d5,
+   including its native Project reference-file UI/API. Additional scoped
+   R195 C5 modifications preserve upstream MIT rights and notices. The
+   old v0.8.8 compiled API is not an active consumer of the rc1 candidate.
+   The exact upstream MIT license text is retained at
+   licenses/LibreChat-v0.8.8-MIT-LICENSE.txt (identical SHA256 to rc1 LICENSE).
+   Any later copy or patch redistribution must preserve the applicable
+   upstream license/copyright notices and complete dependency provenance.
 
 2. **markdown-it 14.3.1** — copyright (c) 2014 Vitaly Puzrin and
    Alex Kocharin, among relevant upstream rights holders.

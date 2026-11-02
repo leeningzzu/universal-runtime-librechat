@@ -11,3 +11,22 @@ NOTICE -text -eol
 licenses/LibreChat-v0.8.8-MIT-LICENSE.txt -text -eol
 # Frozen previously-tested C5 candidate source: preserve archived bytes exactly.
 native_c5_candidate/** -text -eol -diff whitespace=cr-at-eol
+
+# Preserve exact upstream/R195 frontend patch bytes (including CRLF, BOM) so
+# a GitHub-only clone rechecks the original SHA-256 and official RC1 preimage.
+patches/librechat/v0.8.9-rc1/** -text -eol whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+# Current immutable nonshipping source/build receipts are byte evidence.
+release/P4A_RC1_NATIVE_PROJECT_FILES_SOURCE_CANDIDATE_R002.json -text -eol
+release/P4A_RC1_NATIVE_PROJECT_FILES_R002_REAL_EXE_WINDOWS_ENTRY_RECEIPT_R001.json -text -eol
+
+# Official generated frontend assets are vendor build output: preserve byte-for-byte.
+# Whitespace inside JS embedded demos/template strings is semantic; do not rewrite
+# generated assets merely to silence Git trailing-space checks.
+windows/inquiry_desk/payload/product/overlay/librechat/frontend-dist/** -text -diff whitespace=-blank-at-eol,-blank-at-eof
+
+# These are SHA-locked original uploads or immutable mature source fixtures;
+# existing Markdown hard line-break spaces/CRLF are intentional original bytes.
+docs/project_sources/** whitespace=-blank-at-eol,-blank-at-eof
+windows/inquiry_desk/payload/product/overlay/librechat/c5/runtimeProjectDeleteRetirement.c5.js whitespace=-blank-at-eof
+release/P4A_RC1_NATIVE_PROJECT_FILES_SOURCE_CANDIDATE_R002.json whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+release/P4A_RC1_NATIVE_PROJECT_FILES_R002_REAL_EXE_WINDOWS_ENTRY_RECEIPT_R001.json whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof

@@ -1,6 +1,6 @@
-# P4A R206 NONSHIPPING generated template, not user live config
+# Official LibreChat rc1 config 1.3.18 NONSHIPPING candidate, not user live config
 # Provider keys and accounts must be created on target machine
-version: 1.3.17
+version: 1.3.18
 cache: true
 fileConfig:
   retainedFileCleanup: false

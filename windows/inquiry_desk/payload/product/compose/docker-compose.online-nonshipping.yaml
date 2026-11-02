@@ -1,5 +1,5 @@
 # R227 online, official pinned digest reuse; nonshipping pilot.
-# Project-first Core: single LibreChat UI, Mongo and official Node runtime for thin first-party adapter.
+# P4A Project experience candidate: same LibreChat UI and Runtime Adapter plus official RAG/pgvector; no second shell or DB for Chats.
 name: ${AIDES_LOCAL_COMPOSE_ID:?owner isolated project required}
 services:
   mongodb:
@@ -12,6 +12,36 @@ services:
       - mongo-data:/data/db
       - mongo-configdb:/data/configdb
     networks: [app-internal]
+  # Official LibreChat file-search backing store. Private, Project-owned named volume;
+  # no host port or default developer database credentials.
+  vectordb:
+    container_name: "${AIDES_LOCAL_COMPOSE_ID}-vectordb"
+    image: "${AIDES_PGVECTOR_IMAGE:?exact linux amd64 pgvector digest required}"
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+      - path: "${AIDES_PGVECTOR_ENV_FILE:?user-owned private pgvector env required}"
+        required: true
+    volumes:
+      - pgvector-data:/var/lib/postgresql/data
+    networks: [app-internal]
+  # LibreChat native RAG API; embedding-provider consent and availability remain
+  # independent of chat/model API credentials. Never borrow a user_provided key.
+  rag_api:
+    container_name: "${AIDES_LOCAL_COMPOSE_ID}-rag-api"
+    image: "${AIDES_RAG_API_IMAGE:?exact linux amd64 official RAG digest required}"
+    pull_policy: never
+    restart: unless-stopped
+    depends_on:
+      vectordb: {condition: service_started}
+    env_file:
+      - path: "${AIDES_RAG_ENV_FILE:?user-owned private RAG env required}"
+        required: true
+    environment:
+      DB_HOST: vectordb
+      DB_PORT: "5432"
+      RAG_PORT: "8000"
+    networks: [app-internal, ui-egress]
   runtime-adapter:
     container_name: "${AIDES_LOCAL_COMPOSE_ID}-runtime-adapter"
     image: "${AIDES_ADAPTER_IMAGE:?official pinned node image required}"
@@ -61,6 +91,7 @@ services:
       PORT: "3080"
       APP_TITLE: "Inquiry Desk"
       MONGO_URI: "mongodb://mongodb:27017/LibreChat"
+      RAG_API_URL: "http://rag_api:8000"
       UR_RUNTIME_ADAPTER_BASE: "http://ur-runtime-adapter:9000"
       DOMAIN_CLIENT: "http://127.0.0.1:${AIDES_LOOPBACK_PORT:?assigned loopback}"
       DOMAIN_SERVER: "http://127.0.0.1:${AIDES_LOOPBACK_PORT:?assigned loopback}"
@@ -74,10 +105,6 @@ services:
         target: /app/librechat.yaml
         read_only: true
       - type: bind
-        source: "${AIDES_PAYLOAD_ROOT}/librechat/api.index.cjs"
-        target: /app/packages/api/dist/index.cjs
-        read_only: true
-      - type: bind
         source: "${AIDES_PAYLOAD_ROOT}/librechat/empty-native-skill"
         target: /app/skill/workbench-product-guide
         read_only: true
@@ -85,13 +112,82 @@ services:
         source: "${AIDES_PAYLOAD_ROOT}/librechat/agent.client.js"
         target: /app/api/server/controllers/agents/client.js
         read_only: true
+      # Official rc1 native Projects router with reference file CRUD and exact
+      # fail-closed DELETE until the complete R195 C5 owners/UI are admitted.
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/projects.js"
+        target: /app/api/server/routes/projects.js
+        read_only: true
       - type: bind
         source: "${AIDES_PAYLOAD_ROOT}/librechat/agent.chat.js"
         target: /app/api/server/routes/agents/chat.js
         read_only: true
+      # Existing R195 Runtime Project context owner required by the already-mounted
+      # Agent Chat and Client; no second context store or shell.
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/ProjectAssistantProfile.js"
+        target: /app/api/server/services/ProjectAssistantProfile.js
+        read_only: true
+      # Existing R195 Runtime context and agent-native Project recall consumers.
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/projectRuntimeMemoryContext.js"
+        target: /app/api/server/middleware/projectRuntimeMemoryContext.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/projectChatToolsBridge.js"
+        target: /app/api/server/services/Endpoints/agents/projectChatToolsBridge.js
+        read_only: true
       - type: bind
         source: "${AIDES_PAYLOAD_ROOT}/librechat/projectChatRecall.js"
         target: /app/api/server/services/Endpoints/agents/projectChatRecall.js
+        read_only: true
+      # R195 mature C5 native owner cascade inside the SINGLE v0.8.8 server.
+      # Exact preserved prior sources; all mounts read-only; NO Product PASS.
+      # Official v0.8.8 frontend from the exact locked source build; no
+      # second shell, reverse proxy, frontend server or user-data mount.
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/frontend-dist"
+        target: /app/client/dist
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/server.index.js"
+        target: /app/api/server/index.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/runtimeProjects.js"
+        target: /app/api/server/routes/runtimeProjects.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/nativeProjectDocumentBundle.js"
+        target: /app/api/server/routes/nativeProjectDocumentBundle.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/C5WholeProjectDeleteOwners.js"
+        target: /app/api/server/services/C5WholeProjectDeleteOwners.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/C5WriteFence.js"
+        target: /app/api/server/services/C5WriteFence.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/ProjectNativeFile.js"
+        target: /app/api/server/services/ProjectNativeFile.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/ProjectSource.js"
+        target: /app/api/server/services/ProjectSource.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/Files/crossStorePermanentDelete.js"
+        target: /app/api/server/services/Files/crossStorePermanentDelete.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/Files/nativeDeleteReferenceGuard.js"
+        target: /app/api/server/services/Files/nativeDeleteReferenceGuard.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_PAYLOAD_ROOT}/librechat/c5"
+        target: /app/api/server/routes/c5
         read_only: true
     networks: [app-internal, ui-ingress, ui-egress]
 networks:
@@ -104,3 +200,4 @@ volumes:
   mongo-configdb: {}
   files-uploads: {}
   files-images: {}
+  pgvector-data: {}
