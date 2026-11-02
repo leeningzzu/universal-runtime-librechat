@@ -73,21 +73,31 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'PRODUCT_SOURCE_INTEGRITY_FAILED' }
           python tools/verify_github_continuity.py
           if ($LASTEXITCODE -ne 0) { throw 'PROJECT_AUTHORITY_OR_MATURE_RC1_PATCH_SHA_MISSING' }
-      - name: Retrieve and pin NSIS 3.13 official ZIP with exact vendor SHA
+      - name: Recover exact official NSIS 3.13 ZIP from mature SHA-verified Chocolatey package
         shell: pwsh
         run: |
           $ErrorActionPreference='Stop'
-          $url='https://sourceforge.net/projects/nsis/files/NSIS%203/3.13/nsis-3.13.zip/download'
-          $zip=Join-Path $env:RUNNER_TEMP 'InquiryDesk_Official_NSIS_3_13.zip'
-          Invoke-WebRequest -Uri $url -OutFile $zip -MaximumRedirection 6 -TimeoutSec 90 -ErrorAction Stop
+          $url='https://community.chocolatey.org/api/v2/package/nsis.portable/3.13.0'
+          $nupkg=Join-Path $env:RUNNER_TEMP 'InquiryDesk_NSIS_313_Chocolatey_3_13_0.nupkg'
+          Invoke-WebRequest -Uri $url -OutFile $nupkg -MaximumRedirection 6 -TimeoutSec 90 -ErrorAction Stop
+          if ((Get-FileHash $nupkg -Algorithm SHA256).Hash.ToLowerInvariant() -cne
+              'c3597a5bbb40521bad9e762b3175b8bcde4768fb8a51376471a3d8293a2e86f2') {
+            throw 'PINNED_CHOCOLATEY_NSIS313_PACKAGE_BYTES_CHANGED'
+          }
+          $packagezip=Join-Path $env:RUNNER_TEMP 'InquiryDesk_NSIS_313_Chocolatey_3_13_0.zip'
+          Copy-Item -LiteralPath $nupkg -Destination $packagezip
+          $pkgout=Join-Path $env:RUNNER_TEMP 'InquiryDesk_NSIS_313_Choco_Content'
+          Expand-Archive -LiteralPath $packagezip -DestinationPath $pkgout -ErrorAction Stop
+          $zip=Join-Path $pkgout 'tools/nsis-3.13.zip'
+          if (!(Test-Path $zip -PathType Leaf)) { throw 'MATURE_NSIS313_PACKAGE_MISSING_VENDOR_COMPILER' }
           if ((Get-FileHash $zip -Algorithm SHA256).Hash.ToLowerInvariant() -cne
               'ba63dffc4410ee89193e1cb5a41989991bd77c61068da17e3156d136b7b0b3d8') {
-            throw 'OFFICIAL_NSIS_313_VENDOR_ZIP_SHA_NOT_EQUAL'
+            throw 'ORIGINAL_OFFICIAL_NSIS313_VENDOR_SHA_NOT_MATCHED'
           }
           $out=Join-Path $env:RUNNER_TEMP 'InquiryDesk_NSIS_313'
           Expand-Archive -LiteralPath $zip -DestinationPath $out -ErrorAction Stop
-          $cmd=Join-Path $out 'nsis-3.13\makensis.exe'
-          if (!(Test-Path $cmd -PathType Leaf)) { throw 'NSIS_313_OFFICIAL_COMPILER_NOT_FOUND' }
+          $cmd=Join-Path $out 'nsis-3.13/makensis.exe'
+          if (!(Test-Path $cmd -PathType Leaf)) { throw 'EXACT_OFFICIAL_NSIS313_EXE_NOT_FOUND' }
           Add-Content -Path $env:GITHUB_ENV -Value ('ID_NSIS_313='+$cmd)
       - name: Rebuild exact NONSHIPPING R002 EXE from Github checkout only
         shell: pwsh
