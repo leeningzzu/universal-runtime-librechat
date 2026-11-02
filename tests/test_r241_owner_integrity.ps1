@@ -26,12 +26,22 @@ try {
     $OwnerRoot = Join-Path $TestRoot 'private_owner'
     $OwnerFile = Join-Path $OwnerRoot 'owner.json'
     $SourceManifest = Join-Path $Root 'manifest\SHA256SUMS'
+    # This historical negative fixture exercises the CURRENT R002 launcher
+    # code owner, not the retired v0.8.8 precompiled API. Keep the C5
+    # tamper/update/uninstall rejection proof family unchanged.
     $listedFiles = @(
         'product\runtime\src\universal_runtime\webapp.py',
         'product\runtime\src\universal_runtime\cli.py',
         'product\runtime\scripts\c5_current_protected_snapshot.py',
         'product\overlay\adapter\adapter.js',
-        'product\overlay\librechat\api.index.cjs'
+        'product\overlay\librechat\server.index.js',
+        'product\overlay\librechat\projects.js',
+        'product\overlay\librechat\ProjectAssistantProfile.js',
+        'product\overlay\librechat\projectRuntimeMemoryContext.js',
+        'product\overlay\librechat\projectChatToolsBridge.js',
+        'product\overlay\librechat\C5WholeProjectDeleteOwners.js',
+        'product\overlay\librechat\C5WriteFence.js',
+        'product\overlay\librechat\frontend-dist\index.html'
     )
     foreach ($name in $listedFiles) {
         $path = Join-Path $Root $name
@@ -58,6 +68,18 @@ try {
     }
     [IO.File]::WriteAllText($OwnerFile, ($owner | ConvertTo-Json), [Text.UTF8Encoding]::new($false))
     if (-not (Get-Owner)) { throw 'R241_VALID_OWNER_NOT_ACCEPTED' }
+    # Negative case introduced by official rc1 consumer replacement:
+    # an old precompiled API shadow MUST be rejected even if every listed
+    # new product-source SHA remains unchanged.
+    $legacy = Join-Path $Root 'product\overlay\librechat\api.index.cjs'
+    [IO.File]::WriteAllText($legacy,'R241_SYNTHETIC_STALE_OWNER_ONLY',[Text.UTF8Encoding]::new($false))
+    $shadowRejected = $false
+    try { $null = Get-Owner } catch {
+        $shadowRejected = ($_.Exception.Message -match 'LEGACY_COMPILED_API_MUST_NOT_SHADOW_RC1_NATIVE_PROJECT_FILES')
+    }
+    if (-not $shadowRejected) { throw 'RC1_RETIRED_COMPILED_API_SHADOW_ACCEPTED' }
+    Remove-Item -LiteralPath $legacy -Force
+
     [IO.File]::WriteAllText((Join-Path $Root $listedFiles[0]), 'R241_SYNTHETIC_TAMPER', [Text.UTF8Encoding]::new($false))
     $tamper = $false
     try { $null = Get-Owner } catch { $tamper = ($_.Exception.Message -match 'RELEASE_HASH_DRIFT') }
@@ -75,6 +97,7 @@ try {
         modified_code_daily = 'REJECTED'
         modified_code_uninstall = 'REJECTED'
         unapproved_version = 'REJECTED'
+        stale_v088_compiled_api_shadow = 'REJECTED'
         in_place_overwrite = 'BLOCKED'
         user_project_data_effect = 0
     } | ConvertTo-Json -Compress
