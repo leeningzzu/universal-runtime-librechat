@@ -9,6 +9,8 @@ Mandatory proof before considering ANY local staging removal:
 4. Fresh clone from GitHub without old Windows source directories passes tools/verify_distribution.py and tools/verify_github_continuity.py. GitHub alone is sufficient for development source and build provenance, but NOT private user account data.
 5. No active build/test process depends on a candidate staging directory; current user/source value and rollback value have been assessed individually.
 
+Historical archive: 56 previously untracked local P4A files are retained under archive/non_authority_p4a_pre_rc1_r002/ with an exact SHA manifest; these are NOT current route authority. Only after GitHub CI + fresh clone SHA may the byte-identical original staging copies be safely retired.
+
 Allowed to retire only exact inactive, reproducible scratch caches, obsolete incomplete temporary dependency archives and truly redundant failed installer duplicates, after all five proof families pass. Do not delete current source or EXE until remote reentry is independently verified. Never blindly clean a whole inbox, Desktop, Downloads, parent Runtime root or Docker host.
 
 NEVER delete or publish without separate authorization: real Chat/Project/Memory/File/Source/Library data, account credentials, API secrets, Mongo/pgvector volumes, user backups, rollback assets, signed production artifacts or original promoted Project Source authority. No Docker prune, compose down -v or recursive user-data deletion.

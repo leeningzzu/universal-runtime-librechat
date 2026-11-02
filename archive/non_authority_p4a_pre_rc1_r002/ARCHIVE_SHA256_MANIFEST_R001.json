@@ -1,0 +1,464 @@
+{
+  "schema": "INQUIRY_DESK_PRE_RC1_R002_NON_AUTHORITY_EXACT_RECOVERY_R001",
+  "fact_class": "RETENTION_ARCHIVE_NON_AUTHORITY",
+  "created_from_source_commit": "33bad01f74e1395824c1be781401a6ab3a3b211f",
+  "source_untracked_candidate_file_count": 56,
+  "source_total_bytes": 1436999,
+  "source_public_privacy_filename_secret_path_scan": "PASS_NO_FLAGGED_MATCHES",
+  "source_files_byte_identity_verification": "PASS_56_OF_56",
+  "active_runtime_or_user_project_data": "NOT_INCLUDED",
+  "sha_manifest_of_original_untracked_file_paths": {
+    "r242_isolated/BUILD_STATUS_GATE23_CONTEXT_AND_DELETE_SAFE_EXE_R001.md": {
+      "sha256": "66c29b50652bfd6e3b6250c532a8c6b2f920e0453acf338e1fa7fd6306686c13",
+      "bytes": 5665,
+      "role": "TRANSIENT_BUILD_STATUS_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/BUILD_STATUS_GATE23_CONTEXT_AND_DELETE_SAFE_EXE_R001.md",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/BUILD_STATUS_GATE23_CONTEXT_AND_DELETE_SAFE_EXE_R001.md",
+      "current_active_product": false
+    },
+    "r242_isolated/BUILD_STATUS_P4A_COMPLETE_PROJECT_EXE_CANDIDATE_R001.md": {
+      "sha256": "5fe0639a71fa7bd336fc26fc47889bad3219eeaaf233f627d5312a413a2d938d",
+      "bytes": 3247,
+      "role": "TRANSIENT_BUILD_STATUS_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/BUILD_STATUS_P4A_COMPLETE_PROJECT_EXE_CANDIDATE_R001.md",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/BUILD_STATUS_P4A_COMPLETE_PROJECT_EXE_CANDIDATE_R001.md",
+      "current_active_product": false
+    },
+    "r242_isolated/BUILD_STATUS_P4A_R002_REAL_EXE_AND_PROJECT_GATES_R001.md": {
+      "sha256": "c5060b0aaef6a4953af21501ffce11dd8661224ebe6489680bf7827fef364dfc",
+      "bytes": 3111,
+      "role": "TRANSIENT_BUILD_STATUS_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/BUILD_STATUS_P4A_R002_REAL_EXE_AND_PROJECT_GATES_R001.md",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/BUILD_STATUS_P4A_R002_REAL_EXE_AND_PROJECT_GATES_R001.md",
+      "current_active_product": false
+    },
+    "r242_isolated/BUILD_STATUS_P4A_R195_NATIVE_BACKEND_EXE_AND_FRONTEND_SOURCE_ONLY_R001.md": {
+      "sha256": "f8fa331f5a46a08c789d777dbb521af70635369bd9eae0dc273f37bfcaabba99",
+      "bytes": 3237,
+      "role": "TRANSIENT_BUILD_STATUS_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/BUILD_STATUS_P4A_R195_NATIVE_BACKEND_EXE_AND_FRONTEND_SOURCE_ONLY_R001.md",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/BUILD_STATUS_P4A_R195_NATIVE_BACKEND_EXE_AND_FRONTEND_SOURCE_ONLY_R001.md",
+      "current_active_product": false
+    },
+    "r242_isolated/BUILD_STATUS_P4A_R195_NATIVE_UI_EXE_467_SHA_PASS_E2E_OPEN_R001.md": {
+      "sha256": "7918ae57820038741cc5c0de51737a42aff81011ff68c17a605e7ca84241baeb",
+      "bytes": 6162,
+      "role": "TRANSIENT_BUILD_STATUS_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/BUILD_STATUS_P4A_R195_NATIVE_UI_EXE_467_SHA_PASS_E2E_OPEN_R001.md",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/BUILD_STATUS_P4A_R195_NATIVE_UI_EXE_467_SHA_PASS_E2E_OPEN_R001.md",
+      "current_active_product": false
+    },
+    "r242_isolated/BUILD_STATUS_R242_R001.md": {
+      "sha256": "96dba7898203e66d93477c7472043534d53188705ea680d465e5e05ab142ce71",
+      "bytes": 4814,
+      "role": "TRANSIENT_BUILD_STATUS_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/BUILD_STATUS_R242_R001.md",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/BUILD_STATUS_R242_R001.md",
+      "current_active_product": false
+    },
+    "r242_isolated/OFFICIAL_V088_C5_FRONTEND_DIST_TO_SINGLE_SHELL_PROVENANCE_R001.json": {
+      "sha256": "bed5e26ad5691f4e82af0560464f80011c60653c84040005aa42013aa42e6b4e",
+      "bytes": 40591,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/OFFICIAL_V088_C5_FRONTEND_DIST_TO_SINGLE_SHELL_PROVENANCE_R001.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/OFFICIAL_V088_C5_FRONTEND_DIST_TO_SINGLE_SHELL_PROVENANCE_R001.json",
+      "current_active_product": false
+    },
+    "r242_isolated/R195_NATIVE_FRONTEND_V088_SOURCE_PATCH_PROVENANCE_R001.json": {
+      "sha256": "2a373c7fe23b643d55440bf9ba2c5249e9a53f7673d07364b884ed521d1b7420",
+      "bytes": 1475,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/R195_NATIVE_FRONTEND_V088_SOURCE_PATCH_PROVENANCE_R001.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/R195_NATIVE_FRONTEND_V088_SOURCE_PATCH_PROVENANCE_R001.json",
+      "current_active_product": false
+    },
+    "r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/agent.chat.js": {
+      "sha256": "8e1f176e441bdda50a42a03f19bbdfe084bba8086171d58c1f72ecf50b9e57ce",
+      "bytes": 4542,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/agent.chat.js",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/agent.chat.js",
+      "current_active_product": false
+    },
+    "r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/agent.client.js": {
+      "sha256": "7e32e775ef37379f895da8c3c5b59be20ca975dd6892029ecfd103b264a82a0e",
+      "bytes": 274908,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/agent.client.js",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/agent.client.js",
+      "current_active_product": false
+    },
+    "r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/projectChatToolsBridge.js": {
+      "sha256": "3a030b9e9b22198a2d0a6019e19926c29ec7909019ffe9bf403915bf30ebb956",
+      "bytes": 2316,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/projectChatToolsBridge.js",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/projectChatToolsBridge.js",
+      "current_active_product": false
+    },
+    "r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/projectRuntimeMemoryContext.js": {
+      "sha256": "f10ad96e2f982a4f1802eb7d9fbcbe89cc3f65f39b6a607721c84e3e25c88ea9",
+      "bytes": 4189,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/projectRuntimeMemoryContext.js",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/projectRuntimeMemoryContext.js",
+      "current_active_product": false
+    },
+    "r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/projects.js": {
+      "sha256": "8fd4303bcee8ce3029d9ed9583602698d741405476fd8d41f6f8d4d6cc29b704",
+      "bytes": 3150,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/projects.js",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/projects.js",
+      "current_active_product": false
+    },
+    "r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/server.index.js": {
+      "sha256": "85c06b34d25a9e8eb11a98164e292db5f92a488062f36e43a0dc9fddff612184",
+      "bytes": 26502,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/server.index.js",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/RC1_NATIVE_FILES_R195_SINGLE_SHELL_STAGED_PATCH_R001/server.index.js",
+      "current_active_product": false
+    },
+    "r242_isolated/RC1_OFFICIAL_PROJECT_FILES_AND_R195_C5_NATIVE_CLIENT_SOURCE_R001.json": {
+      "sha256": "4f4356fc12367a7a1368b331e4bebfa8965201c7d87a96de0cd189ab08f37268",
+      "bytes": 2164,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/RC1_OFFICIAL_PROJECT_FILES_AND_R195_C5_NATIVE_CLIENT_SOURCE_R001.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/RC1_OFFICIAL_PROJECT_FILES_AND_R195_C5_NATIVE_CLIENT_SOURCE_R001.json",
+      "current_active_product": false
+    },
+    "r242_isolated/README_PROOF_CEILING.md": {
+      "sha256": "e891e50834ea8a55fffa9c5ce9770a224372580133f6d66f63c1a1e8fd5ba620",
+      "bytes": 3341,
+      "role": "TRANSIENT_BUILD_STATUS_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/README_PROOF_CEILING.md",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/README_PROOF_CEILING.md",
+      "current_active_product": false
+    },
+    "r242_isolated/compose/docker-compose.c5-synthetic.override.yaml": {
+      "sha256": "19d2d45766182c7a25ca5b7ca31f40362f65a168cda1202dca87c4fc7b8baff2",
+      "bytes": 2689,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/compose/docker-compose.c5-synthetic.override.yaml",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/compose/docker-compose.c5-synthetic.override.yaml",
+      "current_active_product": false
+    },
+    "r242_isolated/native/projects.js": {
+      "sha256": "00bb8f93315543b80c4f57cd32ac0ffa54a74404da8a723b645b046232005d75",
+      "bytes": 3919,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/native/projects.js",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/native/projects.js",
+      "current_active_product": false
+    },
+    "r242_isolated/native_frontend_R195_SOURCE_ONLY/README_NOT_INSTALLED_IN_EXE.md": {
+      "sha256": "091d0c6750f38530c85c8fa6024d1c410429bc3e4713ff0ab5b5c530c06170c0",
+      "bytes": 701,
+      "role": "TRANSIENT_BUILD_STATUS_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/native_frontend_R195_SOURCE_ONLY/README_NOT_INSTALLED_IN_EXE.md",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/native_frontend_R195_SOURCE_ONLY/README_NOT_INSTALLED_IN_EXE.md",
+      "current_active_product": false
+    },
+    "r242_isolated/native_frontend_R195_SOURCE_ONLY/components/Projects/ProjectDeleteDialog.tsx": {
+      "sha256": "e75abd46847fab5d3054797febfbc57765d8aaf39e9808a9863007c48b006cec",
+      "bytes": 2482,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/native_frontend_R195_SOURCE_ONLY/components/Projects/ProjectDeleteDialog.tsx",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/native_frontend_R195_SOURCE_ONLY/components/Projects/ProjectDeleteDialog.tsx",
+      "current_active_product": false
+    },
+    "r242_isolated/native_frontend_R195_SOURCE_ONLY/data-provider/Projects/mutations.ts": {
+      "sha256": "fc818cb8714eda37159f106da5cdff5c093ecdcf208d4787fc4ffd319b64b480",
+      "bytes": 16263,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/native_frontend_R195_SOURCE_ONLY/data-provider/Projects/mutations.ts",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/native_frontend_R195_SOURCE_ONLY/data-provider/Projects/mutations.ts",
+      "current_active_product": false
+    },
+    "r242_isolated/native_frontend_v088_C5_PATCH_READY_SOURCE_ONLY/client/src/components/Projects/ProjectDeleteDialog.tsx": {
+      "sha256": "29e0d9e0679483f3c8679260b74da52f8406b7ed28685c462574cf96e5e0882f",
+      "bytes": 2191,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/native_frontend_v088_C5_PATCH_READY_SOURCE_ONLY/client/src/components/Projects/ProjectDeleteDialog.tsx",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/native_frontend_v088_C5_PATCH_READY_SOURCE_ONLY/client/src/components/Projects/ProjectDeleteDialog.tsx",
+      "current_active_product": false
+    },
+    "r242_isolated/native_frontend_v088_C5_PATCH_READY_SOURCE_ONLY/client/src/data-provider/Projects/mutations.ts": {
+      "sha256": "22be4b97e46518d4f1f0c72ba87323170709cbd574ad3cdfc9e531d40d89c1f8",
+      "bytes": 14003,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/native_frontend_v088_C5_PATCH_READY_SOURCE_ONLY/client/src/data-provider/Projects/mutations.ts",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/native_frontend_v088_C5_PATCH_READY_SOURCE_ONLY/client/src/data-provider/Projects/mutations.ts",
+      "current_active_product": false
+    },
+    "r242_isolated/native_frontend_v088_C5_PATCH_READY_SOURCE_ONLY/client/src/locales/en/translation.json": {
+      "sha256": "5f8f0f4149873dc89abca8ad0032c189313184f8f03fb80901af714025175981",
+      "bytes": 205967,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/native_frontend_v088_C5_PATCH_READY_SOURCE_ONLY/client/src/locales/en/translation.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/native_frontend_v088_C5_PATCH_READY_SOURCE_ONLY/client/src/locales/en/translation.json",
+      "current_active_product": false
+    },
+    "r242_isolated/native_frontend_v088_C5_PATCH_READY_SOURCE_ONLY/client/src/locales/zh-Hans/translation.json": {
+      "sha256": "634d38453001502a35b48d376af4e6c4ff25b8841e610fd2bcb6f1b9fec652e9",
+      "bytes": 92729,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/native_frontend_v088_C5_PATCH_READY_SOURCE_ONLY/client/src/locales/zh-Hans/translation.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/native_frontend_v088_C5_PATCH_READY_SOURCE_ONLY/client/src/locales/zh-Hans/translation.json",
+      "current_active_product": false
+    },
+    "r242_isolated/native_frontend_v088_C5_PATCH_READY_SOURCE_ONLY/client/src/locales/zh-Hant/translation.json": {
+      "sha256": "ec31e10103d1048ca2cb79b2f03b919b1e45df4d60196fc2866b21173b5cb22b",
+      "bytes": 127558,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/native_frontend_v088_C5_PATCH_READY_SOURCE_ONLY/client/src/locales/zh-Hant/translation.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/native_frontend_v088_C5_PATCH_READY_SOURCE_ONLY/client/src/locales/zh-Hant/translation.json",
+      "current_active_product": false
+    },
+    "r242_isolated/native_frontend_v088_official/client/src/components/Projects/ProjectDeleteDialog.tsx": {
+      "sha256": "e56b4c08949733094be843a82af8ebdf9260fb9c78e2ce6e2aad76e9830942da",
+      "bytes": 2262,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/native_frontend_v088_official/client/src/components/Projects/ProjectDeleteDialog.tsx",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/native_frontend_v088_official/client/src/components/Projects/ProjectDeleteDialog.tsx",
+      "current_active_product": false
+    },
+    "r242_isolated/native_frontend_v088_official/client/src/data-provider/Projects/mutations.ts": {
+      "sha256": "cc3eb03ad10031c70ba40823ce53f8dcab3ac324731ac0e9a984d516b7ccf410",
+      "bytes": 10148,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/native_frontend_v088_official/client/src/data-provider/Projects/mutations.ts",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/native_frontend_v088_official/client/src/data-provider/Projects/mutations.ts",
+      "current_active_product": false
+    },
+    "r242_isolated/native_frontend_v088_official/client/src/locales/en/translation.json": {
+      "sha256": "fbedc9f0401abb75cfdcaab465adb3dc5ddc26e70f89b2d0e93cf977e90da1e4",
+      "bytes": 205687,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/native_frontend_v088_official/client/src/locales/en/translation.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/native_frontend_v088_official/client/src/locales/en/translation.json",
+      "current_active_product": false
+    },
+    "r242_isolated/native_frontend_v088_official/client/src/locales/zh-Hans/translation.json": {
+      "sha256": "aaca179ba38a5ac1e36d9f61f502f26f1f722f63592bfe07198a7517b3b09c4a",
+      "bytes": 92460,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/native_frontend_v088_official/client/src/locales/zh-Hans/translation.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/native_frontend_v088_official/client/src/locales/zh-Hans/translation.json",
+      "current_active_product": false
+    },
+    "r242_isolated/native_frontend_v088_official/client/src/locales/zh-Hant/translation.json": {
+      "sha256": "f4cbed3baa1f51f0e0310b600d6890d74e30348c1975a087befb8b6eeda247e8",
+      "bytes": 127292,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/native_frontend_v088_official/client/src/locales/zh-Hant/translation.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/native_frontend_v088_official/client/src/locales/zh-Hant/translation.json",
+      "current_active_product": false
+    },
+    "r242_isolated/tests/test_c5_native_route.cjs": {
+      "sha256": "8fdab6017738a592d6d6d539cd84a7597fabbec549a4c6a08d6da8b14bef6406",
+      "bytes": 5008,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/tests/test_c5_native_route.cjs",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/tests/test_c5_native_route.cjs",
+      "current_active_product": false
+    },
+    "r242_isolated/tests/test_r195_live_native_route_fail_closed.cjs": {
+      "sha256": "1f668d33aa289de087bb7186c28804d00524cc150b79093d9067db5e74cb4c43",
+      "bytes": 6379,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/tests/test_r195_live_native_route_fail_closed.cjs",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/tests/test_r195_live_native_route_fail_closed.cjs",
+      "current_active_product": false
+    },
+    "r242_isolated/tests/test_r242_source_and_contract.py": {
+      "sha256": "1bc41d9584f6adefbad6807607b772678bbff313702461e962183a96dd8e277f",
+      "bytes": 2716,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/tests/test_r242_source_and_contract.py",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/tests/test_r242_source_and_contract.py",
+      "current_active_product": false
+    },
+    "r242_isolated/tests/test_real_r006_route_binding.cjs": {
+      "sha256": "d0eff26350165ce32b3e3144f70f68010b2c0ef3cba825a366f8141dd629614c",
+      "bytes": 3455,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/tests/test_real_r006_route_binding.cjs",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/tests/test_real_r006_route_binding.cjs",
+      "current_active_product": false
+    },
+    "r242_isolated/tests/test_stable_v088_project_delete_boundary.cjs": {
+      "sha256": "68cffa08604929d68769b3fc2ec5ed8ae66fd8bd11cec1b4107436a0c86b1082",
+      "bytes": 3019,
+      "role": "HISTORICAL_SOURCE_OR_TEST_ONLY_NON_AUTHORITY",
+      "original_relative_path": "r242_isolated/tests/test_stable_v088_project_delete_boundary.cjs",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/r242_isolated/tests/test_stable_v088_project_delete_boundary.cjs",
+      "current_active_product": false
+    },
+    "release/P4A_GATE23_REAL_EXE_RECEIPT_R001.json": {
+      "sha256": "075764f21fac45e0c24e604eba9f501decac62ed583fb6c68a16097371f29c99",
+      "bytes": 3108,
+      "role": "OBSOLETE_SOURCE_OR_BUILD_RECEIPT_NON_AUTHORITY",
+      "original_relative_path": "release/P4A_GATE23_REAL_EXE_RECEIPT_R001.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/release/P4A_GATE23_REAL_EXE_RECEIPT_R001.json",
+      "current_active_product": false
+    },
+    "release/P4A_GATE23_SOURCE_CANDIDATE.json": {
+      "sha256": "02f4aeb57c7a4c3e377d338df1b7ad29fe9e00ed17c93e8d6af0df00fc8b9013",
+      "bytes": 2055,
+      "role": "OBSOLETE_SOURCE_OR_BUILD_RECEIPT_NON_AUTHORITY",
+      "original_relative_path": "release/P4A_GATE23_SOURCE_CANDIDATE.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/release/P4A_GATE23_SOURCE_CANDIDATE.json",
+      "current_active_product": false
+    },
+    "release/P4A_R002_REAL_EXE_AND_BUILTIN_MANUAL_BYTE_RECEIPT_R001.json": {
+      "sha256": "99791b175bfce3e9f5c0aca5d31e59ab717388ead067bc96bf010ed9d1da8bf8",
+      "bytes": 2579,
+      "role": "OBSOLETE_SOURCE_OR_BUILD_RECEIPT_NON_AUTHORITY",
+      "original_relative_path": "release/P4A_R002_REAL_EXE_AND_BUILTIN_MANUAL_BYTE_RECEIPT_R001.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/release/P4A_R002_REAL_EXE_AND_BUILTIN_MANUAL_BYTE_RECEIPT_R001.json",
+      "current_active_product": false
+    },
+    "release/P4A_R002_SOURCE_CANDIDATE.json": {
+      "sha256": "db54984f7a94c1f1ba5aa8b18521280c99ed7357948aa5507cbb3d7fb8dab37c",
+      "bytes": 1945,
+      "role": "OBSOLETE_SOURCE_OR_BUILD_RECEIPT_NON_AUTHORITY",
+      "original_relative_path": "release/P4A_R002_SOURCE_CANDIDATE.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/release/P4A_R002_SOURCE_CANDIDATE.json",
+      "current_active_product": false
+    },
+    "release/P4A_R195_NATIVE_BACKEND_EXE_BYTE_RECEIPT_R001.json": {
+      "sha256": "ef38fa3c4404f0a6f69eafae4b63bb1e66701af8841def001f67daa601972773",
+      "bytes": 2288,
+      "role": "OBSOLETE_SOURCE_OR_BUILD_RECEIPT_NON_AUTHORITY",
+      "original_relative_path": "release/P4A_R195_NATIVE_BACKEND_EXE_BYTE_RECEIPT_R001.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/release/P4A_R195_NATIVE_BACKEND_EXE_BYTE_RECEIPT_R001.json",
+      "current_active_product": false
+    },
+    "release/P4A_R195_NATIVE_C5_SOURCE_CANDIDATE_R001.json": {
+      "sha256": "c8485746ce6c0588f04776a1aa6155599b24948474eeb64d4ab2e980c112073c",
+      "bytes": 4766,
+      "role": "OBSOLETE_SOURCE_OR_BUILD_RECEIPT_NON_AUTHORITY",
+      "original_relative_path": "release/P4A_R195_NATIVE_C5_SOURCE_CANDIDATE_R001.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/release/P4A_R195_NATIVE_C5_SOURCE_CANDIDATE_R001.json",
+      "current_active_product": false
+    },
+    "release/P4A_R195_NATIVE_UI_FULL_SOURCE_CANDIDATE_R001.json": {
+      "sha256": "3fdbf9e4b16691a8ce2c109fb0a71b5ae2623cb4423e7c74eb01e2fade9703a4",
+      "bytes": 2275,
+      "role": "OBSOLETE_SOURCE_OR_BUILD_RECEIPT_NON_AUTHORITY",
+      "original_relative_path": "release/P4A_R195_NATIVE_UI_FULL_SOURCE_CANDIDATE_R001.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/release/P4A_R195_NATIVE_UI_FULL_SOURCE_CANDIDATE_R001.json",
+      "current_active_product": false
+    },
+    "release/P4A_R195_NATIVE_UI_REAL_EXE_BUILD_RECEIPT_R001.json": {
+      "sha256": "10018da20fad389152ec3e3b57fff329ea6c7589baabe06e43913f4be199fa60",
+      "bytes": 2642,
+      "role": "OBSOLETE_SOURCE_OR_BUILD_RECEIPT_NON_AUTHORITY",
+      "original_relative_path": "release/P4A_R195_NATIVE_UI_REAL_EXE_BUILD_RECEIPT_R001.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/release/P4A_R195_NATIVE_UI_REAL_EXE_BUILD_RECEIPT_R001.json",
+      "current_active_product": false
+    },
+    "release/P4A_RC1_NATIVE_PROJECT_FILES_SOURCE_CANDIDATE_R001.json": {
+      "sha256": "66f68a1c0d3d7d5bfd632bb838500efae537e9d12b6f2fb0ab6d6b5242e8967e",
+      "bytes": 2814,
+      "role": "OBSOLETE_SOURCE_OR_BUILD_RECEIPT_NON_AUTHORITY",
+      "original_relative_path": "release/P4A_RC1_NATIVE_PROJECT_FILES_SOURCE_CANDIDATE_R001.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/release/P4A_RC1_NATIVE_PROJECT_FILES_SOURCE_CANDIDATE_R001.json",
+      "current_active_product": false
+    },
+    "release/P4A_REAL_EXE_BUILD_BYTE_RECEIPT_R001.json": {
+      "sha256": "53d12f61f317e7025e4061c7cce15877edd75cf329f947c0daa05ccaebd453ea",
+      "bytes": 1710,
+      "role": "OBSOLETE_SOURCE_OR_BUILD_RECEIPT_NON_AUTHORITY",
+      "original_relative_path": "release/P4A_REAL_EXE_BUILD_BYTE_RECEIPT_R001.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/release/P4A_REAL_EXE_BUILD_BYTE_RECEIPT_R001.json",
+      "current_active_product": false
+    },
+    "release/P4A_SOURCE_CANDIDATE.json": {
+      "sha256": "150faa054aa980f9f24c476782f6e76d1f6c84d8c348063df5f57b33491966c6",
+      "bytes": 1777,
+      "role": "OBSOLETE_SOURCE_OR_BUILD_RECEIPT_NON_AUTHORITY",
+      "original_relative_path": "release/P4A_SOURCE_CANDIDATE.json",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/release/P4A_SOURCE_CANDIDATE.json",
+      "current_active_product": false
+    },
+    "windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_GATE23_NONSHIPPING.nsi": {
+      "sha256": "b16a919c24a58cf35352f3cebb12973a3e83384f61a758b645771e728ca3a95c",
+      "bytes": 5125,
+      "role": "SUPERSEDED_INSTALLER_NONSHIPPING",
+      "original_relative_path": "windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_GATE23_NONSHIPPING.nsi",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_GATE23_NONSHIPPING.nsi",
+      "current_active_product": false
+    },
+    "windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_NONSHIPPING.nsi": {
+      "sha256": "40d1a6c6448355215fbd52ab14ead334fa37d9493db47bad0b90d21cfe5c303d",
+      "bytes": 4777,
+      "role": "SUPERSEDED_INSTALLER_NONSHIPPING",
+      "original_relative_path": "windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_NONSHIPPING.nsi",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_NONSHIPPING.nsi",
+      "current_active_product": false
+    },
+    "windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_R002_NONSHIPPING.nsi": {
+      "sha256": "bc55c0c2c9c36861338934336cf1f6972cdcd2746fa154098b038d2d737b285b",
+      "bytes": 5117,
+      "role": "SUPERSEDED_INSTALLER_NONSHIPPING",
+      "original_relative_path": "windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_R002_NONSHIPPING.nsi",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_R002_NONSHIPPING.nsi",
+      "current_active_product": false
+    },
+    "windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_R195NativeUI_NONSHIPPING.nsi": {
+      "sha256": "fc2c0a875a959717d7d287df4eea13b7beed13a127ab59ec109082a2db3e36b5",
+      "bytes": 5132,
+      "role": "SUPERSEDED_INSTALLER_NONSHIPPING",
+      "original_relative_path": "windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_R195NativeUI_NONSHIPPING.nsi",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_R195NativeUI_NONSHIPPING.nsi",
+      "current_active_product": false
+    },
+    "windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_R195Native_NONSHIPPING.nsi": {
+      "sha256": "305ce08ac16c77edad4b0767cccbfedefaca481dd85c7abe93631deba9bc668c",
+      "bytes": 5127,
+      "role": "SUPERSEDED_INSTALLER_NONSHIPPING",
+      "original_relative_path": "windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_R195Native_NONSHIPPING.nsi",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_R195Native_NONSHIPPING.nsi",
+      "current_active_product": false
+    },
+    "windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_RC1NativeProjectFiles_NONSHIPPING.nsi": {
+      "sha256": "6427ca517e261b08d3173078359d99d89c2f05ccc70495550e13d9a51b738a3b",
+      "bytes": 5162,
+      "role": "SUPERSEDED_INSTALLER_NONSHIPPING",
+      "original_relative_path": "windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_RC1NativeProjectFiles_NONSHIPPING.nsi",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/windows/inquiry_desk/installer/InquiryDesk_Setup_P4A_RC1NativeProjectFiles_NONSHIPPING.nsi",
+      "current_active_product": false
+    },
+    "windows/inquiry_desk/installer/P4A_GATE23_EXACT_UNINSTALL_ALLOWLIST.nsh": {
+      "sha256": "84083946fe0b317b6118ec955864760a61b12c67981cdc07cfd105186c5e7db0",
+      "bytes": 8321,
+      "role": "SUPERSEDED_INSTALLER_NONSHIPPING",
+      "original_relative_path": "windows/inquiry_desk/installer/P4A_GATE23_EXACT_UNINSTALL_ALLOWLIST.nsh",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/windows/inquiry_desk/installer/P4A_GATE23_EXACT_UNINSTALL_ALLOWLIST.nsh",
+      "current_active_product": false
+    },
+    "windows/inquiry_desk/installer/P4A_R195_EXACT_UNINSTALL_ALLOWLIST.nsh": {
+      "sha256": "f5117bd7069184e26bb1c8737d6df76b0f2d55ad90fd5f23fba2276bff621c4a",
+      "bytes": 9989,
+      "role": "SUPERSEDED_INSTALLER_NONSHIPPING",
+      "original_relative_path": "windows/inquiry_desk/installer/P4A_R195_EXACT_UNINSTALL_ALLOWLIST.nsh",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/windows/inquiry_desk/installer/P4A_R195_EXACT_UNINSTALL_ALLOWLIST.nsh",
+      "current_active_product": false
+    },
+    "windows/inquiry_desk/installer/P4A_R195_UI_EXACT_UNINSTALL_ALLOWLIST.nsh": {
+      "sha256": "9a5656488756223687e16762332c795d4ab1be34199f578752fe1177c9c37052",
+      "bytes": 43948,
+      "role": "SUPERSEDED_INSTALLER_NONSHIPPING",
+      "original_relative_path": "windows/inquiry_desk/installer/P4A_R195_UI_EXACT_UNINSTALL_ALLOWLIST.nsh",
+      "archive_relative_path": "archive/non_authority_p4a_pre_rc1_r002/windows/inquiry_desk/installer/P4A_R195_UI_EXACT_UNINSTALL_ALLOWLIST.nsh",
+      "current_active_product": false
+    }
+  },
+  "promotion_or_product_pass": false,
+  "archive_cannot_supersede": "AGENTS.md, docs/CURRENT_DELIVERY_STATE_R003.md, release/P4A_RC1_NATIVE_PROJECT_FILES_SOURCE_CANDIDATE_R002.json",
+  "delete_origins_only_after": "GitHub candidate push HEAD exact, GitHub CI success, clean clone 56 SHA, zero live consumers",
+  "future_use": "Historical regressions and rollback research only; not the current shipping product or current route owner"
+}

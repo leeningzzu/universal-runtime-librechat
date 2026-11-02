@@ -1,0 +1,21 @@
+{
+  "official_v088_sources": {
+    "components/Projects/ProjectDeleteDialog.tsx": "e56b4c08949733094be843a82af8ebdf9260fb9c78e2ce6e2aad76e9830942da",
+    "data-provider/Projects/mutations.ts": "cc3eb03ad10031c70ba40823ce53f8dcab3ac324731ac0e9a984d516b7ccf410",
+    "locales/en/translation.json": "fbedc9f0401abb75cfdcaab465adb3dc5ddc26e70f89b2d0e93cf977e90da1e4",
+    "locales/zh-Hans/translation.json": "aaca179ba38a5ac1e36d9f61f502f26f1f722f63592bfe07198a7517b3b09c4a",
+    "locales/zh-Hant/translation.json": "f4cbed3baa1f51f0e0310b600d6890d74e30348c1975a087befb8b6eeda247e8"
+  },
+  "patched_frontend_sources": {
+    "components/Projects/ProjectDeleteDialog.tsx": "29e0d9e0679483f3c8679260b74da52f8406b7ed28685c462574cf96e5e0882f",
+    "data-provider/Projects/mutations.ts": "22be4b97e46518d4f1f0c72ba87323170709cbd574ad3cdfc9e531d40d89c1f8",
+    "locales/en/translation.json": "5f8f0f4149873dc89abca8ad0032c189313184f8f03fb80901af714025175981",
+    "locales/zh-Hans/translation.json": "634d38453001502a35b48d376af4e6c4ff25b8841e610fd2bcb6f1b9fec652e9",
+    "locales/zh-Hant/translation.json": "ec31e10103d1048ca2cb79b2f03b919b1e45df4d60196fc2866b21173b5cb22b"
+  },
+  "backend_EXE_contains_compiled_native_frontend": false,
+  "front_end_build_v088_official_lockgraph": "NOT_RUN_WITHOUT_OFFICIAL_COMPILER_RUNTIME",
+  "real_browser_delete_confirmation": "NOT_PROVEN",
+  "frontend_models_calls": "ZERO",
+  "frontend_project_delete_real_effect": "ZERO"
+}

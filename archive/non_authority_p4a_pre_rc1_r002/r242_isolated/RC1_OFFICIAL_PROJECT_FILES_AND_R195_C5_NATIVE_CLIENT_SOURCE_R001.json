@@ -1,0 +1,29 @@
+{
+  "schema": "P4A_RC1_OFFICIAL_FULL_PROJECT_FILES_AND_R195_NATIVE_C5_UI_PINNED_SOURCE_R001",
+  "fact_class": "TRANSIENT_SOURCE_PROVENANCE_NOT_PRODUCT_AUTHORITY",
+  "official_commit": "8d3da9bbb220a0a96be9330a2e1cbd385fb786d5",
+  "official_lock_sha256": "2fa0ea3ce9a09037d0255d8161d684928ee9bfb6d1f4ee860f73487e69ab1dcc",
+  "official_source_archive_sha256": "7a355d31fc04af593b68a953179ce570cf682bfad821fbcbbfbc8a0c4259681d",
+  "exact_C5_UI_patch_file_count": 5,
+  "original_official_source_sha256_by_path": {
+    "client/src/components/Projects/ProjectDeleteDialog.tsx": "8a2f6444f095de171e6cd20d23fa8e391864f9b9eb1f47b0d891f611118eb74f",
+    "client/src/data-provider/Projects/mutations.ts": "19cbc9897e93a256927a32fafdaa6bcf60c5023442cea6e96d783ef6a83e8917",
+    "client/src/locales/en/translation.json": "1e996ed11a709ef07aa605f8f56450d3deba653afb1cc5690e8a8affc4ca4740",
+    "client/src/locales/zh-Hans/translation.json": "aaca179ba38a5ac1e36d9f61f502f26f1f722f63592bfe07198a7517b3b09c4a",
+    "client/src/locales/zh-Hant/translation.json": "f4cbed3baa1f51f0e0310b600d6890d74e30348c1975a087befb8b6eeda247e8"
+  },
+  "R195_SHA256_verified_patched_source_by_path": {
+    "client/src/components/Projects/ProjectDeleteDialog.tsx": "e75abd46847fab5d3054797febfbc57765d8aaf39e9808a9863007c48b006cec",
+    "client/src/data-provider/Projects/mutations.ts": "fc818cb8714eda37159f106da5cdff5c093ecdcf208d4787fc4ffd319b64b480",
+    "client/src/locales/en/translation.json": "8a2a08a42317ae77f340d31c213f7667eb0dcf2dbb23ec5d62b9cc9f99e5d7f6",
+    "client/src/locales/zh-Hans/translation.json": "38728e171dcdd7a72baf4d3dae6f7a6b21a2fa07980248fd54843d42e845bd6f",
+    "client/src/locales/zh-Hant/translation.json": "5c5f0ff80efa220290861c3964d03f516adccbce747ae5c745e03baa054df941"
+  },
+  "official_project_workspace_reference_file_section": true,
+  "official_rc1_native_project_reference_file_endpoints_count": 4,
+  "C5_one_irreversible_delete_source_present": true,
+  "official_frontend_build_run": false,
+  "real_user_browser_file_search_and_delete_e2e": false,
+  "existing_v088_binary_preserved": true,
+  "production_daily_changes": false
+}

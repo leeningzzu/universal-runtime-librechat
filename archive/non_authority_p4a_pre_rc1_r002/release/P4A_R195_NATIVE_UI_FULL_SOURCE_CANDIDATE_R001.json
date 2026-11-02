@@ -1,0 +1,42 @@
+{
+  "schema": "P4A_V088_OFFICIAL_NATIVE_C5_BOTH_BACKEND_AND_COMPILED_CLIENT_DIST_SOURCE_R001",
+  "fact_class": "TRANSIENT_NONSHIPPING_SOURCE_CANDIDATE_NOT_PRODUCT_AUTHORITY",
+  "status": "NONSHIPPING_DO_NOT_RELEASE",
+  "source_git_preimage": "d816141cc8b576a15651cc640743c26b6113ba01",
+  "predecessor_R195_backend_exe_sha256": "48114fc444c5fb4fb50ee3ac144bbf8041c5c263e041b62476c8e85e6ac56789",
+  "exe_name": "InquiryDesk_Setup_P4A_R195NativeUI_NONSHIPPING.exe",
+  "exe_sha256": null,
+  "exe_bytes": null,
+  "build_pending": true,
+  "payload_file_count": 468,
+  "payload_manifest_rows": 467,
+  "payload_SHA256SUMS_sha256": "15d9abf49e8d2983d174150a47ba63cd2845e4a23089750a70e284f123420f24",
+  "unchanged_inherited_payload_count": 98,
+  "changed_existing_payload_paths": [
+    "docs/DATA_AND_UNINSTALL.zh-Hans.md",
+    "docs/FIRST_RUN.zh-Hans.md",
+    "product/compose/docker-compose.online-nonshipping.yaml"
+  ],
+  "official_built_frontend_assets_count": 366,
+  "official_built_frontend_assets_sha_provenance": "r242_isolated/OFFICIAL_V088_C5_FRONTEND_DIST_TO_SINGLE_SHELL_PROVENANCE_R001.json",
+  "official_frontend_lock_sha256": "af5f9a7a73a1ec056f796eea736a3e0026b5c7c53813439f093ec51b2a7cb023",
+  "official_frontend_index_sha256": "422decb12f8b0f0ae744267c5a6bcb1bc7d0619de9e830b00e3dfbb8ab4c04d9",
+  "native_c5_backend_in_exe_source": true,
+  "native_c5_browser_frontend_compiled_in_exe_source": true,
+  "real_project_ui_file_search_memory_azure_or_model_citations_e2e": false,
+  "real_native_project_cascade_delete_shared_resource_afterstate_e2e": false,
+  "supported_independent_windows11": false,
+  "data_safe_update_repair_uninstall": false,
+  "GitHub_release_published": false,
+  "installed_product_pass": false,
+  "program_pass": false,
+  "proof_ceiling": {
+    "gate2": "BUILT_NATIVE_V088_FRONTEND_PLUS_R195_CONTEXT_RAG_COMPOSE_NO_REAL_MODEL_FILE_CITATION_E2E",
+    "gate3": "BUILT_NATIVE_V088_C5_FRONTEND_PLUS_R195_NATIVE_BACKEND_R241_TRUTH_NO_REAL_DELETE_E2E",
+    "windows_install": "NOT_RUN_HELDOUT_SUPPORTED_WIN11",
+    "signing": "UNSIGNED",
+    "GitHub": "NOT_PUBLISHED"
+  },
+  "R241_current_runtime_physical_erasure_truth_unchanged": true,
+  "R241_actual_runtime_erasure_truth_sha256": "6dc6f75f017a826596998899a23d8221c54333e9cebd61e3faefe2840f67b126"
+}

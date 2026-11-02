@@ -1,0 +1,40 @@
+{
+  "schema": "P4A_GATE23_REAL_NATIVE_PROJECT_CONTEXT_AND_FAIL_CLOSED_DELETE_R001",
+  "fact_class": "TRANSIENT_NONSHIPPING_RELEASE_CANDIDATE_NOT_STABLE_AUTHORITY",
+  "status": "NONSHIPPING_DO_NOT_RELEASE",
+  "base_git_sha": "d816141cc8b576a15651cc640743c26b6113ba01",
+  "predecessor_P4A_R002_exe_sha256": "34caf7c9bd5587571446d0f7770546d908fa93973ad92299f852255870bf747b",
+  "exe_name": "InquiryDesk_Setup_P4A_GATE23_NONSHIPPING.exe",
+  "exe_sha256": null,
+  "exe_bytes": null,
+  "build_pending": true,
+  "payload_file_count": 83,
+  "payload_manifest_rows": 82,
+  "payload_SHA256SUMS_sha256": "5c3089116087c883253c93d7203126dffba6fb35afa578522372e481e69ea058",
+  "changed_existing_payload_paths": [
+    "product/compose/docker-compose.online-nonshipping.yaml",
+    "product/windows/InquiryDesk.ps1"
+  ],
+  "added_payload_paths": [
+    "product/overlay/librechat/ProjectAssistantProfile.js",
+    "product/overlay/librechat/projects.js"
+  ],
+  "unaffected_inherited_payload_count": 78,
+  "built_in_chinese_user_manual_retained": true,
+  "native_project_context_owner_R195_SHA256": "81b6e30731eca222f204c9b9e099219f2f80e355652d63127cbcaf52ade22a1a",
+  "native_projects_router_fails_closed_when_C5_unwired": true,
+  "native_full_project_delete_implemented_in_EXE": false,
+  "real_model_context_source_pdf_docx_native_file_search_E2E": false,
+  "real_permanent_exclusive_bytes_and_vectors_deleted": false,
+  "supported_heldout_Windows_E2E": false,
+  "GitHub_release_published": false,
+  "installed_product_pass": false,
+  "program_pass": false,
+  "proof_ceiling": {
+    "gate2_project_instructions_memory": "MATURE_R195_SOURCE_IN_PRODUCT_COMPOSE_AND_SYNTHETIC_CONSUMER_PASS_NOT_REAL_MODEL",
+    "gate2_cross_chat": "INHERITED_ISOLATED_CONSUMER_ONLY",
+    "gate2_native_rag": "INHERITED_STATIC_COMPOSE_NO_REAL_INDEX",
+    "gate3_permanent_delete": "CURRENT_NATIVE_ROUTER_BLOCKS_OLD_UNASSIGN_ONLY_NO_REAL_C5_COMPLETE",
+    "gate3_R195_forward_only_cascade": "MATURE_SOURCE_DISCOVERED_NOT_INSTALLED_OR_REAL_VERIFIED"
+  }
+}

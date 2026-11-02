@@ -27,6 +27,9 @@ jobs:
       - name: Verify nine original Project Source SHA and independent-model Github reentry
         shell: pwsh
         run: python tools/verify_github_continuity.py
+      - name: Verify retained pre-RC1 historical archive SHA (non-authority only)
+        shell: pwsh
+        run: python tools/verify_historical_archive.py
       - uses: actions/setup-node@v4
         with:
           node-version: '24.22.2'

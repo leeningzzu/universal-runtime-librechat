@@ -1,0 +1,46 @@
+{
+  "schema": "INQUIRY_DESK_P4A_R002_EMBEDDED_USER_GUIDE_AND_EMBEDDING_ONBOARDING_SOURCE_CANDIDATE",
+  "fact_class": "TRANSIENT_RELEASE_SOURCE_CANDIDATE_NOT_AUTHORITY",
+  "status": "NONSHIPPING_DO_NOT_RELEASE",
+  "preimage_git_sha": "d816141cc8b576a15651cc640743c26b6113ba01",
+  "prior_P4A_R001_EXE_sha256": "178ab157dc30d546d3088954e3724f4586c99e3a2e628252dc0de8a5fa567f4f",
+  "prior_R241_EXE_sha256": "b9711ab8dd321da626ebc9073ae38e6fd2e1f72de94f0c70b20cdde293498e8b",
+  "exe_name": "InquiryDesk_Setup_P4A_R002_NONSHIPPING.exe",
+  "exe_sha256": null,
+  "exe_bytes": null,
+  "build_pending": true,
+  "payload_file_count": 81,
+  "payload_manifest_rows": 80,
+  "payload_SHA256SUMS_sha256": "6be9a4635aa4d3c349e2cc170cf8a8e822a7391e83fe32b217a29df3cf615cfb",
+  "changed_payload_paths": [
+    "docs/DATA_AND_UNINSTALL.zh-Hans.md",
+    "docs/FIRST_RUN.zh-Hans.md",
+    "product/windows/InquiryDesk.ps1"
+  ],
+  "inherited_unchanged_payload_count": 77,
+  "native_project_services": [
+    "librechat",
+    "mongodb",
+    "runtime-adapter",
+    "rag_api",
+    "vectordb"
+  ],
+  "embedded_user_guide_and_uninstall_guide": true,
+  "optional_embedding_key_gui_source": true,
+  "embedding_key_user_authorized": false,
+  "real_RAG_file_index_and_answer": false,
+  "real_C5_whole_project_delete": false,
+  "real_heldout_windows_install": false,
+  "real_update_rollback_uninstall": false,
+  "installed_product_pass": false,
+  "program_pass": false,
+  "GitHub_release_published": false,
+  "proof_ceiling": {
+    "P4A_native_project_file_search": "COMPOSE_AND_EMBEDDING_ONBOARDING_SOURCE_ONLY_NOT_REAL_INDEX",
+    "P4A_embedded_guide": "SOURCE_DOCUMENTATION_REVISED_NOT_YET_EXE_EXTRACT_VERIFIED",
+    "R242_native_C5": "ISOLATED_NEGATIVE_CONSUMER_ONLY_NO_TRUE_DELETE",
+    "P4A_supported_Windows_new_install": "NOT_RUN",
+    "P4B_data_safe_upgrade": "NOT_RUN",
+    "G3_signed_GitHub_public_release": "NOT_RUN"
+  }
+}

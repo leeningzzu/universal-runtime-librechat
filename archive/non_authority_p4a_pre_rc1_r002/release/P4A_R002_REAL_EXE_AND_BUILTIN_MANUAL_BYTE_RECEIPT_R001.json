@@ -1,0 +1,42 @@
+{
+  "schema": "P4A_R002_REAL_EXE_WITH_BUILTIN_USER_GUIDES_AND_EMBEDDING_ONBOARDING_R001",
+  "fact_class": "TRANSIENT_BUILD_ARTIFACT_RECEIPT_NOT_STABLE_OR_PRODUCT_AUTHORITY",
+  "date": "2026-10-31",
+  "source_git_preimage": "d816141cc8b576a15651cc640743c26b6113ba01",
+  "nonshipping": true,
+  "binary_relative": "windows/inquiry_desk/output/InquiryDesk_Setup_P4A_R002_NONSHIPPING.exe",
+  "binary_bytes": 2080359,
+  "binary_sha256": "34caf7c9bd5587571446d0f7770546d908fa93973ad92299f852255870bf747b",
+  "verified_pinned_compiler": "NSIS 3.13 from Tauri pinned upstream hash",
+  "source_manifest_sha256": "6be9a4635aa4d3c349e2cc170cf8a8e822a7391e83fe32b217a29df3cf615cfb",
+  "source_manifest_rows": 80,
+  "actual_7zip_exe_extraction_byte_identity": "PASS_80_OF_80",
+  "embedded_file_sha256": {
+    "installation_guide": "8e4e937ba6e879664b74c07234d9db34faea4bc898ab14125d527cb4e7a95fbb",
+    "data_uninstall_guide": "c4a7ad28a0dd9d6bf8e707ed0eb58a5356691f69fdb54b592086ada5c6451786",
+    "rag_user_onboarding": "a8f991ab4cf2e5e60781045a51e61c0156ed8bcc37296e43d57a10b37f77b89f",
+    "nsis_compiler_script": "bc55c0c2c9c36861338934336cf1f6972cdcd2746fa154098b038d2d737b285b"
+  },
+  "windows_start_menu_help_shortcut": "BUILT_NOT_REAL_WINDOWS_CLICKED",
+  "windows_start_menu_project_file_search_credentials_shortcut": "BUILT_NOT_REAL_WINDOWS_CLICKED",
+  "post_build_script_integrity": "PASS_SOURCE_MANIFEST_AND_PS51_AST",
+  "rag_real_index_and_model_answer": "NOT_PROVEN",
+  "project_memory_cross_chat_real_ui_consumer": "NOT_PROVEN",
+  "native_R006_cascade_in_shipping_payload": "NO_SOURCE_ONLY_OUTSIDE_EXE",
+  "real_full_project_delete": "NOT_PROVEN",
+  "supported_Windows_fresh_install_and_data_maintenance": "NOT_PROVEN",
+  "github_remote_candidate_head": "d816141cc8b576a15651cc640743c26b6113ba01",
+  "github_R002_source_push": "NOT_PERFORMED_PREVIOUSLY_PROHIBITED",
+  "github_R002_exe_release": "NOT_PERFORMED",
+  "code_signing": "UNSIGNED",
+  "product_pass": false,
+  "program_pass": false,
+  "remaining_product_gate_groups": [
+    "ONE_SHELL_PROJECT_MEMORY_CROSS_CHAT_SOURCE_AND_FILE_SEARCH_REAL_E2E",
+    "C5_NATIVE_WHOLE_PROJECT_PERMANENT_DELETE_OWNER_WRITER_RECOVERY_VECTOR_REAL_EFFECT",
+    "SUPPORTED_WINDOWS_NEW_INSTALL_ACCOUNT_MODEL_PROVIDER_PRIVACY_RESTART",
+    "DATA_SAFE_UPDATE_REPAIR_ROLLBACK_UNINSTALL",
+    "GITHUB_ACCEPTED_SOURCE_TO_SIGNED_BINARY_INSTALLED_SHA_AND_PROGRAM_COMPLETENESS"
+  ],
+  "unique_next_action": "P4A_COMPLETE_NATIVE_PROJECT_CONSUMER_AND_PROTECTION_INTEGRATION_ON_SUPPORTED_ISOLATED_WINDOWS_R001"
+}

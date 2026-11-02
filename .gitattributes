@@ -30,3 +30,6 @@ docs/project_sources/** whitespace=-blank-at-eol,-blank-at-eof
 windows/inquiry_desk/payload/product/overlay/librechat/c5/runtimeProjectDeleteRetirement.c5.js whitespace=-blank-at-eof
 release/P4A_RC1_NATIVE_PROJECT_FILES_SOURCE_CANDIDATE_R002.json whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
 release/P4A_RC1_NATIVE_PROJECT_FILES_R002_REAL_EXE_WINDOWS_ENTRY_RECEIPT_R001.json whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+# Preserve byte-for-byte historical receipts and older UTF8/CRLF test sources;
+# the archive is NON_AUTHORITY and is never the current product owner.
+archive/non_authority_p4a_pre_rc1_r002/** -text -diff whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof

@@ -17,6 +17,9 @@ Normal user flow: New Project -> purpose once if needed -> New Chat -> direct re
 
 Prefer current LibreChat native upstream -> mature Runtime/Pack reuse -> thin adapter; NO second shell, chat DB, vector DB, generic Agent/Skill engine, generic memory/router, custom installer/update engine, mandatory internal proxy/tunnel or whole-drive Docker bind. Preserve accepted P1/P2 baselines; a bounded delta only revalidates directly affected consumers.
 
+## Retained historical non-authority evidence
+The archive at archive/non_authority_p4a_pre_rc1_r002/ contains 56 SHA-pinned superseded build/test/installer/source receipts (1,436,999 bytes). It is NOT an active route authority or Product PASS. Check docs/CURRENT_DELIVERY_STATE_R003.md first and run tools/verify_historical_archive.py before relying on a historical observation. Local originals may be retired only after exact GitHub remote CI, fresh-clone archive SHA, and zero active consumers are proven.
+
 ## Current product proof ceiling
 The exact current NONSHIPPING R002 EXE is named InquiryDesk_Setup_P4A_RC1NativeProjectFiles_R002_NONSHIPPING.exe.
 Expected bytes: 19,341,420; SHA256: 81420f4aacc56100d0027f335e8eaa460d4c9322f79afe7362c7ac86d0822c18.

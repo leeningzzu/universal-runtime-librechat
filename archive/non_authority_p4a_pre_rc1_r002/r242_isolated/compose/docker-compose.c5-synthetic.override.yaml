@@ -1,0 +1,50 @@
+# R242 synthetic-only Compose OVERRIDE (not shipped / not auto-activated).
+# Requires explicitly isolated Compose + immutable R006 source under two machine-local
+# variables; no Proxy/second shell/database. Never use against real user Projects.
+services:
+  librechat:
+    volumes:
+      - type: bind
+        source: "${AIDES_R242_NATIVE_ROOT:?isolated R242 source}/native/projects.js"
+        target: /app/api/server/routes/projects.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_R242_R006_ROOT:?SHA-verified R006}/api/server/routes/c5WholeProjectProductNativeRoute.candidate.js"
+        target: /app/api/server/routes/c5WholeProjectProductNativeRoute.candidate.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_R242_R006_ROOT}/api/server/routes/c5WholeProjectProductEndpoints.candidate.js"
+        target: /app/api/server/routes/c5WholeProjectProductEndpoints.candidate.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_R242_R006_ROOT}/api/server/routes/c5NativeWholeProjectBinding.candidate.js"
+        target: /app/api/server/routes/c5NativeWholeProjectBinding.candidate.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_R242_R006_ROOT}/api/server/routes/c5NativeChatFileConsumers.candidate.js"
+        target: /app/api/server/routes/c5NativeChatFileConsumers.candidate.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_R242_R006_ROOT}/api/server/routes/projectDeleteOwnedCascade.c5.product.candidate.js"
+        target: /app/api/server/routes/projectDeleteOwnedCascade.c5.product.candidate.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_R242_R006_ROOT}/api/server/routes/c5CurrentNativeRetirementCallbacks.candidate.js"
+        target: /app/api/server/routes/c5CurrentNativeRetirementCallbacks.candidate.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_R242_R006_ROOT}/api/server/routes/c5CanonicalNativeRetirement.candidate.js"
+        target: /app/api/server/routes/c5CanonicalNativeRetirement.candidate.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_R242_R006_ROOT}/api/server/routes/c5RuntimeOwnerNativeBridge.candidate.js"
+        target: /app/api/server/routes/c5RuntimeOwnerNativeBridge.candidate.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_R242_R006_ROOT}/api/server/services/Files/VectorDB/crud.js"
+        target: /app/api/server/services/Files/VectorDB/crud.js
+        read_only: true
+      - type: bind
+        source: "${AIDES_R242_R006_ROOT}/api/server/services/Files/Code/crud.js"
+        target: /app/api/server/services/Files/Code/crud.js
+        read_only: true

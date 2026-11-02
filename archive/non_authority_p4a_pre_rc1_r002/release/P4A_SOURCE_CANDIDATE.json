@@ -1,0 +1,42 @@
+{
+  "schema": "INQUIRY_DESK_P4A_OFFICIAL_NATIVE_PROJECT_FILE_SEARCH_SOURCE_CANDIDATE_R001",
+  "status": "NONSHIPPING_DO_NOT_RELEASE",
+  "fact_class": "TRANSIENT_RELEASE_SOURCE_CANDIDATE_NOT_STABLE_AUTHORITY",
+  "base_git_sha": "d816141cc8b576a15651cc640743c26b6113ba01",
+  "preserved_prior_R241_binary_sha256": "b9711ab8dd321da626ebc9073ae38e6fd2e1f72de94f0c70b20cdde293498e8b",
+  "exe_name": "InquiryDesk_Setup_P4A_NONSHIPPING.exe",
+  "exe_sha256": null,
+  "exe_bytes": null,
+  "build_pending": true,
+  "payload_file_count": 81,
+  "payload_manifest_rows": 80,
+  "payload_SHA256SUMS_sha256": "9d7430f7bdec33f92e786df8eadca500900b08d95c5237cede258cbacf9aa146",
+  "modified_payload_paths": [
+    "manifest/upstream-pinned-sources.NONSHIPPING.json",
+    "product/compose/docker-compose.online-nonshipping.yaml",
+    "product/windows/InquiryDesk.ps1"
+  ],
+  "inherited_unchanged_payload_count": 77,
+  "official_product_services": [
+    "mongodb",
+    "runtime-adapter",
+    "librechat",
+    "vectordb",
+    "rag_api"
+  ],
+  "project_file_search_embeddings_authorized": false,
+  "file_indexing_real_consumer_pass": false,
+  "native_c5_real_delete_user_consumer_pass": false,
+  "GitHub_release_published": false,
+  "installed_product_pass": false,
+  "program_pass": false,
+  "proof_ceiling": {
+    "P4A_native_project_file_search": "COMPOSE_AND_LAUNCHER_SOURCE_ONLY_NO_REAL_FILE_INDEX",
+    "R242_native_c5_delete": "ISOLATED_SYNTHETIC_NO_EFFECT_ONLY",
+    "R241_prior_product_baseline": "INHERIT_UNCHANGED_PROOFS_ONLY;DO_NOT_ESCALATE_OLD_C5",
+    "P4A_fresh_supported_Windows": "NOT_RUN",
+    "P4B_data_safe_update_repair_rollback": "NOT_RUN",
+    "G3_signed_GitHub_downloaded_installed_sha": "NOT_PROVEN"
+  },
+  "public_shipping": false
+}
