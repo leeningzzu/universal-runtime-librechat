@@ -5,7 +5,7 @@ Read this file first when continuing from GitHub with a different AI model or Wi
 ## Read order
 1. docs/PROGRAM_PURPOSE_R001.md (North Star, architecture and user workflow).
 2. docs/project_sources/README.md and SOURCE_FILES_SHA256_R001.json (six active Stable Sources, two unpromoted Candidates, one supporting contract).
-3. docs/CURRENT_DELIVERY_STATE_R001.md (latest exact candidate and proof ceilings).
+3. docs/CURRENT_DELIVERY_STATE_R002.md (latest exact GitHub migration and product proof ceilings; R001 remains predecessor).
 4. docs/GITHUB_ONLY_REENTRY_R001.md and docs/BUILD_REPRODUCTION_R001.md (recovery without local histories).
 5. release/P4A_RC1_R002_NONSHIPPING_RELEASE_NOTES.md, tools/verify_distribution.py, tools/verify_github_continuity.py, tests.
 6. Actual product source: windows/inquiry_desk/payload/product and SHA inventory: windows/inquiry_desk/payload/manifest/SHA256SUMS.
@@ -29,5 +29,5 @@ Do not push main, --all, --mirror or force. Do not promote this unsigned NONSHIP
 Do not auto-retry a partially executed or UNKNOWN C5 operation. Owner, Writer, lease, Source/File/Blob/Vector afterstate, shared neighbors and restart recovery require independent proof.
 
 ## Single current action
-UNIQUE_NEXT_ACTION = GITHUB_AUTHORIZED_SOURCE_AND_DRAFT_BINARY_SYNC_WITH_REMOTE_SHA_READBACK_R001
-The Windows runner currently has NO noninteractive GitHub write credentials. Complete one unavoidable GitHub authorization, then commit/push the screened candidate source and upload the exact R002 EXE as a DRAFT Release asset. Verify remote HEAD/CI, re-download asset SHA and clean clone BEFORE retiring any local staging. After remote parity, resume supported isolated Windows11 synthetic Project Gate2/Gate3 real E2E. Do not change Production/Daily or real user Project data.
+UNIQUE_NEXT_ACTION = GITHUB_CI_SOURCE_REENTRY_PASS_THEN_ACTIONS_BUILD_EXACT_R002_EXE_AND_CREATE_OWNER_ONLY_DRAFT_WITH_REMOTE_SHA_READBACK_R002
+The screened source was pushed to the candidate branch at predecessor SHA 51de4a84fa764a8bbd403947f1affb8ffe754d23; its CI failed because the new continuity checker was accidentally omitted from the commit, not because the 496-file product failed its source SHA. A separate fresh GitHub clone rebuilt the exact 19,341,420-byte R002 EXE with the SAME SHA256. The new candidate revision adds the missing continuity checker and an official source-integrity-dependent GitHub Actions job which is allowed to publish ONLY an owner-visible NONSHIPPING Draft after exact source-to-binary SHA parity. Check the NEW remote commit/CI and Draft download SHA, not old status text, before considering any local staging retirement. After remote parity, resume supported isolated Windows11 synthetic Project Gate2/Gate3 real E2E. Do not change Production/Daily, real user data or public latest release.

@@ -1,4 +1,4 @@
-name: Inquiry Desk candidate source integrity (no release)
+name: Inquiry Desk source and exact NONSHIPPING Draft delivery
 on:
   push:
     branches:
@@ -51,4 +51,115 @@ jobs:
       - name: Check exact source formatting
         shell: pwsh
         run: git diff --check
+
+  draft-nonshipping:
+    name: Exact R002 EXE to owner-only Draft (not public Product)
+    needs: source-integrity
+    if: github.ref == 'refs/heads/candidate/inquiry-desk-windows-product'
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirm Github-only source, original Project materials and official RC1 input
+        shell: pwsh
+        run: |
+          python tools/verify_distribution.py
+          if ($LASTEXITCODE -ne 0) { throw 'PRODUCT_SOURCE_INTEGRITY_FAILED' }
+          python tools/verify_github_continuity.py
+          if ($LASTEXITCODE -ne 0) { throw 'PROJECT_AUTHORITY_OR_MATURE_RC1_PATCH_SHA_MISSING' }
+      - name: Retrieve and pin NSIS 3.13 official ZIP with exact vendor SHA
+        shell: pwsh
+        run: |
+          $ErrorActionPreference='Stop'
+          $url='https://sourceforge.net/projects/nsis/files/NSIS%203/3.13/nsis-3.13.zip/download'
+          $zip=Join-Path $env:RUNNER_TEMP 'InquiryDesk_Official_NSIS_3_13.zip'
+          Invoke-WebRequest -Uri $url -OutFile $zip -MaximumRedirection 6 -TimeoutSec 90 -ErrorAction Stop
+          if ((Get-FileHash $zip -Algorithm SHA256).Hash.ToLowerInvariant() -cne
+              'ba63dffc4410ee89193e1cb5a41989991bd77c61068da17e3156d136b7b0b3d8') {
+            throw 'OFFICIAL_NSIS_313_VENDOR_ZIP_SHA_NOT_EQUAL'
+          }
+          $out=Join-Path $env:RUNNER_TEMP 'InquiryDesk_NSIS_313'
+          Expand-Archive -LiteralPath $zip -DestinationPath $out -ErrorAction Stop
+          $cmd=Join-Path $out 'nsis-3.13\makensis.exe'
+          if (!(Test-Path $cmd -PathType Leaf)) { throw 'NSIS_313_OFFICIAL_COMPILER_NOT_FOUND' }
+          Add-Content -Path $env:GITHUB_ENV -Value ('ID_NSIS_313='+$cmd)
+      - name: Rebuild exact NONSHIPPING R002 EXE from Github checkout only
+        shell: pwsh
+        run: |
+          $ErrorActionPreference='Stop'
+          $path='windows/inquiry_desk/output/InquiryDesk_Setup_P4A_RC1NativeProjectFiles_R002_NONSHIPPING.exe'
+          if (Test-Path $path) { throw 'R002_EXISTING_OUTPUT_NO_OVERWRITE' }
+          powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/build_windows_distribution.ps1 -MakensisPath $env:ID_NSIS_313
+          if ($LASTEXITCODE -ne 0) { throw 'NSIS_PRODUCT_BUILD_FAILED' }
+          python tools/verify_github_continuity.py --exe $path
+          if ($LASTEXITCODE -ne 0) { throw 'R002_GITHUB_REBUILD_SHA_MISMATCH_NO_DRAFT_RELEASE' }
+      - name: Check exact compiled EXE name bytes and SHA before any upload
+        shell: pwsh
+        run: |
+          $ErrorActionPreference='Stop'
+          $path='windows/inquiry_desk/output/InquiryDesk_Setup_P4A_RC1NativeProjectFiles_R002_NONSHIPPING.exe'
+          if ((Get-Item $path).Length -ne 19341420) { throw 'R002_EXE_BYTE_COUNT_MISMATCH' }
+          if ((Get-FileHash $path -Algorithm SHA256).Hash.ToLowerInvariant() -cne
+              '81420f4aacc56100d0027f335e8eaa460d4c9322f79afe7362c7ac86d0822c18') {
+            throw 'R002_UNSIGNED_INSTALLER_IS_NOT_EXACT_ACCEPTED_BYTES'
+          }
+          Write-Output 'EXACT_EXE_BUILD_SHA_PASS_ONLY_NOT_PRODUCT_PASS'
+      - name: Retain nonshipping executable and checksum as owner-visible Actions artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: InquiryDesk_RC1_R002_NONSHIPPING_ExactSHA81420f4a
+          retention-days: 90
+          if-no-files-found: error
+          path: |
+            windows/inquiry_desk/output/InquiryDesk_Setup_P4A_RC1NativeProjectFiles_R002_NONSHIPPING.exe
+            release/P4A_RC1_R002_NONSHIPPING_EXE_SHA256SUMS.txt
+            release/P4A_RC1_R002_NONSHIPPING_RELEASE_NOTES.md
+      - name: Create owner-only Draft Release, never publish or replace an existing one
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $ErrorActionPreference='Stop'
+          $repo=$env:GITHUB_REPOSITORY
+          $tag='inquiry-desk-p4a-rc1-r002-nonshipping'
+          if (!(Get-Command gh.exe -ErrorAction SilentlyContinue)) { throw 'GITHUB_CLI_NOT_FOUND_ON_CI_HOST' }
+          $before=$ErrorActionPreference
+          try {
+            $ErrorActionPreference='Continue'
+            $prior=@(& gh.exe release view $tag -R $repo --json isDraft --jq '.isDraft' 2>$null)
+            $present=$LASTEXITCODE
+          } finally { $ErrorActionPreference=$before }
+          if ($present -eq 0) { throw 'DRAFT_RELEASE_EXISTS_DO_NOT_AUTO_RETRY_OR_OVERWRITE' }
+          $name='windows/inquiry_desk/output/InquiryDesk_Setup_P4A_RC1NativeProjectFiles_R002_NONSHIPPING.exe'
+          & gh.exe release create $tag $name 'release/P4A_RC1_R002_NONSHIPPING_EXE_SHA256SUMS.txt' -R $repo --target $env:GITHUB_SHA --draft --prerelease --title 'Inquiry Desk R002 NONSHIPPING - Project Gate 2 and Gate 3 NOT PROVEN' --notes-file 'release/P4A_RC1_R002_NONSHIPPING_RELEASE_NOTES.md'
+          if ($LASTEXITCODE -ne 0) { throw 'DRAFT_RELEASE_UPLOAD_UNKNOWN_DO_NOT_AUTOMATICALLY_RETRY' }
+      - name: Verify Draft status and re-download exact R002 EXE SHA
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $ErrorActionPreference='Stop'
+          $repo=$env:GITHUB_REPOSITORY
+          $tag='inquiry-desk-p4a-rc1-r002-nonshipping'
+          $out=@(& gh.exe release view $tag -R $repo --json isDraft --jq '.isDraft')
+          if ($LASTEXITCODE -ne 0 -or ($out -join '').Trim() -cne 'true') { throw 'RELEASE_IS_NOT_OWNER_ONLY_DRAFT' }
+          $filename='InquiryDesk_Setup_P4A_RC1NativeProjectFiles_R002_NONSHIPPING.exe'
+          $tmp=Join-Path $env:RUNNER_TEMP 'InquiryDesk_Verified_Draft_Download'
+          New-Item -ItemType Directory -Path $tmp -Force | Out-Null
+          & gh.exe release download $tag -R $repo -p $filename -D $tmp
+          if ($LASTEXITCODE -ne 0) { throw 'DRAFT_ASSET_NOT_DOWNLOADABLE' }
+          $file=Join-Path $tmp $filename
+          if ((Get-Item $file).Length -ne 19341420 -or
+              (Get-FileHash $file -Algorithm SHA256).Hash.ToLowerInvariant() -cne
+              '81420f4aacc56100d0027f335e8eaa460d4c9322f79afe7362c7ac86d0822c18') {
+            throw 'GITHUB_DRAFT_EXE_DOWNLOADED_SHA_NOT_IDENTICAL'
+          }
+          Write-Output 'GITHUB_OWNER_DRAFT_RELEASE_REDOWNLOADED_SHA_PASS_NOT_PRODUCT_PASS'
+
 # This is SOURCE/continuity QA only; installed Gate2/3 and Product/Program PASS remain UNPROVEN.
